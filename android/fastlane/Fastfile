@@ -1,0 +1,22 @@
+
+default_platform(:android)
+
+platform :android do
+  desc "Build production APK"
+ 
+  lane :distribute do
+    sh "flutter clean"
+    sh "flutter build apk --release --flavor production --target lib/main_production.dart --no-tree-shake-icons"
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
+      android_artifact_type: "APK",
+      android_artifact: "../build/app/outputs/flutter-apk/app-production-release.apk",
+      testers: ENV["FIREBASE_TESTERS"],
+      release_notes: "Automated distribution via Fastlane - Production build #{Time.now.strftime('%Y-%m-%d %H:%M')}",
+    )
+  end
+end  
+
+  
