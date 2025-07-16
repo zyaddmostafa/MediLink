@@ -1,8 +1,5 @@
 plugins {
     id("com.android.application")
-    // START: FlutterFire Configuration
-    id("com.google.gms.google-services")
-    // END: FlutterFire Configuration
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
@@ -64,4 +61,9 @@ android {
 
 flutter {
     source = "../.."
+}
+
+// Apply Google Services plugin only for production flavor
+if (gradle.startParameter.taskNames.any { it.contains("Production") || it.contains("production") }) {
+    apply(plugin = "com.google.gms.google-services")
 }
