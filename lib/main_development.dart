@@ -1,7 +1,5 @@
 import 'package:doctor_appoinment/doctor_app.dart';
-import 'package:doctor_appoinment/feature/home_screen.dart';
 import 'package:doctor_appoinment/firebase_options.dart';
-import 'package:doctor_appoinment/main_production.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
