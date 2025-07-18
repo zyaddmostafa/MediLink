@@ -1,17 +1,25 @@
-import 'package:doctor_appoinment/core/helpers/extentions.dart';
-import 'package:doctor_appoinment/core/helpers/spacing.dart';
-import 'package:doctor_appoinment/core/routing/routes.dart';
-import 'package:doctor_appoinment/core/widgets/custom_elevated_button.dart';
-import 'package:doctor_appoinment/core/widgets/custom_text_from_field.dart';
-import 'package:doctor_appoinment/core/widgets/label_and_text_filed.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_header.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_rich_text.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/password_text_from_field.dart';
+import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../core/widgets/custom_text_from_field.dart';
+import '../../../../core/widgets/label_and_text_filed.dart';
+import '../widgets/auth_header.dart';
+import '../widgets/auth_rich_text.dart';
+import '../widgets/password_text_from_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,18 +30,18 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpacing(48),
-              AuthHeader(title: 'Login'),
+              const AuthHeader(title: 'Login'),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       verticalSpacing(80),
-                      _signinTextFields(),
+                      _emailAndPassword(),
                       verticalSpacing(32),
                       _signinElevatedButton(),
                       verticalSpacing(32),
-                      _dontHaveAnAccountRichText(context),
+                      _dontHaveAnAccount(context),
                       verticalSpacing(32),
                     ],
                   ),
@@ -50,12 +58,12 @@ class LoginScreen extends StatelessWidget {
     return CustomElevatedButton(
       text: 'Login',
       onPressed: () {
-        // Handle login action
+        validateThenDoLogin(context);
       },
     );
   }
 
-  Center _dontHaveAnAccountRichText(BuildContext context) {
+  Center _dontHaveAnAccount(BuildContext context) {
     return Center(
       child: AuthRichText(
         text: 'Don\'t have an account? ',
@@ -66,20 +74,50 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _signinTextFields() {
-  return Column(
-    children: [
-      LabelAndTextField(
-        label: 'Email Address',
-        textFormField: CustomTextFromField(hintText: 'Enter your email'),
+  Widget _emailAndPassword() {
+    return Form(
+      key: formKey,
+      child: Column(
+        children: [
+          LabelAndTextField(
+            label: 'Email Address',
+            textFormField: CustomTextFromField(
+              hintText: 'Enter your email',
+              controller: emailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Email is required';
+                }
+                if (!value.contains('@') || !value.contains('.')) {
+                  return 'Invalid email format';
+                }
+                return null;
+              },
+            ),
+          ),
+          verticalSpacing(24),
+          LabelAndTextField(
+            label: 'Password',
+            textFormField: PasswordTextFormField(
+              hintText: 'Enter your password',
+              controller: passwordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Password is required';
+                }
+                return null;
+              },
+            ),
+          ),
+        ],
       ),
-      verticalSpacing(24),
-      LabelAndTextField(
-        label: 'Password',
-        textFormField: PasswordTextFormField(hintText: 'Enter your password'),
-      ),
-    ],
-  );
+    );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    if (formKey.currentState!.validate()) {
+      context.pushReplacementNamed(Routes.signUpScreen);
+    }
+  }
 }

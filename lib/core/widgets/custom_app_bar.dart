@@ -1,4 +1,4 @@
-import 'package:doctor_appoinment/core/helpers/extentions.dart';
+import '../helpers/extentions.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
