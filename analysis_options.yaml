@@ -21,9 +21,6 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # Prefer single quotes for consistency
-    prefer_single_quotes: true
-
     # Avoid using print
     avoid_print: true
 
