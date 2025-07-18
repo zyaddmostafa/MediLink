@@ -21,3 +21,7 @@ extension Navigation on BuildContext {
 
   void pop() => Navigator.of(this).pop();
 }
+
+extension MapExtention<x, v> on Map<x, v>? {
+  bool isNullOrEmpty() => this == null || this!.isEmpty;
+}

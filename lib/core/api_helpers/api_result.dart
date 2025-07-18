@@ -1,17 +1,17 @@
-import 'api_error_handler.dart';
+import 'api_error_model.dart';
 
 class ApiResult<T> {
   ApiResult._();
   factory ApiResult.success(T data) = Success<T>;
-  factory ApiResult.error(ErrorHandler e) = Failure<T>;
+  factory ApiResult.failure(ApiErrorModel e) = Failure<T>;
   when({
     required Function(T data) onSuccess,
-    required Function(ErrorHandler error) onError,
+    required Function(ApiErrorModel error) onError,
   }) {
     if (this is Success<T>) {
       return onSuccess((this as Success<T>).data);
     } else {
-      return onError(ErrorHandler.handle((this as Failure).error));
+      return onError((this as Failure<T>).error);
     }
   }
 }
@@ -23,7 +23,7 @@ class Success<T> extends ApiResult<T> {
 }
 
 class Failure<T> extends ApiResult<T> {
-  final ErrorHandler error;
+  final ApiErrorModel error;
 
   Failure(this.error) : super._();
 }
