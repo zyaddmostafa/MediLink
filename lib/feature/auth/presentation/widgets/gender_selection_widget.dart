@@ -1,7 +1,7 @@
-import 'package:doctor_appoinment/core/helpers/spacing.dart';
+import '../../../../core/helpers/spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_appoinment/core/theme/app_color.dart';
-import 'package:doctor_appoinment/core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_color.dart';
+import '../../../../core/theme/app_text_styles.dart';
 
 enum Gender { male, female }
 
@@ -22,7 +22,7 @@ class GenderSelectionWidget extends StatefulWidget {
 }
 
 class _GenderSelectionWidgetState extends State<GenderSelectionWidget> {
-  Gender? _selectedGender;
+  Gender _selectedGender = Gender.male;
 
   @override
   Widget build(BuildContext context) {

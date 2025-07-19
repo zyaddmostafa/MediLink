@@ -1,16 +1,36 @@
-import 'package:doctor_appoinment/core/helpers/extentions.dart';
-import 'package:doctor_appoinment/core/helpers/spacing.dart';
-import 'package:doctor_appoinment/core/routing/routes.dart';
-import 'package:doctor_appoinment/core/widgets/custom_elevated_button.dart';
-import 'package:doctor_appoinment/core/widgets/custom_text_from_field.dart';
-import 'package:doctor_appoinment/core/widgets/label_and_text_filed.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_header.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_rich_text.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/password_text_from_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../data/models/login_request_body.dart';
+import '../cubit/auth_cubit.dart';
+import '../widgets/auth_header.dart';
+import '../widgets/auth_rich_text.dart';
+import '../widgets/login_bloc_listener.dart';
+import '../widgets/login_screen_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +42,22 @@ class LoginScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               verticalSpacing(48),
-              AuthHeader(title: 'Login'),
+              const AuthHeader(title: 'Login'),
               Expanded(
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      verticalSpacing(80),
-                      _signinTextFields(),
+                      verticalSpacing(50),
+                      _emailAndPassword(context),
                       verticalSpacing(32),
-                      _signinElevatedButton(),
+                      _loginElevatedButton(context),
                       verticalSpacing(32),
-                      _dontHaveAnAccountRichText(context),
+                      _dontHaveAnAccount(context),
                       verticalSpacing(32),
+                      const LoginBlocListener(),
                     ],
                   ),
                 ),
@@ -46,40 +69,45 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  CustomElevatedButton _signinElevatedButton() {
+  CustomElevatedButton _loginElevatedButton(BuildContext context) {
+    final authCubit = context.watch<AuthCubit>();
     return CustomElevatedButton(
       text: 'Login',
       onPressed: () {
-        // Handle login action
+        validateThenDoLogin(context);
       },
+      isLoading: authCubit.state is LoginLoading,
     );
   }
 
-  Center _dontHaveAnAccountRichText(BuildContext context) {
+  Center _dontHaveAnAccount(BuildContext context) {
     return Center(
       child: AuthRichText(
         text: 'Don\'t have an account? ',
         linkText: 'Sign Up',
         onTap: () {
-          context.pushReplacementNamed(Routes.signUpScreen);
+          context.pushNamed(Routes.signUpScreen);
         },
       ),
     );
   }
-}
 
-Widget _signinTextFields() {
-  return Column(
-    children: [
-      LabelAndTextField(
-        label: 'Email Address',
-        textFormField: CustomTextFromField(hintText: 'Enter your email'),
-      ),
-      verticalSpacing(24),
-      LabelAndTextField(
-        label: 'Password',
-        textFormField: PasswordTextFormField(hintText: 'Enter your password'),
-      ),
-    ],
-  );
+  Widget _emailAndPassword(BuildContext context) {
+    return LoginScreenForm(
+      formKey: _formKey,
+      emailController: emailController,
+      passwordController: passwordController,
+    );
+  }
+
+  void validateThenDoLogin(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<AuthCubit>().login(
+        LoginRequestBody(
+          email: emailController.text,
+          password: passwordController.text,
+        ),
+      );
+    }
+  }
 }

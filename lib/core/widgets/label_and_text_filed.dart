@@ -1,5 +1,5 @@
-import 'package:doctor_appoinment/core/helpers/spacing.dart';
-import 'package:doctor_appoinment/core/theme/app_text_styles.dart';
+import '../helpers/spacing.dart';
+import '../theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class LabelAndTextField extends StatelessWidget {

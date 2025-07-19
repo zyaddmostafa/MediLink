@@ -1,15 +1,17 @@
 import 'dart:developer';
 
-import 'package:doctor_appoinment/core/helpers/extentions.dart';
-import 'package:doctor_appoinment/core/helpers/spacing.dart';
-import 'package:doctor_appoinment/core/routing/routes.dart';
-import 'package:doctor_appoinment/core/widgets/custom_elevated_button.dart';
-import 'package:doctor_appoinment/core/widgets/custom_text_from_field.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/gender_selection_widget.dart';
-import 'package:doctor_appoinment/core/widgets/label_and_text_filed.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_header.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_rich_text.dart';
+import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/gender_selection_helper.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_elevated_button.dart';
+import '../widgets/gender_selection_widget.dart';
+import '../widgets/auth_header.dart';
+import '../widgets/auth_rich_text.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/signup_screen_form.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -21,6 +23,20 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   Gender? selectedGender;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,14 +46,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              verticalSpacing(48),
-              AuthHeader(title: 'Sign Up'),
+              const CustomAppBar(),
+              verticalSpacing(28),
+              const AuthHeader(title: 'Sign Up'),
               Expanded(
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Column(
                     children: [
-                      verticalSpacing(80),
-                      _signupTextField(),
+                      verticalSpacing(50),
+                      _nameAndEmailAndPhone(),
                       verticalSpacing(16),
                       _selectGender(),
                       verticalSpacing(32),
@@ -60,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return CustomElevatedButton(
       text: 'Continue',
       onPressed: () {
-        context.pushNamed(Routes.setPasswordScreen, arguments: selectedGender);
+        validateThenDoSignUp(context);
       },
     );
   }
@@ -86,26 +105,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
         setState(() {
           selectedGender = gender;
         });
+
         log('Selected gender: $selectedGender');
       },
     );
   }
 
-  Widget _signupTextField() {
-    return Column(
-      children: [
-        LabelAndTextField(
-          label: 'Email',
-          textFormField: CustomTextFromField(hintText: 'Enter your email'),
-        ),
-        verticalSpacing(24),
-        LabelAndTextField(
-          label: 'Phone',
-          textFormField: CustomTextFromField(
-            hintText: 'Enter your phone number',
-          ),
-        ),
-      ],
+  Widget _nameAndEmailAndPhone() {
+    return SignupScreenForm(
+      formKey: _formKey,
+      nameController: nameController,
+      emailController: emailController,
+      phoneController: phoneController,
     );
+  }
+
+  void validateThenDoSignUp(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      // Create signup data object to pass
+      final signupData = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'phone': phoneController.text,
+        'gender': GenderSelectionHelper.selectedGender(selectedGender),
+      };
+
+      context.pushNamed(Routes.setPasswordScreen, arguments: signupData);
+    }
   }
 }

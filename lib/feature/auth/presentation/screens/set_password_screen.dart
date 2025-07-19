@@ -1,16 +1,40 @@
-import 'package:doctor_appoinment/core/helpers/extentions.dart';
-import 'package:doctor_appoinment/core/helpers/spacing.dart';
-import 'package:doctor_appoinment/core/routing/routes.dart';
-import 'package:doctor_appoinment/core/widgets/custom_app_bar.dart';
-import 'package:doctor_appoinment/core/widgets/custom_elevated_button.dart';
-import 'package:doctor_appoinment/core/widgets/label_and_text_filed.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_header.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/auth_rich_text.dart';
-import 'package:doctor_appoinment/feature/auth/presentation/widgets/password_text_from_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../data/models/sign_up_request_body.dart';
+import '../cubit/auth_cubit.dart';
+import '../widgets/auth_header.dart';
+import '../widgets/auth_rich_text.dart';
 import 'package:flutter/material.dart';
 
-class SetPasswordScreen extends StatelessWidget {
-  const SetPasswordScreen({super.key});
+import '../widgets/set_password_screen_form.dart';
+import '../widgets/signup_bloc_listener.dart';
+
+class SetPasswordScreen extends StatefulWidget {
+  final Map<String, dynamic> signupData;
+  const SetPasswordScreen({super.key, required this.signupData});
+
+  @override
+  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
+}
+
+class _SetPasswordScreenState extends State<SetPasswordScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    passwordController.dispose();
+    passwordConfirmationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +44,17 @@ class SetPasswordScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             children: [
-              CustomAppBar(),
-              verticalSpacing(20),
-              AuthHeader(title: 'Set Password'),
+              const CustomAppBar(),
+              verticalSpacing(28),
+              const AuthHeader(title: 'Set Password'),
               Expanded(
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Column(
                     children: [
                       verticalSpacing(80),
-                      _passwordTextFormField(),
+                      _passwordTextFormField(context),
                       verticalSpacing(32),
                       _signupElevatedButton(context),
                       verticalSpacing(32),
@@ -38,6 +64,7 @@ class SetPasswordScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SignupBlocListener(),
             ],
           ),
         ),
@@ -57,24 +84,38 @@ class SetPasswordScreen extends StatelessWidget {
     );
   }
 
-  CustomElevatedButton _signupElevatedButton(context) =>
-      CustomElevatedButton(text: 'Sign Up', onPressed: () {});
-}
+  CustomElevatedButton _signupElevatedButton(BuildContext context) {
+    final signupCubit = context.watch<AuthCubit>();
+    return CustomElevatedButton(
+      text: 'Sign Up',
+      onPressed: () {
+        validateThenDoSignUp(context);
+      },
+      isLoading: signupCubit.state is SignupLoading,
+    );
+  }
 
-Widget _passwordTextFormField() {
-  return Column(
-    children: [
-      LabelAndTextField(
-        label: 'Password',
-        textFormField: PasswordTextFormField(hintText: 'Enter your password'),
-      ),
-      verticalSpacing(24),
-      LabelAndTextField(
-        label: 'Confirm Password',
-        textFormField: PasswordTextFormField(
-          hintText: 'Re-enter your password',
+  Widget _passwordTextFormField(BuildContext context) {
+    return SetPasswordScreenForm(
+      passwordController: passwordController,
+      passwordConfirmation: passwordConfirmationController,
+      formKey: _formKey,
+    );
+  }
+
+  void validateThenDoSignUp(BuildContext context) {
+    final signupCubit = context.read<AuthCubit>();
+    if (_formKey.currentState!.validate()) {
+      signupCubit.signup(
+        SignupRequestBody(
+          name: widget.signupData['name'],
+          email: widget.signupData['email'],
+          password: passwordController.text,
+          passwordConfirmation: passwordConfirmationController.text,
+          phone: widget.signupData['phone'],
+          gender: widget.signupData['gender'],
         ),
-      ),
-    ],
-  );
+      );
+    }
+  }
 }

@@ -1,5 +1,5 @@
-import 'package:doctor_appoinment/core/theme/app_color.dart';
-import 'package:doctor_appoinment/core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_color.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
