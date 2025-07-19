@@ -1,26 +1,21 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/label_and_text_filed.dart';
+import '../cubit/signup/signup_cubit.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
-import '../widgets/password_text_from_field.dart';
 import 'package:flutter/material.dart';
 
-class SetPasswordScreen extends StatefulWidget {
-  const SetPasswordScreen({super.key});
+import '../widgets/set_password_screen_form.dart';
+import '../widgets/signup_bloc_listener.dart';
 
-  @override
-  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
-}
-
-class _SetPasswordScreenState extends State<SetPasswordScreen> {
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+class SetPasswordScreen extends StatelessWidget {
+  final int gender;
+  const SetPasswordScreen({super.key, required this.gender});
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +26,14 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
           child: Column(
             children: [
               const CustomAppBar(),
-              verticalSpacing(20),
+              verticalSpacing(28),
               const AuthHeader(title: 'Set Password'),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       verticalSpacing(80),
-                      _passwordTextFormField(),
+                      _passwordTextFormField(context),
                       verticalSpacing(32),
                       _signupElevatedButton(context),
                       verticalSpacing(32),
@@ -48,6 +43,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   ),
                 ),
               ),
+              const SignupBlocListener(),
             ],
           ),
         ),
@@ -67,60 +63,26 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     );
   }
 
-  CustomElevatedButton _signupElevatedButton(context) => CustomElevatedButton(
-    text: 'Sign Up',
-    onPressed: () {
-      validateThenDoSignUp(context);
-    },
-  );
-
-  Widget _passwordTextFormField() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          LabelAndTextField(
-            label: 'Password',
-            textFormField: PasswordTextFormField(
-              hintText: 'Enter your password',
-              controller: passwordController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Password is required';
-                }
-                if (value.length < 6) {
-                  return 'Password must be at least 6 characters';
-                }
-                return null;
-              },
-            ),
-          ),
-          verticalSpacing(24),
-          LabelAndTextField(
-            label: 'Confirm Password',
-            textFormField: PasswordTextFormField(
-              hintText: 'Re-enter your password',
-              controller: confirmPasswordController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please confirm your password';
-                }
-                if (value != passwordController.text) {
-                  return 'Passwords do not match';
-                }
-                return null;
-              },
-            ),
-          ),
-        ],
-      ),
+  CustomElevatedButton _signupElevatedButton(BuildContext context) {
+    final signupCubit = context.watch<SignupCubit>();
+    return CustomElevatedButton(
+      text: 'Sign Up',
+      onPressed: () {
+        validateThenDoSignUp(context);
+      },
+      isLoading: signupCubit.state is SignupLoading,
     );
   }
 
+  Widget _passwordTextFormField(BuildContext context) {
+    final signupCubit = context.read<SignupCubit>();
+    return SetPasswordScreenForm(signupCubit: signupCubit);
+  }
+
   void validateThenDoSignUp(BuildContext context) {
-    if (formKey.currentState!.validate()) {
-      // Navigate to login screen
-      context.pushReplacementNamed(Routes.loginScreen);
+    final signupCubit = context.read<SignupCubit>();
+    if (signupCubit.passwordsFormKey.currentState!.validate()) {
+      signupCubit.signup(gender);
     }
   }
 }

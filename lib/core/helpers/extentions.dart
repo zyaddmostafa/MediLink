@@ -22,6 +22,10 @@ extension Navigation on BuildContext {
   void pop() => Navigator.of(this).pop();
 }
 
+extension StringExtention on String? {
+  bool isNullOrEmpty() => this == null || this!.isEmpty;
+}
+
 extension MapExtention<x, v> on Map<x, v>? {
   bool isNullOrEmpty() => this == null || this!.isEmpty;
 }

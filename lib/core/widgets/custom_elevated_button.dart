@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 class CustomElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final bool isLoading;
   const CustomElevatedButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.isLoading = false,
   });
 
   @override
@@ -20,10 +22,12 @@ class CustomElevatedButton extends StatelessWidget {
         backgroundColor: AppColor.primaryColor,
       ),
       onPressed: onPressed,
-      child: Text(
-        text,
-        style: AppTextStyles.font16Bold.copyWith(color: AppColor.white),
-      ),
+      child: isLoading
+          ? const CircularProgressIndicator(color: AppColor.white)
+          : Text(
+              text,
+              style: AppTextStyles.font16Bold.copyWith(color: AppColor.white),
+            ),
     );
   }
 }

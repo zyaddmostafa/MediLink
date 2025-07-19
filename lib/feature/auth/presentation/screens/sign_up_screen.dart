@@ -1,15 +1,20 @@
 import 'dart:developer';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/gender_selection_helper.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/custom_text_from_field.dart';
+import '../cubit/signup/signup_cubit.dart';
 import '../widgets/gender_selection_widget.dart';
-import '../../../../core/widgets/label_and_text_filed.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/signup_screen_form.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -19,10 +24,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  Gender? selectedGender = Gender.male;
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  Gender? selectedGender;
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +35,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              verticalSpacing(48),
+              const CustomAppBar(),
+              verticalSpacing(28),
               const AuthHeader(title: 'Sign Up'),
               Expanded(
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Column(
                     children: [
-                      verticalSpacing(80),
-                      _emailAndPhone(),
+                      verticalSpacing(50),
+                      _nameAndEmailAndPhone(),
                       verticalSpacing(16),
                       _selectGender(),
                       verticalSpacing(32),
@@ -89,56 +94,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         setState(() {
           selectedGender = gender;
         });
+
         log('Selected gender: $selectedGender');
       },
     );
   }
 
-  Widget _emailAndPhone() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          LabelAndTextField(
-            label: 'Email',
-            textFormField: CustomTextFromField(
-              hintText: 'Enter your email',
-              controller: emailController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Email is required';
-                }
-                if (!value.contains('@') || !value.contains('.')) {
-                  return 'Please enter a valid email';
-                }
-                return null;
-              },
-            ),
-          ),
-          verticalSpacing(24),
-          LabelAndTextField(
-            label: 'Phone',
-            textFormField: CustomTextFromField(
-              hintText: 'Enter your phone number',
-              controller: phoneController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Phone number is required';
-                }
-                return null;
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+  Widget _nameAndEmailAndPhone() {
+    return SignupScreenForm(context: context);
   }
 
   void validateThenDoSignUp(BuildContext context) {
-    if (formKey.currentState!.validate()) {
-      context.pushReplacementNamed(
+    if (context
+        .read<SignupCubit>()
+        .emailAndPhoneFormKey
+        .currentState!
+        .validate()) {
+      context.pushNamed(
         Routes.setPasswordScreen,
-        arguments: selectedGender,
+        arguments: GenderSelectionHelper.selectedGender(selectedGender),
       );
     }
   }

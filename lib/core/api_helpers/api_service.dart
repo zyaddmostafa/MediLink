@@ -19,4 +19,7 @@ abstract class ApiService {
 
   @POST(ApiConstants.signup)
   Future<SignupResponse> signup(@Body() SignupRequestBody signupRequestBody);
+
+  @POST(ApiConstants.logout)
+  Future<void> logout();
 }

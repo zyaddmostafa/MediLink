@@ -1,25 +1,19 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/custom_text_from_field.dart';
-import '../../../../core/widgets/label_and_text_filed.dart';
+import '../cubit/login_cubit/login_cubit.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
-import '../widgets/password_text_from_field.dart';
+import '../widgets/login_bloc_listener.dart';
+import '../widgets/login_screen_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,13 +30,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      verticalSpacing(80),
-                      _emailAndPassword(),
+                      verticalSpacing(50),
+                      _emailAndPassword(context),
                       verticalSpacing(32),
-                      _signinElevatedButton(),
+                      _loginElevatedButton(context),
                       verticalSpacing(32),
                       _dontHaveAnAccount(context),
                       verticalSpacing(32),
+                      const LoginBlocListener(),
                     ],
                   ),
                 ),
@@ -54,12 +49,14 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  CustomElevatedButton _signinElevatedButton() {
+  CustomElevatedButton _loginElevatedButton(BuildContext context) {
+    final loginCubit = context.watch<LoginCubit>();
     return CustomElevatedButton(
       text: 'Login',
       onPressed: () {
         validateThenDoLogin(context);
       },
+      isLoading: loginCubit is LoginLoading,
     );
   }
 
@@ -69,55 +66,19 @@ class _LoginScreenState extends State<LoginScreen> {
         text: 'Don\'t have an account? ',
         linkText: 'Sign Up',
         onTap: () {
-          context.pushReplacementNamed(Routes.signUpScreen);
+          context.pushNamed(Routes.signUpScreen);
         },
       ),
     );
   }
 
-  Widget _emailAndPassword() {
-    return Form(
-      key: formKey,
-      child: Column(
-        children: [
-          LabelAndTextField(
-            label: 'Email Address',
-            textFormField: CustomTextFromField(
-              hintText: 'Enter your email',
-              controller: emailController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Email is required';
-                }
-                if (!value.contains('@') || !value.contains('.')) {
-                  return 'Invalid email format';
-                }
-                return null;
-              },
-            ),
-          ),
-          verticalSpacing(24),
-          LabelAndTextField(
-            label: 'Password',
-            textFormField: PasswordTextFormField(
-              hintText: 'Enter your password',
-              controller: passwordController,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Password is required';
-                }
-                return null;
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+  Widget _emailAndPassword(BuildContext context) {
+    return const LoginScreenForm();
   }
 
   void validateThenDoLogin(BuildContext context) {
-    if (formKey.currentState!.validate()) {
-      context.pushReplacementNamed(Routes.signUpScreen);
+    if (context.read<LoginCubit>().formKey.currentState!.validate()) {
+      context.read<LoginCubit>().login();
     }
   }
 }
