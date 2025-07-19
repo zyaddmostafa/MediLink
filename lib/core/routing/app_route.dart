@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../feature/auth/presentation/cubit/login_cubit/login_cubit.dart';
-import '../../feature/auth/presentation/cubit/signup/signup_cubit.dart';
+import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/home/home_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
@@ -17,24 +17,30 @@ class AppRoute {
       case Routes.loginScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
-            create: (context) => getIt<LoginCubit>(),
+            create: (context) => getIt<AuthCubit>(),
             child: const LoginScreen(),
           ),
         );
       case Routes.signUpScreen:
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: getIt<SignupCubit>(),
+            value: getIt<AuthCubit>(),
             child: const SignUpScreen(),
           ),
         );
 
       case Routes.setPasswordScreen:
+        final Map<String, dynamic> signupData = args as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: getIt<SignupCubit>(),
-            child: SetPasswordScreen(gender: args as int),
+            value: getIt<AuthCubit>(),
+            child: SetPasswordScreen(signupData: signupData),
           ),
+        );
+
+      case Routes.homeScreen:
+        return MaterialPageRoute(
+          builder: (_) => const HomeScreen(), // Assuming HomeScreen is defined
         );
       default:
         return null;

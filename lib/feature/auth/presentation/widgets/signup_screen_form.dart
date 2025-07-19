@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/helpers/form_validaor.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/widgets/custom_text_from_field.dart';
 import '../../../../core/widgets/label_and_text_filed.dart';
-import '../cubit/signup/signup_cubit.dart';
 
 class SignupScreenForm extends StatelessWidget {
-  const SignupScreenForm({super.key, required this.context});
-
-  final BuildContext context;
+  final GlobalKey<FormState> formKey;
+  final TextEditingController nameController;
+  final TextEditingController emailController;
+  final TextEditingController phoneController;
+  const SignupScreenForm({
+    super.key,
+    required this.formKey,
+    required this.nameController,
+    required this.emailController,
+    required this.phoneController,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<SignupCubit>().emailAndPhoneFormKey,
+      key: formKey,
       child: Column(
         children: [
           LabelAndTextField(
             label: 'Name',
             textFormField: CustomTextFromField(
               hintText: 'Enter your name',
-              controller: context.read<SignupCubit>().nameController,
+              controller: nameController,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Name is required';
-                }
-                return null;
+                return FormValidators.validateName(value);
               },
             ),
           ),
@@ -35,15 +39,9 @@ class SignupScreenForm extends StatelessWidget {
             label: 'Email',
             textFormField: CustomTextFromField(
               hintText: 'Enter your email',
-              controller: context.read<SignupCubit>().emailController,
+              controller: emailController,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Email is required';
-                }
-                if (!value.contains('@') || !value.contains('.')) {
-                  return 'Please enter a valid email';
-                }
-                return null;
+                return FormValidators.validateEmail(value);
               },
             ),
           ),
@@ -51,13 +49,10 @@ class SignupScreenForm extends StatelessWidget {
           LabelAndTextField(
             label: 'Phone',
             textFormField: CustomTextFromField(
-              hintText: 'Enter your phone number',
-              controller: context.read<SignupCubit>().phoneNumberController,
+              hintText: 'Enter your phone number with country code',
+              controller: phoneController,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Phone number is required';
-                }
-                return null;
+                return FormValidators.validatePhone(value);
               },
             ),
           ),

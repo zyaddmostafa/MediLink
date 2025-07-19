@@ -5,7 +5,8 @@ import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../cubit/signup/signup_cubit.dart';
+import '../../data/models/sign_up_request_body.dart';
+import '../cubit/auth_cubit.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,27 @@ import 'package:flutter/material.dart';
 import '../widgets/set_password_screen_form.dart';
 import '../widgets/signup_bloc_listener.dart';
 
-class SetPasswordScreen extends StatelessWidget {
-  final int gender;
-  const SetPasswordScreen({super.key, required this.gender});
+class SetPasswordScreen extends StatefulWidget {
+  final Map<String, dynamic> signupData;
+  const SetPasswordScreen({super.key, required this.signupData});
+
+  @override
+  State<SetPasswordScreen> createState() => _SetPasswordScreenState();
+}
+
+class _SetPasswordScreenState extends State<SetPasswordScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController passwordConfirmationController =
+      TextEditingController();
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    passwordController.dispose();
+    passwordConfirmationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +49,8 @@ class SetPasswordScreen extends StatelessWidget {
               const AuthHeader(title: 'Set Password'),
               Expanded(
                 child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   child: Column(
                     children: [
                       verticalSpacing(80),
@@ -64,7 +85,7 @@ class SetPasswordScreen extends StatelessWidget {
   }
 
   CustomElevatedButton _signupElevatedButton(BuildContext context) {
-    final signupCubit = context.watch<SignupCubit>();
+    final signupCubit = context.watch<AuthCubit>();
     return CustomElevatedButton(
       text: 'Sign Up',
       onPressed: () {
@@ -75,14 +96,26 @@ class SetPasswordScreen extends StatelessWidget {
   }
 
   Widget _passwordTextFormField(BuildContext context) {
-    final signupCubit = context.read<SignupCubit>();
-    return SetPasswordScreenForm(signupCubit: signupCubit);
+    return SetPasswordScreenForm(
+      passwordController: passwordController,
+      passwordConfirmation: passwordConfirmationController,
+      formKey: _formKey,
+    );
   }
 
   void validateThenDoSignUp(BuildContext context) {
-    final signupCubit = context.read<SignupCubit>();
-    if (signupCubit.passwordsFormKey.currentState!.validate()) {
-      signupCubit.signup(gender);
+    final signupCubit = context.read<AuthCubit>();
+    if (_formKey.currentState!.validate()) {
+      signupCubit.signup(
+        SignupRequestBody(
+          name: widget.signupData['name'],
+          email: widget.signupData['email'],
+          password: passwordController.text,
+          passwordConfirmation: passwordConfirmationController.text,
+          phone: widget.signupData['phone'],
+          gender: widget.signupData['gender'],
+        ),
+      );
     }
   }
 }

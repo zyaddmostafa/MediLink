@@ -1,14 +1,11 @@
 import 'dart:developer';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/gender_selection_helper.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../cubit/signup/signup_cubit.dart';
 import '../widgets/gender_selection_widget.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
@@ -25,6 +22,20 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   Gender? selectedGender;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  @override
+  void dispose() {
+    _formKey.currentState?.dispose();
+    nameController.dispose();
+    emailController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,19 +112,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Widget _nameAndEmailAndPhone() {
-    return SignupScreenForm(context: context);
+    return SignupScreenForm(
+      formKey: _formKey,
+      nameController: nameController,
+      emailController: emailController,
+      phoneController: phoneController,
+    );
   }
 
   void validateThenDoSignUp(BuildContext context) {
-    if (context
-        .read<SignupCubit>()
-        .emailAndPhoneFormKey
-        .currentState!
-        .validate()) {
-      context.pushNamed(
-        Routes.setPasswordScreen,
-        arguments: GenderSelectionHelper.selectedGender(selectedGender),
-      );
+    if (_formKey.currentState!.validate()) {
+      // Create signup data object to pass
+      final signupData = {
+        'name': nameController.text,
+        'email': emailController.text,
+        'phone': phoneController.text,
+        'gender': GenderSelectionHelper.selectedGender(selectedGender),
+      };
+
+      context.pushNamed(Routes.setPasswordScreen, arguments: signupData);
     }
   }
 }

@@ -1,4 +1,4 @@
-import 'package:doctor_appoinment/core/theme/app_color.dart';
+import '../theme/app_color.dart';
 import '../theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
