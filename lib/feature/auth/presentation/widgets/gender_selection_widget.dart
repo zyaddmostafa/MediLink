@@ -96,11 +96,11 @@ class _GenderOption extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColor.primaryColor.withOpacity(0.1)
+              ? AppColor.primary.withOpacity(0.1)
               : AppColor.white,
           border: Border.all(
             color: isSelected
-                ? AppColor.primaryColor
+                ? AppColor.primary
                 : AppColor.grey.withValues(alpha: 0.5),
             width: isSelected ? 2 : 1,
           ),
@@ -112,14 +112,14 @@ class _GenderOption extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: isSelected ? AppColor.primaryColor : AppColor.black,
+              color: isSelected ? AppColor.primary : AppColor.black,
               size: 24,
             ),
             horizontalSpacing(8),
             Text(
               label,
               style: AppTextStyles.font14Medium.copyWith(
-                color: isSelected ? AppColor.primaryColor : AppColor.black,
+                color: isSelected ? AppColor.primary : AppColor.black,
               ),
             ),
           ],

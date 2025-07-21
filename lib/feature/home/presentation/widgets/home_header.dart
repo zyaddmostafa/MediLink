@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/theme/app_color.dart';
+import '../../../../core/theme/app_text_styles.dart';
+
+class HomeHeader extends StatelessWidget {
+  const HomeHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Column(
+          children: [
+            Text(
+              'Welcome Back',
+              style: AppTextStyles.font14Regular.copyWith(color: AppColor.grey),
+            ),
+            Text('Zyad Mostafa', style: AppTextStyles.font16Medium),
+          ],
+        ),
+        const Spacer(),
+        SvgPicture.asset(Assets.assetsSvgsSearch),
+        horizontalSpacing(24),
+        const Icon(Icons.favorite_border, color: AppColor.black, size: 28),
+      ],
+    );
+  }
+}
