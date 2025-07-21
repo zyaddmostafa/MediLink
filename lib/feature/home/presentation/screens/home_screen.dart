@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../widgets/categories_grid_view.dart';
 import '../widgets/doctors_list_view.dart';
@@ -20,16 +22,17 @@ class HomeScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const HomeHeader(),
-                  verticalSpacing(40),
-                  Text(
-                    'Upcoming Appointments',
-                    style: AppTextStyles.font18Bold,
-                  ),
-                ],
+              child: HomeHeader(
+                onSearchTap: () => context.pushNamed(Routes.searchScreen),
+                onFavoriteTap: () => context.pushNamed(Routes.favoriteScreen),
+              ),
+            ),
+            verticalSpacing(40),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                'Upcoming Appointments',
+                style: AppTextStyles.font18Bold,
               ),
             ),
             verticalSpacing(24),
@@ -46,7 +49,7 @@ class HomeScreen extends StatelessWidget {
               child: HomeBodyHeader(title: 'Find Doctors'),
             ),
             verticalSpacing(24),
-            const DoctorListView(),
+            const DoctorListView(isFavorite: false),
           ],
         ),
       ),

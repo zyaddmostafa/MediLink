@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'doctors_card.dart';
 
 class DoctorListView extends StatelessWidget {
-  const DoctorListView({super.key});
+  final bool isFavorite;
+  const DoctorListView({super.key, required this.isFavorite});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class DoctorListView extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.only(bottom: index == 4 ? 0 : 16),
-            child: const DoctorsCard(),
+            child: DoctorsCard(
+              isFavorite: isFavorite, // Pass the isFavorite flag
+            ),
           );
         },
       ),

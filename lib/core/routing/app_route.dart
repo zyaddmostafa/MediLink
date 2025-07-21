@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/home/presentation/screens/favorite_screen.dart';
+import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
@@ -41,6 +43,17 @@ class AppRoute {
       case Routes.homeScreen:
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(), // Assuming HomeScreen is defined
+        );
+
+      case Routes.searchScreen:
+        return MaterialPageRoute(
+          builder: (_) =>
+              const SearchScreen(), // Assuming SearchScreen is defined
+        );
+      case Routes.favoriteScreen:
+        return MaterialPageRoute(
+          builder: (_) =>
+              const FavoriteScreen(), // Assuming FavoriteScreen is defined
         );
       default:
         return null;

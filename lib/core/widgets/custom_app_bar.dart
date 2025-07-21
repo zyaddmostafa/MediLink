@@ -1,3 +1,6 @@
+import 'package:flutter_svg/svg.dart';
+
+import '../helpers/app_assets.dart';
 import '../helpers/extentions.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +12,10 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(onTap: context.pop, child: const Icon(Icons.arrow_back)),
+        InkWell(
+          onTap: context.pop,
+          child: SvgPicture.asset(Assets.assetsSvgsBack),
+        ),
         appBarwidget ?? const SizedBox.shrink(),
       ],
     );

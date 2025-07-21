@@ -28,6 +28,14 @@ class CategoriesGridItem extends StatelessWidget {
               width: 28.r,
               height: 28.r,
               color: AppColor.black,
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset(
+                  Assets.assetsImagesDoctorsCategorysDermatology,
+                  width: 28.r,
+                  height: 28.r,
+                  color: AppColor.black,
+                );
+              },
             ),
             verticalSpacing(4),
             Text(
