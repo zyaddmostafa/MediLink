@@ -51,7 +51,7 @@ class UpcomingAppoinmentListItem extends StatelessWidget {
                     ),
                   ),
                   verticalSpacing(4),
-                  const DoctorRate(),
+                  const DoctorRate(textColor: AppColor.white),
                 ],
               ),
 

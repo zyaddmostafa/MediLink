@@ -110,6 +110,10 @@ class Assets {
   /// assets/svgs/Home.svg
   static const String assetsSvgsHome = "assets/svgs/Home.svg";
 
+  /// Assets for assetsSvgsNotselected
+  /// assets/svgs/notselected.svg
+  static const String assetsSvgsNotselected = "assets/svgs/notselected.svg";
+
   /// Assets for assetsSvgsNotvisiable
   /// assets/svgs/notvisiable.svg
   static const String assetsSvgsNotvisiable = "assets/svgs/notvisiable.svg";
@@ -125,6 +129,10 @@ class Assets {
   /// Assets for assetsSvgsSeccessful
   /// assets/svgs/Seccessful.svg
   static const String assetsSvgsSeccessful = "assets/svgs/Seccessful.svg";
+
+  /// Assets for assetsSvgsSelected
+  /// assets/svgs/selected.svg
+  static const String assetsSvgsSelected = "assets/svgs/selected.svg";
 
   /// Assets for assetsSvgsShowmore
   /// assets/svgs/showmore.svg

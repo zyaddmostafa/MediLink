@@ -10,7 +10,8 @@ import '../../../../core/widgets/custom_elevated_button.dart';
 import 'doctor_rate.dart';
 
 class DoctorsCard extends StatelessWidget {
-  const DoctorsCard({super.key});
+  final bool isFavorite;
+  const DoctorsCard({super.key, required this.isFavorite});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +55,7 @@ class DoctorsCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     spacing: 4,
                     children: [
-                      const DoctorRate(),
+                      const DoctorRate(textColor: AppColor.black),
                       horizontalSpacing(24),
                       SvgPicture.asset(
                         Assets.assetsSvgsTime,
@@ -74,7 +75,11 @@ class DoctorsCard extends StatelessWidget {
                 ],
               ),
 
-              const Icon(Icons.favorite_border, size: 28, color: AppColor.red),
+              Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                size: 28,
+                color: AppColor.red,
+              ),
             ],
           ),
           verticalSpacing(16),
