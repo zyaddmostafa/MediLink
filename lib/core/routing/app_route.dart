@@ -1,9 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/home/presentation/screens/doctors_by_category.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
 import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
+import '../../feature/home/presentation/screens/see_all_categories.dart';
+import '../../feature/home/presentation/screens/see_all_doctors.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
@@ -54,6 +57,24 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (_) =>
               const FavoriteScreen(), // Assuming FavoriteScreen is defined
+        );
+
+      case Routes.seeAllDoctors:
+        return MaterialPageRoute(
+          builder: (_) =>
+              const SeeAllDoctors(), // Assuming SeeAllDoctors is defined
+        );
+
+      case Routes.doctorsByCategory:
+        final String categoryName = args as String;
+        return MaterialPageRoute(
+          builder: (_) => DoctorsByCategories(categoryName: categoryName),
+        );
+
+      case Routes.seeAllCategory:
+        return MaterialPageRoute(
+          builder: (_) =>
+              const SeeAllCategories(), // Assuming SeeAllCategory is defined
         );
       default:
         return null;

@@ -37,16 +37,23 @@ class HomeScreen extends StatelessWidget {
             ),
             verticalSpacing(24),
             const UpcomingAppoinmentsListView(),
+
             verticalSpacing(24),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: HomeBodyHeader(title: 'Categories'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: HomeBodyHeader(
+                title: 'Categories',
+                onSeeAllTap: () => context.pushNamed(Routes.seeAllCategory),
+              ),
             ),
             verticalSpacing(24),
             const CategoriesGridView(),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: HomeBodyHeader(title: 'Find Doctors'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: HomeBodyHeader(
+                title: 'Find Doctors',
+                onSeeAllTap: () => context.pushNamed(Routes.seeAllDoctors),
+              ),
             ),
             verticalSpacing(24),
             const DoctorListView(isFavorite: false),

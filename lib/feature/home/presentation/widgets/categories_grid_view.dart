@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/helpers/app_assets.dart';
 import 'categories_grid_item.dart';
 
 class CategoriesGridView extends StatelessWidget {
@@ -20,7 +21,52 @@ class CategoriesGridView extends StatelessWidget {
           ),
           itemCount: 8, // 4 horizontal × 2 vertical = 8 items
           itemBuilder: (context, index) {
-            return const CategoriesGridItem();
+            final categories = [
+              {
+                'title': 'Cardiology',
+                'image': Assets.assetsImagesDoctorsCategorysCardiology,
+              },
+              {
+                'title': 'Dermatology',
+                'image': Assets.assetsImagesDoctorsCategorysDermatology,
+              },
+              {
+                'title': 'Gastroenterology',
+                'image': Assets.assetsImagesDoctorsCategorysGastroenterology,
+              },
+              {
+                'title': 'Gynecology',
+                'image': Assets.assetsImagesDoctorsCategorysGynecology,
+              },
+              {
+                'title': 'Neurology',
+                'image': Assets.assetsImagesDoctorsCategorysNeurology,
+              },
+              {
+                'title': 'Ophthalmology',
+                'image': Assets.assetsImagesDoctorsCategorysOphthalmology,
+              },
+              {
+                'title': 'Orthopedics',
+                'image': Assets.assetsImagesDoctorsCategorysOrthopedics,
+              },
+              {
+                'title': 'Pediatrics',
+                'image': Assets.assetsImagesDoctorsCategorysPediatrics,
+              },
+              {
+                'title': 'Psychiatry',
+                'image': Assets.assetsImagesDoctorsCategorysPsychiatry,
+              },
+              {
+                'title': 'Urology',
+                'image': Assets.assetsImagesDoctorsCategorysUrology,
+              },
+            ];
+            return CategoriesGridItem(
+              categoryName: categories[index % categories.length]['title']!,
+              imagePath: categories[index % categories.length]['image']!,
+            );
           },
         ),
       ),
