@@ -6,11 +6,15 @@ class CustomElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
   final bool isLoading;
+  final Color backgroundColor;
+  final Color textColor;
   const CustomElevatedButton({
     super.key,
     required this.text,
     required this.onPressed,
     this.isLoading = false,
+    this.backgroundColor = AppColor.primary,
+    this.textColor = AppColor.white,
   });
 
   @override
@@ -19,14 +23,14 @@ class CustomElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 56),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-        backgroundColor: AppColor.primaryColor,
+        backgroundColor: backgroundColor,
       ),
       onPressed: onPressed,
       child: isLoading
           ? const CircularProgressIndicator(color: AppColor.white)
           : Text(
               text,
-              style: AppTextStyles.font16Bold.copyWith(color: AppColor.white),
+              style: AppTextStyles.font16Bold.copyWith(color: textColor),
             ),
     );
   }

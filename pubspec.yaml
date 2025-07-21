@@ -70,6 +70,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/images/Doctors_categorys/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
@@ -95,3 +96,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/core/helpers
+  filename: app_assets.dart

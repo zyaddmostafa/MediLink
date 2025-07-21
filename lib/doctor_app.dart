@@ -16,7 +16,8 @@ class DoctorApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
-        initialRoute: Routes.loginScreen,
+        // initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.loginScreen,
+        initialRoute: Routes.homeScreen,
         onGenerateRoute: AppRoute.generateRoute,
       ),
     );

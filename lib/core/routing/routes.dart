@@ -4,7 +4,12 @@ class Routes {
   static const String signUpScreen = '/signUp';
   static const String setPasswordScreen = '/setPassword';
   static const String homeScreen = '/home';
+  static const String searchScreen = '/search';
+  static const String favoriteScreen = '/favorite';
   static const String doctorDetailsScreen = '/doctorDetails';
+  static const String seeAllDoctors = '/seeAllDoctors';
+  static const String seeAllCategory = '/seeAllCategory';
+  static const String doctorsByCategory = '/doctorsByCategory';
   static const String appointmentScreen = '/appointment';
   static const String appointmentDetailsScreen = '/appointmentDetails';
   static const String profileScreen = '/profile';

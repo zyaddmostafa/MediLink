@@ -64,7 +64,7 @@ class CustomDialog {
                 child: ElevatedButton(
                   onPressed: onPressed ?? () => context.pop(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColor.primaryColor,
+                    backgroundColor: AppColor.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -241,7 +241,7 @@ class CustomDialog {
                     child: ElevatedButton(
                       onPressed: () => Navigator.of(context).pop(true),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: confirmColor ?? AppColor.primaryColor,
+                        backgroundColor: confirmColor ?? AppColor.primary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -280,7 +280,7 @@ class CustomDialog {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CircularProgressIndicator(color: AppColor.primaryColor),
+              const CircularProgressIndicator(color: AppColor.primary),
               const SizedBox(height: 16),
               Text(
                 message ?? 'Please wait...',
