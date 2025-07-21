@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget {
           onTap: context.pop,
           child: SvgPicture.asset(Assets.assetsSvgsBack),
         ),
+
         appBarwidget ?? const SizedBox.shrink(),
       ],
     );

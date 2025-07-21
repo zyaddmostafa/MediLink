@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             verticalSpacing(24),
-            const CategoriesGridView(),
+            const Expanded(child: CategoriesGridView()),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: HomeBodyHeader(

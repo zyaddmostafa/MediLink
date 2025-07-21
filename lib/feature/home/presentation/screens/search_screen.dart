@@ -38,6 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             verticalSpacing(12),
             Padding(
@@ -58,19 +59,12 @@ class _SearchScreenState extends State<SearchScreen> {
             verticalSpacing(16),
 
             // Doctors List
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Text('Results', style: AppTextStyles.font18Bold),
-                  ),
-                  verticalSpacing(16),
-                  const Expanded(child: DoctorListView(isFavorite: false)),
-                ],
-              ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text('Results', style: AppTextStyles.font18Bold),
             ),
+            verticalSpacing(16),
+            const DoctorListView(isFavorite: false),
           ],
         ),
       ),
