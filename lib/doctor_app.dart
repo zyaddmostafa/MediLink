@@ -1,5 +1,8 @@
-import 'package:doctor_appoinment/feature/home_screen.dart';
+import 'core/helpers/constants.dart';
+import 'core/routing/app_route.dart';
+import 'core/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DoctorApp extends StatelessWidget {
   const DoctorApp({super.key});
@@ -7,9 +10,17 @@ class DoctorApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+
+        // initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.loginScreen,
+        initialRoute: Routes.homeScreen,
+        onGenerateRoute: AppRoute.generateRoute,
+      ),
     );
   }
 }

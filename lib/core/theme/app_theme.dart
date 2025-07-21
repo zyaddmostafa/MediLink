@@ -50,7 +50,7 @@ class AppTheme {
       // Elevated Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.primary,
           foregroundColor: AppColor.white,
           textStyle: AppTextStyles.font16SemiBold,
           shape: RoundedRectangleBorder(
@@ -74,7 +74,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColor.primaryColor, width: 2),
+          borderSide: const BorderSide(color: AppColor.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -133,7 +133,7 @@ class AppTheme {
       // Elevated Button Theme
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColor.primaryColor,
+          backgroundColor: AppColor.primary,
           foregroundColor: AppColor.white,
           textStyle: AppTextStyles.font16SemiBold,
           shape: RoundedRectangleBorder(
@@ -157,7 +157,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColor.primaryColor, width: 2),
+          borderSide: const BorderSide(color: AppColor.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
