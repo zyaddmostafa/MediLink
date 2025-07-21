@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
-import '../../feature/home/home_screen.dart';
+import '../../feature/home/presentation/screens/home_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
