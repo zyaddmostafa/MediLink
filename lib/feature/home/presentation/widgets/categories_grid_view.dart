@@ -6,65 +6,59 @@ import 'categories_grid_item.dart';
 class CategoriesGridView extends StatelessWidget {
   const CategoriesGridView({super.key});
 
+  static const _categories = [
+    {
+      'name': 'Cardiology',
+      'image': Assets.assetsImagesDoctorsCategorysCardiology,
+    },
+    {
+      'name': 'Dermatology',
+      'image': Assets.assetsImagesDoctorsCategorysDermatology,
+    },
+    {
+      'name': 'Neurology',
+      'image': Assets.assetsImagesDoctorsCategorysNeurology,
+    },
+    {
+      'name': 'Orthopedics',
+      'image': Assets.assetsImagesDoctorsCategorysOrthopedics,
+    },
+    {
+      'name': 'Pediatrics',
+      'image': Assets.assetsImagesDoctorsCategorysPediatrics,
+    },
+    {
+      'name': 'Psychiatry',
+      'image': Assets.assetsImagesDoctorsCategorysPsychiatry,
+    },
+    {'name': 'Urology', 'image': Assets.assetsImagesDoctorsCategorysUrology},
+    {
+      'name': 'Gynecology',
+      'image': Assets.assetsImagesDoctorsCategorysGynecology,
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: GridView.builder(
-        physics: const BouncingScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 4,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
           childAspectRatio: 1.0,
         ),
-        itemCount: 8, // 4 horizontal × 2 vertical = 8 items
+        itemCount: _categories.length,
         itemBuilder: (context, index) {
-          final categories = [
-            {
-              'title': 'Cardiology',
-              'image': Assets.assetsImagesDoctorsCategorysCardiology,
-            },
-            {
-              'title': 'Dermatology',
-              'image': Assets.assetsImagesDoctorsCategorysDermatology,
-            },
-            {
-              'title': 'Gastroenterology',
-              'image': Assets.assetsImagesDoctorsCategorysGastroenterology,
-            },
-            {
-              'title': 'Gynecology',
-              'image': Assets.assetsImagesDoctorsCategorysGynecology,
-            },
-            {
-              'title': 'Neurology',
-              'image': Assets.assetsImagesDoctorsCategorysNeurology,
-            },
-            {
-              'title': 'Ophthalmology',
-              'image': Assets.assetsImagesDoctorsCategorysOphthalmology,
-            },
-            {
-              'title': 'Orthopedics',
-              'image': Assets.assetsImagesDoctorsCategorysOrthopedics,
-            },
-            {
-              'title': 'Pediatrics',
-              'image': Assets.assetsImagesDoctorsCategorysPediatrics,
-            },
-            {
-              'title': 'Psychiatry',
-              'image': Assets.assetsImagesDoctorsCategorysPsychiatry,
-            },
-            {
-              'title': 'Urology',
-              'image': Assets.assetsImagesDoctorsCategorysUrology,
-            },
-          ];
-          return CategoriesGridItem(
-            categoryName: categories[index % categories.length]['title']!,
-            imagePath: categories[index % categories.length]['image']!,
+          final category = _categories[index];
+          return RepaintBoundary(
+            child: CategoriesGridItem(
+              categoryName: category['name']!,
+              imagePath: category['image']!,
+            ),
           );
         },
       ),

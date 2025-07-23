@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             verticalSpacing(24),
-            const DoctorListView(isFavorite: false),
+            const Expanded(child: DoctorListView(isFavorite: false)),
           ],
         ),
       ),

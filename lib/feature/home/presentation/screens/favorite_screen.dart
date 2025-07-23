@@ -38,7 +38,7 @@ class FavoriteScreen extends StatelessWidget {
               ),
             ),
             verticalSpacing(24),
-            const DoctorListView(isFavorite: true),
+            const Expanded(child: DoctorListView(isFavorite: true)),
           ],
         ),
       ),

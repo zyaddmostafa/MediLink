@@ -16,6 +16,7 @@ class HomeHeader extends StatelessWidget {
     return Row(
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Welcome Back',

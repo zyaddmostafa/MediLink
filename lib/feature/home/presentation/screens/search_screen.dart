@@ -64,7 +64,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Text('Results', style: AppTextStyles.font18Bold),
             ),
             verticalSpacing(16),
-            const DoctorListView(isFavorite: false),
+            const Expanded(child: DoctorListView(isFavorite: false)),
           ],
         ),
       ),

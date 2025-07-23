@@ -11,70 +11,77 @@ import 'doctor_rate.dart';
 
 class DoctorsCard extends StatelessWidget {
   final bool isFavorite;
-  const DoctorsCard({super.key, required this.isFavorite});
+  const DoctorsCard({super.key, this.isFavorite = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: ShapeDecoration(
-        color: const Color(0xFFF9FAFB),
-        shape: RoundedRectangleBorder(
-          side: const BorderSide(width: 1, color: Color(0xFFF4F4F6)),
-          borderRadius: BorderRadius.circular(16),
-        ),
+      decoration: BoxDecoration(
+        color: AppColor.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColor.grey.withValues(alpha: .2)),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                Assets.assetsImagesDoctorFemale1,
-                height: 32.r,
-                width: 32.r,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  Assets.assetsImagesDoctorFemale1,
+                  height: 32.r,
+                  width: 32.r,
+                  cacheWidth: 64, // Performance optimization
+                  cacheHeight: 64,
+                  fit: BoxFit.cover,
+                ),
               ),
               horizontalSpacing(8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Dr. Jane Smith', style: AppTextStyles.font14SemiBold),
-                  verticalSpacing(4),
-                  Text(
-                    'Cardiologist',
-                    style: AppTextStyles.font14Regular.copyWith(
-                      color: AppColor.doctorCardSubtitle,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Dr. Jane Smith',
+                      style: AppTextStyles.font14SemiBold,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  verticalSpacing(8),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 4,
-                    children: [
-                      const DoctorRate(textColor: AppColor.black),
-                      horizontalSpacing(24),
-                      SvgPicture.asset(
-                        Assets.assetsSvgsTime,
-                        colorFilter: const ColorFilter.mode(
-                          AppColor.grey,
-                          BlendMode.srcIn,
+                    verticalSpacing(4),
+                    Text(
+                      'Cardiologist',
+                      style: AppTextStyles.font14Regular.copyWith(
+                        color: AppColor.doctorCardSubtitle,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    verticalSpacing(8),
+                    Row(
+                      children: [
+                        const DoctorRate(textColor: AppColor.black),
+                        horizontalSpacing(24),
+                        SvgPicture.asset(
+                          Assets.assetsSvgsTime,
+                          width: 18.r,
+                          height: 18.r,
+                          colorFilter: const ColorFilter.mode(
+                            AppColor.grey,
+                            BlendMode.srcIn,
+                          ),
                         ),
-                        width: 18.r,
-                        height: 18.r,
-                      ),
-                      Text(
-                        '10:30 pm - 11:30 pm',
-                        style: AppTextStyles.font14Medium,
-                      ),
-                    ],
-                  ),
-                ],
+                        horizontalSpacing(4),
+                        Text(
+                          '10:30 pm - 11:30 pm',
+                          style: AppTextStyles.font14Medium,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-
               Icon(
                 isFavorite ? Icons.favorite : Icons.favorite_border,
                 size: 28,

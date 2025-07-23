@@ -35,7 +35,7 @@ class DoctorsByCategories extends StatelessWidget {
             ),
             verticalSpacing(24),
             // Here you would typically include a widget that lists all doctors
-            const DoctorListView(isFavorite: false),
+            const Expanded(child: DoctorListView(isFavorite: false)),
           ],
         ),
       ),
