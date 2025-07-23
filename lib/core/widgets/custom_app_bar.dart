@@ -4,9 +4,16 @@ import '../helpers/app_assets.dart';
 import '../helpers/extentions.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/app_color.dart';
+
 class CustomAppBar extends StatelessWidget {
   final Widget? appBarwidget;
-  const CustomAppBar({super.key, this.appBarwidget});
+  final Color iconColor;
+  const CustomAppBar({
+    super.key,
+    this.appBarwidget,
+    this.iconColor = AppColor.black,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +21,12 @@ class CustomAppBar extends StatelessWidget {
       children: [
         InkWell(
           onTap: context.pop,
-          child: SvgPicture.asset(Assets.assetsSvgsBack),
+          child: SvgPicture.asset(
+            Assets.assetsSvgsBack,
+            colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
+          ),
         ),
+
         appBarwidget ?? const SizedBox.shrink(),
       ],
     );

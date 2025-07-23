@@ -12,4 +12,6 @@ class AppColor {
   static const Color veryLightGrey = Color(0xFFF0F4FB);
   static const Color doctorCardSubtitle = Color(0xFFAAB6C3);
   static const Color doctorCardButton = Color(0xFFE8F0FF);
+  static const Color divider = Color(0xFFF1F2F6);
+  static const Color datePickerBorder = Color(0xFFF9FAFB);
 }

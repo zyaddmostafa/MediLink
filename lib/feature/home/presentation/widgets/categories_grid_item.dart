@@ -39,7 +39,6 @@ class CategoriesGridItem extends StatelessWidget {
                 imagePath,
                 width: 28.r,
                 height: 28.r,
-                color: AppColor.black,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
                     Assets.assetsImagesDoctorsCategorysDermatology,
@@ -51,12 +50,7 @@ class CategoriesGridItem extends StatelessWidget {
               ),
               verticalSpacing(4),
               Flexible(
-                child: Text(
-                  categoryName,
-                  style: AppTextStyles.font12SemiBold.copyWith(
-                    color: AppColor.grey,
-                  ),
-                ),
+                child: Text(categoryName, style: AppTextStyles.font12SemiBold),
               ),
             ],
           ),

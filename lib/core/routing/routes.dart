@@ -10,6 +10,7 @@ class Routes {
   static const String seeAllDoctors = '/seeAllDoctors';
   static const String seeAllCategory = '/seeAllCategory';
   static const String doctorsByCategory = '/doctorsByCategory';
+  static const String doctorInfo = '/doctorInfo';
   static const String appointmentScreen = '/appointment';
   static const String appointmentDetailsScreen = '/appointmentDetails';
   static const String profileScreen = '/profile';

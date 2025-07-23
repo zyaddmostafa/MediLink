@@ -5,13 +5,15 @@ class CustomTextFromField extends StatelessWidget {
   final String hintText;
   final TextInputType? keyboardType;
   final TextEditingController controller;
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
+  final int? maxLines;
   const CustomTextFromField({
     super.key,
     required this.hintText,
     this.keyboardType = TextInputType.text,
     required this.controller,
-    required this.validator,
+    this.validator,
+    this.maxLines = 1,
   });
 
   @override
@@ -21,7 +23,7 @@ class CustomTextFromField extends StatelessWidget {
       controller: controller,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-
+      maxLines: maxLines,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

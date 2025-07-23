@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/home/presentation/screens/doctor_info.dart';
 import '../../feature/home/presentation/screens/doctors_by_category.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
 import '../../feature/home/presentation/screens/search_screen.dart';
@@ -75,6 +76,12 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (_) =>
               const SeeAllCategories(), // Assuming SeeAllCategory is defined
+        );
+
+      case Routes.doctorInfo:
+        final String doctorId = args as String;
+        return MaterialPageRoute(
+          builder: (_) => DoctorInfo(doctorId: doctorId),
         );
       default:
         return null;
