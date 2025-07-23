@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
@@ -94,7 +96,9 @@ class DoctorsCard extends StatelessWidget {
             textColor: AppColor.primary,
             backgroundColor: AppColor.doctorCardButton,
             text: 'Book Appointment',
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(Routes.doctorInfo, arguments: '1');
+            },
           ),
         ],
       ),
