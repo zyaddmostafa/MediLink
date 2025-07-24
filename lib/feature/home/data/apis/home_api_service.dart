@@ -1,0 +1,25 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+
+import '../../../../core/api_helpers/api_constants.dart';
+import '../model/doctors_response.dart';
+
+part 'home_api_service.g.dart';
+
+@RestApi(baseUrl: ApiConstants.apiBaseUrl)
+abstract class HomeApiService {
+  factory HomeApiService(Dio dio, {String baseUrl}) = _HomeApiService;
+
+  @GET(ApiConstants.getAllDoctors)
+  Future<DoctorsResponse> getAllDoctors();
+
+  @GET('${ApiConstants.getDoctorById}/{id}')
+  Future<DoctorsResponse> getDoctorById(@Path("id") int id);
+
+  @GET('${ApiConstants.getDoctorsByCategory}/{categoryId}')
+  Future<DoctorsResponse> getDoctorsByCategory(
+    @Path("categoryId") int categoryId,
+  );
+}

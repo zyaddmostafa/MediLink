@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../data/model/doctors_response.dart';
 import 'doctors_card.dart';
 
 class DoctorListView extends StatelessWidget {
   final bool isFavorite;
-  const DoctorListView({super.key, required this.isFavorite});
+  final List<Doctor>? doctors;
+  const DoctorListView({super.key, required this.isFavorite, this.doctors});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class DoctorListView extends StatelessWidget {
 
       // Items
       itemBuilder: (context, index) {
-        return DoctorsCard(isFavorite: isFavorite);
+        return DoctorsCard(isFavorite: isFavorite, doctor: doctors![index]);
       },
     );
   }

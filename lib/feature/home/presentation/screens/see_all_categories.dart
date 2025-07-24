@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/helpers/medical_categories.dart';
 import '../widgets/see_all_categories_list_item.dart';
 
 class SeeAllCategories extends StatelessWidget {
@@ -34,61 +34,15 @@ class SeeAllCategories extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 10, // Number of categories
+                  itemCount: MedicalCategories.getAllCategories().length,
                   itemBuilder: (context, index) {
-                    // Sample category data - you can replace with real data
-                    final categories = [
-                      {
-                        'title': 'Cardiology',
-                        'image': Assets.assetsImagesDoctorsCategorysCardiology,
-                      },
-                      {
-                        'title': 'Dermatology',
-                        'image': Assets.assetsImagesDoctorsCategorysDermatology,
-                      },
-                      {
-                        'title': 'Gastroenterology',
-                        'image':
-                            Assets.assetsImagesDoctorsCategorysGastroenterology,
-                      },
-                      {
-                        'title': 'Gynecology',
-                        'image': Assets.assetsImagesDoctorsCategorysGynecology,
-                      },
-                      {
-                        'title': 'Neurology',
-                        'image': Assets.assetsImagesDoctorsCategorysNeurology,
-                      },
-                      {
-                        'title': 'Ophthalmology',
-                        'image':
-                            Assets.assetsImagesDoctorsCategorysOphthalmology,
-                      },
-                      {
-                        'title': 'Orthopedics',
-                        'image': Assets.assetsImagesDoctorsCategorysOrthopedics,
-                      },
-                      {
-                        'title': 'Pediatrics',
-                        'image': Assets.assetsImagesDoctorsCategorysPediatrics,
-                      },
-                      {
-                        'title': 'Psychiatry',
-                        'image': Assets.assetsImagesDoctorsCategorysPsychiatry,
-                      },
-                      {
-                        'title': 'Urology',
-                        'image': Assets.assetsImagesDoctorsCategorysUrology,
-                      },
-                    ];
-
-                    final category = categories[index % categories.length];
-
                     return Padding(
                       padding: EdgeInsets.only(bottom: index == 9 ? 0 : 16),
                       child: SeeAllCategoriesListItem(
-                        categoryName: category['title']!,
-                        imagePath: category['image']!,
+                        categoryName:
+                            MedicalCategories.getAllCategories()[index].name,
+                        imagePath:
+                            MedicalCategories.getAllCategories()[index].icon,
                       ),
                     );
                   },

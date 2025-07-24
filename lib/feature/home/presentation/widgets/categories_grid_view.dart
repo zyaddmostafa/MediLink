@@ -1,43 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/medical_categories.dart';
 import 'categories_grid_item.dart';
 
 class CategoriesGridView extends StatelessWidget {
   const CategoriesGridView({super.key});
-
-  static const _categories = [
-    {
-      'name': 'Cardiology',
-      'image': Assets.assetsImagesDoctorsCategorysCardiology,
-    },
-    {
-      'name': 'Dermatology',
-      'image': Assets.assetsImagesDoctorsCategorysDermatology,
-    },
-    {
-      'name': 'Neurology',
-      'image': Assets.assetsImagesDoctorsCategorysNeurology,
-    },
-    {
-      'name': 'Orthopedics',
-      'image': Assets.assetsImagesDoctorsCategorysOrthopedics,
-    },
-    {
-      'name': 'Pediatrics',
-      'image': Assets.assetsImagesDoctorsCategorysPediatrics,
-    },
-    {
-      'name': 'Psychiatry',
-      'image': Assets.assetsImagesDoctorsCategorysPsychiatry,
-    },
-    {'name': 'Urology', 'image': Assets.assetsImagesDoctorsCategorysUrology},
-    {
-      'name': 'Gynecology',
-      'image': Assets.assetsImagesDoctorsCategorysGynecology,
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -51,13 +18,13 @@ class CategoriesGridView extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 1.0,
         ),
-        itemCount: _categories.length,
+        itemCount: MedicalCategories.getPopular().length,
         itemBuilder: (context, index) {
-          final category = _categories[index];
+          final category = MedicalCategories.getPopular()[index];
           return RepaintBoundary(
             child: CategoriesGridItem(
-              categoryName: category['name']!,
-              imagePath: category['image']!,
+              categoryName: category.name,
+              imagePath: category.icon,
             ),
           );
         },

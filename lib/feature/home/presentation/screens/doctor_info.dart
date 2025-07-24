@@ -23,7 +23,7 @@ class DoctorInfo extends StatefulWidget {
 
 class _DoctorInfoState extends State<DoctorInfo> {
   final TextEditingController _noteController = TextEditingController();
-  final DateTime _selectedDate = DateTime.now(); // Initialized immediately
+  DateTime selectedDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +60,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
                     padding: EdgeInsets.symmetric(horizontal: 140),
                     child: Divider(color: AppColor.divider, thickness: 2),
                   ),
-                  verticalSpacing(32),
+                  verticalSpacing(24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -89,6 +89,8 @@ class _DoctorInfoState extends State<DoctorInfo> {
             // Scrollable content starting from doctor details
             Expanded(
               child: SingleChildScrollView(
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Column(
@@ -122,6 +124,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
                       verticalSpacing(16),
                       SelectAppointmentDate(
                         onDateSelected: (DateTime selectedDate) {
+                          this.selectedDate = selectedDate;
                           // Handle date selection
                           log('Selected date: $selectedDate');
                         },

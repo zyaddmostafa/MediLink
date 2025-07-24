@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/presentation/screens/doctor_info.dart';
 import '../../feature/home/presentation/screens/doctors_by_category.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
@@ -46,7 +47,10 @@ class AppRoute {
 
       case Routes.homeScreen:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(), // Assuming HomeScreen is defined
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(getIt())..getAllDoctors(),
+            child: const HomeScreen(),
+          ), // Assuming HomeScreen is defined
         );
 
       case Routes.searchScreen:

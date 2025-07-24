@@ -9,11 +9,13 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../data/model/doctors_response.dart';
 import 'doctor_rate.dart';
 
 class DoctorsCard extends StatelessWidget {
   final bool isFavorite;
-  const DoctorsCard({super.key, this.isFavorite = false});
+  final Doctor? doctor;
+  const DoctorsCard({super.key, this.isFavorite = false, this.doctor});
 
   @override
   Widget build(BuildContext context) {
