@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/medical_categories.dart';
+import '../../../../core/helpers/doctors_helper.dart';
 import 'categories_grid_item.dart';
 
 class CategoriesGridView extends StatelessWidget {
@@ -18,9 +18,9 @@ class CategoriesGridView extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 1.0,
         ),
-        itemCount: MedicalCategories.getPopular().length,
+        itemCount: DoctorsHelpers.getPopular().length,
         itemBuilder: (context, index) {
-          final category = MedicalCategories.getPopular()[index];
+          final category = DoctorsHelpers.getPopular()[index];
           return RepaintBoundary(
             child: CategoriesGridItem(
               categoryName: category.name,

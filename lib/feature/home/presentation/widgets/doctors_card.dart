@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/doctors_images.dart';
 import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/doctors_helper.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
@@ -34,7 +36,7 @@ class DoctorsCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  Assets.assetsImagesDoctorFemale1,
+                  DoctorsImages.getRandomDoctorImage(doctor?.gender ?? 'male'),
                   height: 32.r,
                   width: 32.r,
                   cacheWidth: 64, // Performance optimization
@@ -48,14 +50,14 @@ class DoctorsCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Dr. Jane Smith',
+                      doctor?.name ?? 'Default Doctor Name',
                       style: AppTextStyles.font14SemiBold,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     verticalSpacing(4),
                     Text(
-                      'Cardiologist',
+                      doctor?.specialization?.name ?? 'Default Specialization',
                       style: AppTextStyles.font14Regular.copyWith(
                         color: AppColor.doctorCardSubtitle,
                       ),
@@ -77,9 +79,14 @@ class DoctorsCard extends StatelessWidget {
                           ),
                         ),
                         horizontalSpacing(4),
-                        Text(
-                          '10:30 pm - 11:30 pm',
-                          style: AppTextStyles.font14Medium,
+                        Flexible(
+                          child: Text(
+                            DoctorsHelpers.formatTimeRange(
+                              doctor?.startTime ?? '',
+                              doctor?.endTime ?? '',
+                            ),
+                            style: AppTextStyles.font14Medium,
+                          ),
                         ),
                       ],
                     ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/helpers/medical_categories.dart';
+import '../../../../core/helpers/doctors_helper.dart';
 import '../widgets/see_all_categories_list_item.dart';
 
 class SeeAllCategories extends StatelessWidget {
@@ -34,15 +34,15 @@ class SeeAllCategories extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  itemCount: MedicalCategories.getAllCategories().length,
+                  itemCount: DoctorsHelpers.getAllCategories().length,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: index == 9 ? 0 : 16),
                       child: SeeAllCategoriesListItem(
                         categoryName:
-                            MedicalCategories.getAllCategories()[index].name,
+                            DoctorsHelpers.getAllCategories()[index].name,
                         imagePath:
-                            MedicalCategories.getAllCategories()[index].icon,
+                            DoctorsHelpers.getAllCategories()[index].icon,
                       ),
                     );
                   },
