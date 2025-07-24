@@ -4,8 +4,16 @@ import 'doctors_card.dart';
 
 class DoctorListView extends StatelessWidget {
   final bool isFavorite;
-  final List<Doctor>? doctors;
-  const DoctorListView({super.key, required this.isFavorite, this.doctors});
+  final List<Doctor> doctors;
+  // Simple: just pass the number you want
+  final bool shrinkWrap; // Control shrinkWrap behavior
+
+  const DoctorListView({
+    super.key,
+    required this.isFavorite,
+    required this.doctors,
+    this.shrinkWrap = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +21,11 @@ class DoctorListView extends StatelessWidget {
       // Performance optimizations
       physics: const BouncingScrollPhysics(),
       addAutomaticKeepAlives: false,
+      shrinkWrap: shrinkWrap, // Use the parameter
       // Layout
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      itemCount: 5,
+      itemCount: doctors.length,
 
-      // Separator (more efficient than manual padding)
       separatorBuilder: (context, index) => const SizedBox(height: 16),
 
       // Items

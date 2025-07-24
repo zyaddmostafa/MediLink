@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../data/model/doctors_response.dart';
 import '../widgets/doctors_list_view.dart';
 
 class SeeAllDoctors extends StatelessWidget {
-  const SeeAllDoctors({super.key});
+  final List<Doctor>? doctors;
+  const SeeAllDoctors({super.key, this.doctors});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class SeeAllDoctors extends StatelessWidget {
             ),
             verticalSpacing(24),
             // Here you would typically include a widget that lists all doctors
-            const Expanded(child: DoctorListView(isFavorite: false)),
+            Expanded(
+              child: DoctorListView(isFavorite: false, doctors: doctors ?? []),
+            ),
           ],
         ),
       ),

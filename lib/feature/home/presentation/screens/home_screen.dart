@@ -10,8 +10,20 @@ import '../widgets/doctors_section.dart';
 import '../widgets/home_header.dart';
 import '../widgets/upcoming_appointments_section.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Trigger the API call when screen loads
+    context.read<HomeCubit>().getAllDoctors();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +58,15 @@ class HomeScreen extends StatelessWidget {
           current is GetAllDoctorsLoading ||
           current is GetAllDoctorsError,
       builder: (context, state) {
-        if (state is GetAllDoctorsLoading) {
-          return const Center(child: CircularProgressIndicator());
+        if (state is GetAllDoctorsLoading || state is GetAllDoctorsSuccess) {
+          return Expanded(
+            child: DoctorsSection(
+              isLoading: state is GetAllDoctorsLoading,
+              doctors: state is GetAllDoctorsSuccess ? state.doctors : [],
+            ),
+          );
         } else if (state is GetAllDoctorsError) {
           return const Center(child: Text('Error fetching doctors'));
-        } else if (state is GetAllDoctorsSuccess) {
-          return Expanded(child: DoctorsSection(doctors: state.doctors));
         }
         return const SizedBox.shrink();
       },

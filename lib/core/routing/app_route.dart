@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/home/data/model/doctors_response.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/presentation/screens/doctor_info.dart';
 import '../../feature/home/presentation/screens/doctors_by_category.dart';
@@ -65,9 +66,9 @@ class AppRoute {
         );
 
       case Routes.seeAllDoctors:
+        final List<Doctor>? doctors = args as List<Doctor>?;
         return MaterialPageRoute(
-          builder: (_) =>
-              const SeeAllDoctors(), // Assuming SeeAllDoctors is defined
+          builder: (_) => SeeAllDoctors(doctors: doctors),
         );
 
       case Routes.doctorsByCategory:
