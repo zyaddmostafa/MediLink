@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
-import '../../feature/home/data/model/doctors_response.dart';
+import '../../feature/home/data/model/category_model.dart';
+import '../../feature/home/data/model/doctor_model.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/presentation/screens/doctor_info.dart';
-import '../../feature/home/presentation/screens/doctors_by_category.dart';
+import '../../feature/home/presentation/screens/doctors_by_category_screen.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
 import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
-import '../../feature/home/presentation/screens/see_all_categories.dart';
-import '../../feature/home/presentation/screens/see_all_doctors.dart';
+import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
+import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
@@ -66,21 +67,25 @@ class AppRoute {
         );
 
       case Routes.seeAllDoctors:
-        final List<Doctor>? doctors = args as List<Doctor>?;
+        final List<DoctorModel>? doctors = args as List<DoctorModel>?;
         return MaterialPageRoute(
-          builder: (_) => SeeAllDoctors(doctors: doctors),
+          builder: (_) => SeeAllDoctorsScreen(doctors: doctors),
         );
 
       case Routes.doctorsByCategory:
-        final String categoryName = args as String;
+        final CategoryModel categoryModel = args as CategoryModel;
         return MaterialPageRoute(
-          builder: (_) => DoctorsByCategories(categoryName: categoryName),
+          builder: (_) => BlocProvider(
+            create: (context) =>
+                HomeCubit(getIt())..getDoctorsByCategory(categoryModel.id),
+            child: DoctorsByCategoriesScreen(categoryModel: categoryModel),
+          ),
         );
 
       case Routes.seeAllCategory:
         return MaterialPageRoute(
           builder: (_) =>
-              const SeeAllCategories(), // Assuming SeeAllCategory is defined
+              const SeeAllCategoriesScreen(), // Assuming SeeAllCategory is defined
         );
 
       case Routes.doctorInfo:

@@ -7,21 +7,17 @@ import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../data/model/category_model.dart';
 
 class CategoriesGridItem extends StatelessWidget {
-  final String categoryName;
-  final String imagePath;
-  const CategoriesGridItem({
-    super.key,
-    required this.categoryName,
-    required this.imagePath,
-  });
+  final CategoryModel category;
+  const CategoriesGridItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed(Routes.doctorsByCategory, arguments: categoryName);
+        context.pushNamed(Routes.doctorsByCategory, arguments: category);
       },
       child: Container(
         height: 72.h,
@@ -36,7 +32,7 @@ class CategoriesGridItem extends StatelessWidget {
           child: Column(
             children: [
               Image.asset(
-                imagePath,
+                category.icon,
                 width: 28.r,
                 height: 28.r,
                 errorBuilder: (context, error, stackTrace) {
@@ -50,7 +46,7 @@ class CategoriesGridItem extends StatelessWidget {
               ),
               verticalSpacing(4),
               Flexible(
-                child: Text(categoryName, style: AppTextStyles.font12SemiBold),
+                child: Text(category.name, style: AppTextStyles.font12SemiBold),
               ),
             ],
           ),

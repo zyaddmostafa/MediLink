@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../data/model/doctors_response.dart';
+import '../../data/model/doctor_model.dart';
 import 'doctors_card.dart';
 
 class DoctorListView extends StatelessWidget {
   final bool isFavorite;
-  final List<Doctor> doctors;
+  final List<DoctorModel> doctors;
   // Simple: just pass the number you want
   final bool shrinkWrap; // Control shrinkWrap behavior
 
@@ -30,7 +30,7 @@ class DoctorListView extends StatelessWidget {
 
       // Items
       itemBuilder: (context, index) {
-        return DoctorsCard(isFavorite: isFavorite, doctor: doctors![index]);
+        return DoctorsCard(isFavorite: isFavorite, doctor: doctors[index]);
       },
     );
   }

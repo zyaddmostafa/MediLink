@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../core/api_helpers/api_constants.dart';
+import '../model/doctors_by_category_response.dart';
 import '../model/doctors_response.dart';
 
 part 'home_api_service.g.dart';
@@ -19,7 +20,7 @@ abstract class HomeApiService {
   Future<DoctorsResponse> getDoctorById(@Path("id") int id);
 
   @GET('${ApiConstants.getDoctorsByCategory}/{categoryId}')
-  Future<DoctorsResponse> getDoctorsByCategory(
+  Future<DoctorsByCategoryResponse> getDoctorsByCategory(
     @Path("categoryId") int categoryId,
   );
 }

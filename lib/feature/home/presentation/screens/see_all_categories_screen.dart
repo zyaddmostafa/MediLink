@@ -6,8 +6,8 @@ import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/helpers/doctors_helper.dart';
 import '../widgets/see_all_categories_list_item.dart';
 
-class SeeAllCategories extends StatelessWidget {
-  const SeeAllCategories({super.key});
+class SeeAllCategoriesScreen extends StatelessWidget {
+  const SeeAllCategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,56 +1,57 @@
+import '../../feature/home/data/model/category_model.dart';
 import 'app_assets.dart';
 
 class DoctorsHelpers {
   static const List<CategoryModel> all = [
     CategoryModel(
-      id: '1',
+      id: 1,
       name: 'Cardiology',
       icon: Assets.assetsImagesDoctorsCategorysCardiology,
     ),
     CategoryModel(
-      id: '2',
+      id: 2,
       name: 'Dermatology',
       icon: Assets.assetsImagesDoctorsCategorysDermatology,
     ),
     CategoryModel(
-      id: '3',
-      name: 'Gastroenterology',
-      icon: Assets.assetsImagesDoctorsCategorysGastroenterology,
-    ),
-    CategoryModel(
-      id: '4',
-      name: 'Gynecology',
-      icon: Assets.assetsImagesDoctorsCategorysGynecology,
-    ),
-    CategoryModel(
-      id: '5',
+      id: 3,
       name: 'Neurology',
       icon: Assets.assetsImagesDoctorsCategorysNeurology,
     ),
     CategoryModel(
-      id: '6',
-      name: 'Ophthalmology',
-      icon: Assets.assetsImagesDoctorsCategorysOphthalmology,
-    ),
-    CategoryModel(
-      id: '7',
+      id: 4,
       name: 'Orthopedics',
       icon: Assets.assetsImagesDoctorsCategorysOrthopedics,
     ),
     CategoryModel(
-      id: '8',
+      id: 5,
       name: 'Pediatrics',
       icon: Assets.assetsImagesDoctorsCategorysPediatrics,
     ),
     CategoryModel(
-      id: '9',
-      name: 'Psychiatry',
-      icon: Assets.assetsImagesDoctorsCategorysPsychiatry,
+      id: 6,
+      name: 'Gynecology',
+      icon: Assets.assetsImagesDoctorsCategorysGynecology,
     ),
     CategoryModel(
-      id: '10',
+      id: 7,
+      name: 'Ophthalmology',
+      icon: Assets.assetsImagesDoctorsCategorysOphthalmology,
+    ),
+    CategoryModel(
+      id: 8,
       name: 'Urology',
       icon: Assets.assetsImagesDoctorsCategorysUrology,
+    ),
+    CategoryModel(
+      id: 9,
+      name: 'Gastroenterology',
+      icon: Assets.assetsImagesDoctorsCategorysGastroenterology,
+    ),
+    CategoryModel(
+      id: 10,
+      name: 'Psychiatry',
+      icon: Assets.assetsImagesDoctorsCategorysPsychiatry,
     ),
   ];
 
@@ -92,29 +93,4 @@ class DoctorsHelpers {
   static String formatTimeRange(String startTime, String endTime) {
     return '${formatTime(startTime)} - ${formatTime(endTime)}';
   }
-}
-
-class CategoryModel {
-  final String id;
-  final String name;
-  final String icon;
-
-  const CategoryModel({
-    required this.id,
-    required this.name,
-    required this.icon,
-  });
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CategoryModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id;
-
-  @override
-  int get hashCode => id.hashCode;
-
-  @override
-  String toString() => 'CategoryModel(id: $id, name: $name, icon: $icon)';
 }

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../data/model/doctors_response.dart';
+// ignore: unused_import
+import '../../data/model/doctor_model.dart';
 import '../widgets/doctors_list_view.dart';
 
-class SeeAllDoctors extends StatelessWidget {
-  final List<Doctor>? doctors;
-  const SeeAllDoctors({super.key, this.doctors});
+class SeeAllDoctorsScreen extends StatelessWidget {
+  final List<DoctorModel>? doctors;
+  const SeeAllDoctorsScreen({super.key, this.doctors});
 
   @override
   Widget build(BuildContext context) {

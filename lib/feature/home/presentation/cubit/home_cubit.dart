@@ -1,9 +1,9 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/api_helpers/api_error_model.dart';
+import '../../data/model/doctor_model.dart';
+import '../../data/model/doctors_by_category_response.dart';
 import '../../data/model/doctors_response.dart';
 import '../../data/repo/home_repo_impl.dart';
 
@@ -16,7 +16,6 @@ class HomeCubit extends Cubit<HomeState> {
   void getAllDoctors() async {
     emit(GetAllDoctorsLoading());
     final response = await _homeRepoImpl.getAllDoctors();
-    log('Response: $response', name: 'HomeCubit');
 
     response.when(
       onSuccess: (DoctorsResponse doctors) {
@@ -47,8 +46,8 @@ class HomeCubit extends Cubit<HomeState> {
     final response = await _homeRepoImpl.getDoctorsByCategory(categoryId);
 
     response.when(
-      onSuccess: (DoctorsResponse doctors) {
-        emit(GetDoctorsByCategorySuccess(doctors.data ?? []));
+      onSuccess: (DoctorsByCategoryResponse doctors) {
+        emit(GetDoctorsByCategorySuccess(doctors.data?.doctors ?? []));
       },
       onError: (ApiErrorModel error) {
         emit(GetDoctorsByCategoryError(error));

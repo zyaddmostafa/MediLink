@@ -8,7 +8,7 @@ final class HomeCubitInitial extends HomeState {}
 final class GetAllDoctorsLoading extends HomeState {}
 
 final class GetAllDoctorsSuccess extends HomeState {
-  final List<Doctor> doctors;
+  final List<DoctorModel> doctors;
 
   GetAllDoctorsSuccess(this.doctors);
 }
@@ -22,7 +22,7 @@ final class GetAllDoctorsError extends HomeState {
 final class GetDoctorByIdLoading extends HomeState {}
 
 final class GetDoctorByIdSuccess extends HomeState {
-  final Doctor doctor;
+  final DoctorModel doctor;
 
   GetDoctorByIdSuccess(this.doctor);
 }
@@ -36,7 +36,7 @@ final class GetDoctorByIdError extends HomeState {
 final class GetDoctorsByCategoryLoading extends HomeState {}
 
 final class GetDoctorsByCategorySuccess extends HomeState {
-  final List<Doctor> doctors;
+  final List<DoctorModel> doctors;
 
   GetDoctorsByCategorySuccess(this.doctors);
 }

@@ -1,6 +1,7 @@
 import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
 import '../apis/home_api_service.dart';
+import '../model/doctors_by_category_response.dart';
 import '../model/doctors_response.dart';
 
 class HomeRepoImpl {
@@ -30,7 +31,7 @@ class HomeRepoImpl {
     }
   }
 
-  Future<ApiResult<DoctorsResponse>> getDoctorsByCategory(
+  Future<ApiResult<DoctorsByCategoryResponse>> getDoctorsByCategory(
     int categoryId,
   ) async {
     try {

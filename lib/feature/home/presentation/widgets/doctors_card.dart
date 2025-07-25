@@ -11,12 +11,12 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../data/model/doctors_response.dart';
+import '../../data/model/doctor_model.dart';
 import 'doctor_rate.dart';
 
 class DoctorsCard extends StatelessWidget {
   final bool isFavorite;
-  final Doctor? doctor;
+  final DoctorModel? doctor;
   const DoctorsCard({super.key, this.isFavorite = false, this.doctor});
 
   @override
