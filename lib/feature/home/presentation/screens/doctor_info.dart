@@ -1,31 +1,63 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_from_field.dart';
+import '../../data/model/doctor_model.dart';
+import '../cubit/home_cubit.dart';
 import '../widgets/doctor_info_details.dart';
 import '../widgets/select_appointment_date.dart';
 
-class DoctorInfo extends StatefulWidget {
-  final String doctorId;
-  const DoctorInfo({super.key, required this.doctorId});
+class DoctorInfoScreen extends StatefulWidget {
+  const DoctorInfoScreen({super.key});
 
   @override
-  State<DoctorInfo> createState() => _DoctorInfoState();
+  State<DoctorInfoScreen> createState() => _DoctorInfoScreenState();
 }
 
-class _DoctorInfoState extends State<DoctorInfo> {
+class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
   final TextEditingController _noteController = TextEditingController();
   DateTime selectedDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) =>
+          current is DoctorByIdSuccess ||
+          current is DoctorByIdLoading ||
+          current is DoctorByIdError,
+      builder: (context, state) {
+        if (state is DoctorByIdLoading) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (state is DoctorByIdError) {
+          return Scaffold(
+            body: Center(
+              child: Text('Error: ${state.error.message ?? 'Unknown error'}'),
+            ),
+          );
+        } else if (state is DoctorByIdSuccess) {
+          final DoctorModel doctor = state.doctor!;
+          return _buildDoctorInfoScreen(doctor);
+        }
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      },
+    );
+  }
+
+  Widget _buildDoctorInfoScreen(DoctorModel doctor) {
+    // Example ID, replace with actual
     return Scaffold(
       bottomSheet: Container(
         height: MediaQuery.sizeOf(context).height * 0.615,
@@ -64,10 +96,13 @@ class _DoctorInfoState extends State<DoctorInfo> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('David H. Brown0', style: AppTextStyles.font18Bold),
+                      Text(
+                        doctor.name ?? 'Doctor Name',
+                        style: AppTextStyles.font18Bold,
+                      ),
                       Row(
                         children: [
-                          Text('4.5', style: AppTextStyles.font14Regular),
+                          Text('4.8', style: AppTextStyles.font14Regular),
                           horizontalSpacing(4),
                           SvgPicture.asset(Assets.assetsSvgsStar),
                         ],
@@ -76,7 +111,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
                   ),
                   verticalSpacing(8),
                   Text(
-                    'Psychologists | New York City',
+                    '${doctor.specialization!.name} | ${doctor.city!.name} City',
                     style: AppTextStyles.font16Regular.copyWith(
                       color: AppColor.grey,
                     ),
@@ -102,18 +137,18 @@ class _DoctorInfoState extends State<DoctorInfo> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const DoctorInfoDetails(
-                              value: 'PhDs',
+                            DoctorInfoDetails(
+                              value: doctor.degree ?? 'PhDs',
                               label: 'Degree',
                             ),
                             horizontalSpacing(24),
-                            const DoctorInfoDetails(
-                              value: '\$200',
+                            DoctorInfoDetails(
+                              value: '\$${doctor.appointPrice ?? '200'}',
                               label: 'Price',
                             ),
                             horizontalSpacing(24),
-                            const DoctorInfoDetails(
-                              value: '+1-801-346-6622',
+                            DoctorInfoDetails(
+                              value: doctor.phone ?? '+1-801-346-6622',
                               label: 'Phone Number',
                             ),
                           ],
@@ -205,7 +240,7 @@ class DoctorInfoScreenHeader extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  // Handle search tap
+                  context.pushNamed(Routes.searchScreen);
                 },
                 child: SvgPicture.asset(
                   Assets.assetsSvgsSearch,

@@ -106,7 +106,7 @@ class DoctorsCard extends StatelessWidget {
             backgroundColor: AppColor.doctorCardButton,
             text: 'Book Appointment',
             onPressed: () {
-              context.pushNamed(Routes.doctorInfo, arguments: '1');
+              context.pushNamed(Routes.doctorInfo, arguments: doctor?.id ?? 0);
             },
           ),
         ],

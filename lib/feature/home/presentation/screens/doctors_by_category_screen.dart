@@ -55,24 +55,24 @@ class DoctorsListBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (previous, current) =>
-          current is GetDoctorsByCategorySuccess ||
-          current is GetDoctorsByCategoryLoading ||
-          current is GetDoctorsByCategoryError,
+          current is DoctorsByCategorySuccess ||
+          current is DoctorsByCategoryLoading ||
+          current is DoctorsByCategoryError,
       builder: (context, state) {
-        if (state is GetDoctorsByCategoryLoading ||
-            state is GetDoctorsByCategorySuccess) {
+        if (state is DoctorsByCategoryLoading ||
+            state is DoctorsByCategorySuccess) {
           return Expanded(
             child: Skeletonizer(
-              enabled: state is GetDoctorsByCategoryLoading,
+              enabled: state is DoctorsByCategoryLoading,
               child: DoctorListView(
                 isFavorite: false,
-                doctors: state is GetDoctorsByCategorySuccess
+                doctors: state is DoctorsByCategorySuccess
                     ? state.doctors
                     : generateSkeletonDoctors(),
               ),
             ),
           );
-        } else if (state is GetDoctorsByCategoryError) {
+        } else if (state is DoctorsByCategoryError) {
           return const Center(child: Text('Error fetching doctors'));
         }
         return const SizedBox.shrink();

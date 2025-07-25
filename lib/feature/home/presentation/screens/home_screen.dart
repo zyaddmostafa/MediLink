@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
@@ -54,21 +55,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget doctorsSectionBlocBuilder() {
     return BlocBuilder<HomeCubit, HomeState>(
       buildWhen: (previous, current) =>
-          current is GetAllDoctorsSuccess ||
-          current is GetAllDoctorsLoading ||
-          current is GetAllDoctorsError,
+          current is AllDoctorsSuccess ||
+          current is AllDoctorsLoading ||
+          current is AllDoctorsError,
       builder: (context, state) {
-        if (state is GetAllDoctorsLoading || state is GetAllDoctorsSuccess) {
+        if (state is AllDoctorsLoading || state is AllDoctorsSuccess) {
           return Expanded(
             child: DoctorsSection(
-              isLoading: state is GetAllDoctorsLoading,
-              doctors: state is GetAllDoctorsSuccess ? state.doctors : [],
+              isLoading: state is AllDoctorsLoading,
+              doctors: state is AllDoctorsSuccess
+                  ? state.doctors
+                  : generateSkeletonDoctors(),
             ),
           );
-        } else if (state is GetAllDoctorsError) {
+        } else {
           return const Center(child: Text('Error fetching doctors'));
         }
-        return const SizedBox.shrink();
       },
     );
   }

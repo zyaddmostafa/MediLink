@@ -5,44 +5,58 @@ sealed class HomeState {}
 
 final class HomeCubitInitial extends HomeState {}
 
-final class GetAllDoctorsLoading extends HomeState {}
+final class AllDoctorsLoading extends HomeState {}
 
-final class GetAllDoctorsSuccess extends HomeState {
+final class AllDoctorsSuccess extends HomeState {
   final List<DoctorModel> doctors;
 
-  GetAllDoctorsSuccess(this.doctors);
+  AllDoctorsSuccess(this.doctors);
 }
 
-final class GetAllDoctorsError extends HomeState {
+final class AllDoctorsError extends HomeState {
   final ApiErrorModel error;
 
-  GetAllDoctorsError(this.error);
+  AllDoctorsError(this.error);
 }
 
-final class GetDoctorByIdLoading extends HomeState {}
+final class SearchDoctorsLoading extends HomeState {}
 
-final class GetDoctorByIdSuccess extends HomeState {
-  final DoctorModel doctor;
-
-  GetDoctorByIdSuccess(this.doctor);
-}
-
-final class GetDoctorByIdError extends HomeState {
-  final ApiErrorModel error;
-
-  GetDoctorByIdError(this.error);
-}
-
-final class GetDoctorsByCategoryLoading extends HomeState {}
-
-final class GetDoctorsByCategorySuccess extends HomeState {
+final class SearchDoctorsSuccess extends HomeState {
   final List<DoctorModel> doctors;
 
-  GetDoctorsByCategorySuccess(this.doctors);
+  SearchDoctorsSuccess(this.doctors);
 }
 
-final class GetDoctorsByCategoryError extends HomeState {
+final class SearchDoctorsError extends HomeState {
   final ApiErrorModel error;
 
-  GetDoctorsByCategoryError(this.error);
+  SearchDoctorsError(this.error);
+}
+
+final class DoctorsByCategoryLoading extends HomeState {}
+
+final class DoctorsByCategorySuccess extends HomeState {
+  final List<DoctorModel> doctors;
+
+  DoctorsByCategorySuccess(this.doctors);
+}
+
+final class DoctorsByCategoryError extends HomeState {
+  final ApiErrorModel error;
+
+  DoctorsByCategoryError(this.error);
+}
+
+final class DoctorByIdLoading extends HomeState {}
+
+final class DoctorByIdSuccess extends HomeState {
+  final DoctorModel? doctor;
+
+  DoctorByIdSuccess(this.doctor);
+}
+
+final class DoctorByIdError extends HomeState {
+  final ApiErrorModel error;
+
+  DoctorByIdError(this.error);
 }

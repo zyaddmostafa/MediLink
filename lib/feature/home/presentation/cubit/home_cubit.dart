@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../../../../core/api_helpers/api_error_model.dart';
+import '../../data/model/doctor_by_id_response.dart';
 import '../../data/model/doctor_model.dart';
 import '../../data/model/doctors_by_category_response.dart';
 import '../../data/model/doctors_response.dart';
@@ -14,43 +15,58 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._homeRepoImpl) : super(HomeCubitInitial());
 
   void getAllDoctors() async {
-    emit(GetAllDoctorsLoading());
+    emit(AllDoctorsLoading());
     final response = await _homeRepoImpl.getAllDoctors();
 
     response.when(
       onSuccess: (DoctorsResponse doctors) {
-        emit(GetAllDoctorsSuccess(doctors.data ?? []));
+        emit(AllDoctorsSuccess(doctors.data ?? []));
       },
       onError: (ApiErrorModel error) {
-        emit(GetAllDoctorsError(error));
+        emit(AllDoctorsError(error));
       },
     );
   }
 
-  void getDoctorById(int id) async {
-    emit(GetDoctorByIdLoading());
-    final response = await _homeRepoImpl.getDoctorById(id);
+  void searchDoctors(String query) async {
+    emit(SearchDoctorsLoading());
+    final response = await _homeRepoImpl.searchDoctors(query);
 
     response.when(
       onSuccess: (DoctorsResponse doctor) {
-        emit(GetDoctorByIdSuccess(doctor.data!.first));
+        emit(SearchDoctorsSuccess(doctor.data ?? []));
       },
       onError: (ApiErrorModel error) {
-        emit(GetDoctorByIdError(error));
+        emit(SearchDoctorsError(error));
       },
     );
   }
 
   void getDoctorsByCategory(int categoryId) async {
-    emit(GetDoctorsByCategoryLoading());
+    emit(DoctorsByCategoryLoading());
     final response = await _homeRepoImpl.getDoctorsByCategory(categoryId);
 
     response.when(
       onSuccess: (DoctorsByCategoryResponse doctors) {
-        emit(GetDoctorsByCategorySuccess(doctors.data?.doctors ?? []));
+        emit(DoctorsByCategorySuccess(doctors.data?.doctors ?? []));
       },
       onError: (ApiErrorModel error) {
-        emit(GetDoctorsByCategoryError(error));
+        emit(DoctorsByCategoryError(error));
+      },
+    );
+  }
+
+  void getDoctorById(int id) async {
+    emit(DoctorByIdLoading());
+    final response = await _homeRepoImpl.getDoctorById(id);
+
+    response.when(
+      onSuccess: (DoctorByIdResponse doctor) {
+        emit(DoctorByIdSuccess(doctor.data));
+      },
+
+      onError: (ApiErrorModel error) {
+        emit(DoctorByIdError(error));
       },
     );
   }

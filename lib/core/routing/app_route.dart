@@ -57,8 +57,10 @@ class AppRoute {
 
       case Routes.searchScreen:
         return MaterialPageRoute(
-          builder: (_) =>
-              const SearchScreen(), // Assuming SearchScreen is defined
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(getIt()),
+            child: const SearchScreen(),
+          ), // Assuming SearchScreen is defined
         );
       case Routes.favoriteScreen:
         return MaterialPageRoute(
@@ -89,9 +91,12 @@ class AppRoute {
         );
 
       case Routes.doctorInfo:
-        final String doctorId = args as String;
+        final int doctorId = args as int;
         return MaterialPageRoute(
-          builder: (_) => DoctorInfo(doctorId: doctorId),
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(getIt())..getDoctorById(doctorId),
+            child: const DoctorInfoScreen(),
+          ),
         );
       default:
         return null;

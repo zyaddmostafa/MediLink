@@ -15,3 +15,11 @@ DoctorsResponse _$DoctorsResponseFromJson(Map<String, dynamic> json) =>
       status: json['status'] as bool?,
       code: (json['code'] as num?)?.toInt(),
     );
+
+Map<String, dynamic> _$DoctorsResponseToJson(DoctorsResponse instance) =>
+    <String, dynamic>{
+      'message': instance.message,
+      'data': instance.data,
+      'status': instance.status,
+      'code': instance.code,
+    };
