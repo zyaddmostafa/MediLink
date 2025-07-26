@@ -19,20 +19,25 @@ class DoctorListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       // Performance optimizations
-      physics: shrinkWrap
-          ? const NeverScrollableScrollPhysics()
-          : const BouncingScrollPhysics(),
-      addAutomaticKeepAlives: false,
-      shrinkWrap: shrinkWrap, // Use the parameter
+      physics: const BouncingScrollPhysics(),
+
+      // Independence configurations
+      addAutomaticKeepAlives: true, // Maintain widget state
+      addRepaintBoundaries: true, // Independent repainting
+      cacheExtent: 100, // Pre-cache for smooth scrolling
       // Layout
+      shrinkWrap: shrinkWrap,
       padding: const EdgeInsets.symmetric(horizontal: 24),
       itemCount: doctors.length,
 
       separatorBuilder: (context, index) => const SizedBox(height: 16),
 
-      // Items
       itemBuilder: (context, index) {
-        return DoctorsCard(isFavorite: isFavorite, doctor: doctors[index]);
+        return DoctorsCard(
+          key: ValueKey(doctors[index].id), // Unique key for each card
+          isFavorite: isFavorite,
+          doctor: doctors[index],
+        );
       },
     );
   }

@@ -3,16 +3,16 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import '../../feature/auth/data/models/login_request_body.dart';
-import '../../feature/auth/data/models/login_response.dart';
-import '../../feature/auth/data/models/sign_up_request_body.dart';
-import '../../feature/auth/data/models/sign_up_response.dart';
-import 'api_constants.dart';
-part 'api_service.g.dart';
+import '../../../../core/api_helpers/api_constants.dart';
+import '../models/login_request_body.dart';
+import '../models/login_response.dart';
+import '../models/sign_up_request_body.dart';
+import '../models/sign_up_response.dart';
+part 'auth_api_service.g.dart';
 
 @RestApi(baseUrl: ApiConstants.apiBaseUrl)
-abstract class ApiService {
-  factory ApiService(Dio dio, {String baseUrl}) = _ApiService;
+abstract class AuthApiService {
+  factory AuthApiService(Dio dio, {String baseUrl}) = _AuthApiService;
 
   @POST(ApiConstants.login)
   Future<LoginResponse> login(@Body() LoginRequestBody loginRequestBody);

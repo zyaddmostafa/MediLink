@@ -118,6 +118,8 @@ class DoctorsCard extends StatelessWidget {
         cacheWidth: 64, // Performance optimization
         cacheHeight: 64,
         fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.person, size: 32),
       ),
     );
   }
