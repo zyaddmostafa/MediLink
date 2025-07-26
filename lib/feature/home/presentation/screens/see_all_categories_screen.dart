@@ -4,7 +4,7 @@ import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/helpers/doctors_helper.dart';
-import '../widgets/see_all_categories_list_item.dart';
+import '../widgets/categories/see_all_categories_list_item.dart';
 
 class SeeAllCategoriesScreen extends StatelessWidget {
   const SeeAllCategoriesScreen({super.key});
@@ -37,12 +37,9 @@ class SeeAllCategoriesScreen extends StatelessWidget {
                   itemCount: DoctorsHelpers.getAllCategories().length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: EdgeInsets.only(bottom: index == 9 ? 0 : 16),
+                      padding: const EdgeInsets.only(bottom: 16),
                       child: SeeAllCategoriesListItem(
-                        categoryName:
-                            DoctorsHelpers.getAllCategories()[index].name,
-                        imagePath:
-                            DoctorsHelpers.getAllCategories()[index].icon,
+                        category: DoctorsHelpers.getAllCategories()[index],
                       ),
                     );
                   },

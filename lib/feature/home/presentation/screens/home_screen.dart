@@ -6,10 +6,10 @@ import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../cubit/home_cubit.dart';
-import '../widgets/categories_section.dart';
-import '../widgets/doctors_section.dart';
+import '../widgets/categories/categories_section.dart';
+import '../widgets/doctors/doctors_section.dart';
 import '../widgets/home_header.dart';
-import '../widgets/upcoming_appointments_section.dart';
+import '../widgets/upcomping/upcoming_appointments_section.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/doctors_helper.dart';
+import '../../../../../core/helpers/doctors_helper.dart';
 import 'categories_grid_item.dart';
 
 class CategoriesGridView extends StatelessWidget {

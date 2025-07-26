@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/model/doctor_model.dart';
+import '../../../data/model/doctor_model.dart';
 import 'doctors_card.dart';
 
 class DoctorListView extends StatelessWidget {

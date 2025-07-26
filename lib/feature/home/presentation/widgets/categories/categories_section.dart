@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/extentions.dart';
-import '../../../../core/helpers/spacing.dart';
-import '../../../../core/routing/routes.dart';
+import '../../../../../core/helpers/extentions.dart';
+import '../../../../../core/helpers/spacing.dart';
+import '../../../../../core/routing/routes.dart';
 import 'categories_grid_view.dart';
-import 'home_body_header.dart';
+import '../home_body_header.dart';
 
 class CategoriesSection extends StatelessWidget {
   const CategoriesSection({super.key});

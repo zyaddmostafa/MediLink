@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../core/helpers/app_assets.dart';
-import '../../../../core/helpers/doctors_images.dart';
-import '../../../../core/helpers/extentions.dart';
-import '../../../../core/helpers/doctors_helper.dart';
-import '../../../../core/helpers/spacing.dart';
-import '../../../../core/routing/routes.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../data/model/doctor_model.dart';
+import '../../../../../core/helpers/app_assets.dart';
+import '../../../../../core/helpers/doctors_images.dart';
+import '../../../../../core/helpers/extentions.dart';
+import '../../../../../core/helpers/doctors_helper.dart';
+import '../../../../../core/helpers/spacing.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_color.dart';
+import '../../../../../core/theme/app_text_styles.dart';
+import '../../../../../core/widgets/custom_elevated_button.dart';
+import '../../../data/model/doctor_model.dart';
 import 'doctor_rate.dart';
 
 class DoctorsCard extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/helpers/spacing.dart';
-import '../../../../core/theme/app_text_styles.dart';
+import '../../../../../core/helpers/spacing.dart';
+import '../../../../../core/theme/app_text_styles.dart';
 import 'upcoming_appoinments_list_view.dart';
 
 class UpcomingAppointmentsSection extends StatelessWidget {

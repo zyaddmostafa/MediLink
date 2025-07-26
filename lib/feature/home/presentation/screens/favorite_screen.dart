@@ -5,7 +5,7 @@ import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../widgets/doctors_list_view.dart';
+import '../widgets/doctors/doctors_list_view.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({super.key});

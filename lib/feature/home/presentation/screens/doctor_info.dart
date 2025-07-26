@@ -15,8 +15,8 @@ import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_from_field.dart';
 import '../../data/model/doctor_model.dart';
 import '../cubit/home_cubit.dart';
-import '../widgets/doctor_info_details.dart';
-import '../widgets/select_appointment_date.dart';
+import '../widgets/doctors/doctor_info_details.dart';
+import '../widgets/doctors/select_appointment_date.dart';
 
 class DoctorInfoScreen extends StatefulWidget {
   const DoctorInfoScreen({super.key});

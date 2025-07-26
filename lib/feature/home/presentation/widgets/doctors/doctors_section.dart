@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/helpers/dummy_doctor_list_data.dart';
-import '../../../../core/helpers/extentions.dart';
-import '../../../../core/helpers/spacing.dart';
-import '../../../../core/routing/routes.dart';
-import '../../data/model/doctor_model.dart';
+import '../../../../../core/helpers/dummy_doctor_list_data.dart';
+import '../../../../../core/helpers/extentions.dart';
+import '../../../../../core/helpers/spacing.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../data/model/doctor_model.dart';
 import 'doctors_list_view.dart';
-import 'home_body_header.dart';
+import '../home_body_header.dart';
 
 class DoctorsSection extends StatelessWidget {
   final List<DoctorModel>? doctors;
