@@ -56,7 +56,7 @@ class DoctorsHelpers {
   ];
 
   /// Get popular categories (first 8 for home screen grid)
-  static List<CategoryModel> getPopular() {
+  static List<CategoryModel> getPopularCategories() {
     return all.take(8).toList();
   }
 

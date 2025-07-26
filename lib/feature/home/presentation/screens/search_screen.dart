@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -49,9 +50,6 @@ class _SearchScreenState extends State<SearchScreen> {
   void triggerSearchDoctors(String doctorName) {
     if (doctorName.isNotEmpty) {
       context.read<HomeCubit>().searchDoctors(doctorName);
-    } else {
-      // Optionally, you can clear the results if the search term is empty
-      context.read<HomeCubit>().searchDoctors('');
     }
   }
 
@@ -93,7 +91,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Text('Results', style: AppTextStyles.font18Bold),
             ),
             verticalSpacing(16),
-            const DoctorListBlocBuilder(),
+            _doctorsListViewBlocBuilder(context),
           ],
         ),
       ),
@@ -101,33 +99,38 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 }
 
-class DoctorListBlocBuilder extends StatelessWidget {
-  const DoctorListBlocBuilder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) =>
-          current is SearchDoctorsSuccess ||
-          current is SearchDoctorsLoading ||
-          current is SearchDoctorsError,
-      builder: (context, state) {
-        if (state is SearchDoctorsSuccess || state is SearchDoctorsLoading) {
-          return Expanded(
-            child: Skeletonizer(
-              enabled: state is SearchDoctorsLoading,
-              child: DoctorListView(
-                isFavorite: false,
-                doctors: state is SearchDoctorsSuccess
-                    ? state.doctors
-                    : generateSkeletonDoctors(),
-              ),
+@override
+Widget _doctorsListViewBlocBuilder(BuildContext context) {
+  return BlocBuilder<HomeCubit, HomeState>(
+    buildWhen: (previous, current) =>
+        current is SearchDoctorsSuccess ||
+        current is SearchDoctorsLoading ||
+        current is SearchDoctorsError,
+    builder: (context, state) {
+      if (state is SearchDoctorsSuccess || state is SearchDoctorsLoading) {
+        return Expanded(
+          child: Skeletonizer(
+            enabled: state is SearchDoctorsLoading,
+            child: DoctorListView(
+              isFavorite: false,
+              doctors: state is SearchDoctorsSuccess
+                  ? state.doctors
+                  : generateSkeletonDoctors(),
             ),
-          );
-        } else {
-          return const Center(child: Text('Error fetching doctors'));
-        }
-      },
-    );
-  }
+          ),
+        );
+      } else if (state is SearchDoctorsError) {
+        return Center(
+          child: Text(
+            extractErrorMessages(
+              state.error.errors ??
+                  {'message': state.error.message ?? 'Unknown error'},
+            ).join(', '),
+          ),
+        );
+      } else {
+        return const Center(child: Text('No results found'));
+      }
+    },
+  );
 }

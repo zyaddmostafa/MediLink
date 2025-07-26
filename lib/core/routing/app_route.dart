@@ -4,7 +4,7 @@ import '../../feature/auth/presentation/cubit/auth_cubit.dart';
 import '../../feature/home/data/model/category_model.dart';
 import '../../feature/home/data/model/doctor_model.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
-import '../../feature/home/presentation/screens/doctor_info.dart';
+import '../../feature/home/presentation/screens/doctor_info_screen.dart';
 import '../../feature/home/presentation/screens/doctors_by_category_screen.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
 import '../../feature/home/presentation/screens/search_screen.dart';

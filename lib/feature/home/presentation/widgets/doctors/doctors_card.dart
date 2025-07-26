@@ -33,66 +33,9 @@ class DoctorsCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  DoctorsImages.getRandomDoctorImage(doctor?.gender ?? 'male'),
-                  height: 32.r,
-                  width: 32.r,
-                  cacheWidth: 64, // Performance optimization
-                  cacheHeight: 64,
-                  fit: BoxFit.cover,
-                ),
-              ),
+              _doctorCardImage(),
               horizontalSpacing(8),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      doctor?.name ?? 'Default Doctor Name',
-                      style: AppTextStyles.font14SemiBold,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    verticalSpacing(4),
-                    Text(
-                      doctor?.specialization?.name ?? 'Default Specialization',
-                      style: AppTextStyles.font14Regular.copyWith(
-                        color: AppColor.doctorCardSubtitle,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    verticalSpacing(8),
-                    Row(
-                      children: [
-                        const DoctorRate(textColor: AppColor.black),
-                        horizontalSpacing(24),
-                        SvgPicture.asset(
-                          Assets.assetsSvgsTime,
-                          width: 18.r,
-                          height: 18.r,
-                          colorFilter: const ColorFilter.mode(
-                            AppColor.grey,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                        horizontalSpacing(4),
-                        Flexible(
-                          child: Text(
-                            DoctorsHelpers.formatTimeRange(
-                              doctor?.startTime ?? '',
-                              doctor?.endTime ?? '',
-                            ),
-                            style: AppTextStyles.font14Medium,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              _doctorCardBody(),
               Icon(
                 isFavorite ? Icons.favorite : Icons.favorite_border,
                 size: 28,
@@ -110,6 +53,71 @@ class DoctorsCard extends StatelessWidget {
             },
           ),
         ],
+      ),
+    );
+  }
+
+  Expanded _doctorCardBody() {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            doctor?.name ?? 'Default Doctor Name',
+            style: AppTextStyles.font14SemiBold,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          verticalSpacing(4),
+          Text(
+            doctor?.specialization?.name ?? 'Default Specialization',
+            style: AppTextStyles.font14Regular.copyWith(
+              color: AppColor.doctorCardSubtitle,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          verticalSpacing(8),
+          Row(
+            children: [
+              const DoctorRate(textColor: AppColor.black),
+              horizontalSpacing(24),
+              SvgPicture.asset(
+                Assets.assetsSvgsTime,
+                width: 18.r,
+                height: 18.r,
+                colorFilter: const ColorFilter.mode(
+                  AppColor.grey,
+                  BlendMode.srcIn,
+                ),
+              ),
+              horizontalSpacing(4),
+              Flexible(
+                child: Text(
+                  DoctorsHelpers.formatTimeRange(
+                    doctor?.startTime ?? '',
+                    doctor?.endTime ?? '',
+                  ),
+                  style: AppTextStyles.font14Medium,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  ClipRRect _doctorCardImage() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Image.asset(
+        DoctorsImages.getRandomDoctorImage(doctor?.gender ?? 'male'),
+        height: 32.r,
+        width: 32.r,
+        cacheWidth: 64, // Performance optimization
+        cacheHeight: 64,
+        fit: BoxFit.cover,
       ),
     );
   }

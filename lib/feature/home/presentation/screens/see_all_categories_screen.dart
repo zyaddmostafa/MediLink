@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/helpers/doctors_helper.dart';
-import '../widgets/categories/see_all_categories_list_item.dart';
+import '../widgets/categories/all_categories_list_view.dart';
 
 class SeeAllCategoriesScreen extends StatelessWidget {
   const SeeAllCategoriesScreen({super.key});
@@ -31,20 +30,7 @@ class SeeAllCategoriesScreen extends StatelessWidget {
               verticalSpacing(24),
               Text('Results', style: AppTextStyles.font18Bold),
               verticalSpacing(24),
-              Expanded(
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: DoctorsHelpers.getAllCategories().length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: SeeAllCategoriesListItem(
-                        category: DoctorsHelpers.getAllCategories()[index],
-                      ),
-                    );
-                  },
-                ),
-              ),
+              const AllCategoriesListView(),
             ],
           ),
         ),

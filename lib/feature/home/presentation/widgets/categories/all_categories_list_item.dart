@@ -7,10 +7,10 @@ import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../data/model/category_model.dart';
 
-class SeeAllCategoriesListItem extends StatelessWidget {
+class AllCategoriesListItem extends StatelessWidget {
   final CategoryModel category;
 
-  const SeeAllCategoriesListItem({super.key, required this.category});
+  const AllCategoriesListItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {

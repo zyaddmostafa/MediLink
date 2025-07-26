@@ -18,9 +18,9 @@ class CategoriesGridView extends StatelessWidget {
           mainAxisSpacing: 16,
           childAspectRatio: 1.0,
         ),
-        itemCount: DoctorsHelpers.getPopular().length,
+        itemCount: DoctorsHelpers.getPopularCategories().length,
         itemBuilder: (context, index) {
-          final category = DoctorsHelpers.getPopular()[index];
+          final category = DoctorsHelpers.getPopularCategories()[index];
           return RepaintBoundary(child: CategoriesGridItem(category: category));
         },
       ),

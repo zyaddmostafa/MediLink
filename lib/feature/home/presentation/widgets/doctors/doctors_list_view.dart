@@ -19,7 +19,9 @@ class DoctorListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       // Performance optimizations
-      physics: const BouncingScrollPhysics(),
+      physics: shrinkWrap
+          ? const NeverScrollableScrollPhysics()
+          : const BouncingScrollPhysics(),
       addAutomaticKeepAlives: false,
       shrinkWrap: shrinkWrap, // Use the parameter
       // Layout

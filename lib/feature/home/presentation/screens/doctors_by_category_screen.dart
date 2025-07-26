@@ -40,7 +40,7 @@ class DoctorsByCategoriesScreen extends StatelessWidget {
             ),
             verticalSpacing(24),
             // Here you would typically include a widget that lists all doctors
-            const DoctorsListBlocBuilder(),
+            _doctorsListViewBlocBuilder(context),
           ],
         ),
       ),
@@ -48,35 +48,30 @@ class DoctorsByCategoriesScreen extends StatelessWidget {
   }
 }
 
-class DoctorsListBlocBuilder extends StatelessWidget {
-  const DoctorsListBlocBuilder({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) =>
-          current is DoctorsByCategorySuccess ||
-          current is DoctorsByCategoryLoading ||
-          current is DoctorsByCategoryError,
-      builder: (context, state) {
-        if (state is DoctorsByCategoryLoading ||
-            state is DoctorsByCategorySuccess) {
-          return Expanded(
-            child: Skeletonizer(
-              enabled: state is DoctorsByCategoryLoading,
-              child: DoctorListView(
-                isFavorite: false,
-                doctors: state is DoctorsByCategorySuccess
-                    ? state.doctors
-                    : generateSkeletonDoctors(),
-              ),
+Widget _doctorsListViewBlocBuilder(BuildContext context) {
+  return BlocBuilder<HomeCubit, HomeState>(
+    buildWhen: (previous, current) =>
+        current is DoctorsByCategorySuccess ||
+        current is DoctorsByCategoryLoading ||
+        current is DoctorsByCategoryError,
+    builder: (context, state) {
+      if (state is DoctorsByCategoryLoading ||
+          state is DoctorsByCategorySuccess) {
+        return Expanded(
+          child: Skeletonizer(
+            enabled: state is DoctorsByCategoryLoading,
+            child: DoctorListView(
+              isFavorite: false,
+              doctors: state is DoctorsByCategorySuccess
+                  ? state.doctors
+                  : generateSkeletonDoctors(),
             ),
-          );
-        } else if (state is DoctorsByCategoryError) {
-          return const Center(child: Text('Error fetching doctors'));
-        }
-        return const SizedBox.shrink();
-      },
-    );
-  }
+          ),
+        );
+      } else if (state is DoctorsByCategoryError) {
+        return const Center(child: Text('Error fetching doctors'));
+      }
+      return const SizedBox.shrink();
+    },
+  );
 }
