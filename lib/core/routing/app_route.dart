@@ -11,6 +11,7 @@ import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
 import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
 import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
+import '../../feature/navigation/main_navigation_screen.dart';
 import '../di/dependency_injection.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
@@ -44,6 +45,14 @@ class AppRoute {
           builder: (_) => BlocProvider.value(
             value: getIt<AuthCubit>(),
             child: SetPasswordScreen(signupData: signupData),
+          ),
+        );
+
+      case Routes.mainNavigation:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => HomeCubit(getIt())..getAllDoctors(),
+            child: const MainNavigationScreen(),
           ),
         );
 
