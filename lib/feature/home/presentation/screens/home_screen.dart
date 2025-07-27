@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
 
-            verticalSpacing(40),
+            verticalSpacing(24),
 
             const UpcomingAppointmentsSection(),
 

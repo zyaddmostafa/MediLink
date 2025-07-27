@@ -16,7 +16,7 @@ class DoctorRate extends StatelessWidget {
           '4.8',
           style: AppTextStyles.font14Medium.copyWith(color: textColor),
         ),
-        SvgPicture.asset(Assets.assetsSvgsStar),
+        SvgPicture.asset(Assets.svgsStar),
       ],
     );
   }

@@ -81,7 +81,7 @@ class DoctorsCard extends StatelessWidget {
               const DoctorRate(textColor: AppColor.black),
               horizontalSpacing(24),
               SvgPicture.asset(
-                Assets.assetsSvgsTime,
+                Assets.svgsTime,
                 width: 18.r,
                 height: 18.r,
                 colorFilter: const ColorFilter.mode(

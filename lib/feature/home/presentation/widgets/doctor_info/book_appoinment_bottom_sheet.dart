@@ -72,7 +72,7 @@ class _BookAppointmentBottomSheetState
                       children: [
                         Text('4.8', style: AppTextStyles.font14Regular),
                         horizontalSpacing(4),
-                        SvgPicture.asset(Assets.assetsSvgsStar),
+                        SvgPicture.asset(Assets.svgsStar),
                       ],
                     ),
                   ],

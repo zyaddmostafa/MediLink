@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_color.dart';
 import 'app_text_styles.dart';
 
+/// i'm zyad and i will update the app theme to improve the UI consistency and user experience.
 class AppTheme {
   // Light Theme
   static ThemeData get lightTheme {

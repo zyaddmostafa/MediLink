@@ -28,7 +28,7 @@ class HomeHeader extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: onSearchTap,
-          child: SvgPicture.asset(Assets.assetsSvgsSearch),
+          child: SvgPicture.asset(Assets.svgsSearch),
         ),
         horizontalSpacing(24),
         GestureDetector(

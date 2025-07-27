@@ -37,7 +37,7 @@ class CategoriesGridItem extends StatelessWidget {
                 height: 28.r,
                 errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
-                    Assets.assetsImagesDoctorsCategorysDermatology,
+                    Assets.imagesDoctorsCategorysDermatology,
                     width: 28.r,
                     height: 28.r,
                     color: AppColor.black,

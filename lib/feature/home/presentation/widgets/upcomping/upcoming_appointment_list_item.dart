@@ -29,11 +29,7 @@ class UpcomingAppoinmentListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
-                Assets.assetsImagesDoctorMale1,
-                width: 32.r,
-                height: 32.r,
-              ),
+              Image.asset(Assets.imagesDoctorMale1, width: 32.r, height: 32.r),
               horizontalSpacing(8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

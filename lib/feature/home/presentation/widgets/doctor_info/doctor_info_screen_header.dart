@@ -29,7 +29,7 @@ class DoctorInfoScreenHeader extends StatelessWidget {
                   context.pushNamed(Routes.searchScreen);
                 },
                 child: SvgPicture.asset(
-                  Assets.assetsSvgsSearch,
+                  Assets.svgsSearch,
                   colorFilter: const ColorFilter.mode(
                     AppColor.white,
                     BlendMode.srcIn,
@@ -42,7 +42,7 @@ class DoctorInfoScreenHeader extends StatelessWidget {
                   // Handle favorite tap
                 },
                 child: SvgPicture.asset(
-                  Assets.assetsSvgsFavinactive,
+                  Assets.svgsFavinactive,
                   colorFilter: const ColorFilter.mode(
                     AppColor.white,
                     BlendMode.srcIn,

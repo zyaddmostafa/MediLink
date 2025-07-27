@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget {
         InkWell(
           onTap: context.pop,
           child: SvgPicture.asset(
-            Assets.assetsSvgsBack,
+            Assets.svgsBack,
             colorFilter: ColorFilter.mode(iconColor, BlendMode.srcIn),
           ),
         ),

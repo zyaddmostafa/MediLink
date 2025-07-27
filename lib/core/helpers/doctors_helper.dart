@@ -6,52 +6,52 @@ class DoctorsHelpers {
     CategoryModel(
       id: 1,
       name: 'Cardiology',
-      icon: Assets.assetsImagesDoctorsCategorysCardiology,
+      icon: Assets.imagesDoctorsCategorysCardiology,
     ),
     CategoryModel(
       id: 2,
       name: 'Dermatology',
-      icon: Assets.assetsImagesDoctorsCategorysDermatology,
+      icon: Assets.imagesDoctorsCategorysDermatology,
     ),
     CategoryModel(
       id: 3,
       name: 'Neurology',
-      icon: Assets.assetsImagesDoctorsCategorysNeurology,
+      icon: Assets.imagesDoctorsCategorysNeurology,
     ),
     CategoryModel(
       id: 4,
       name: 'Orthopedics',
-      icon: Assets.assetsImagesDoctorsCategorysOrthopedics,
+      icon: Assets.imagesDoctorsCategorysOrthopedics,
     ),
     CategoryModel(
       id: 5,
       name: 'Pediatrics',
-      icon: Assets.assetsImagesDoctorsCategorysPediatrics,
+      icon: Assets.imagesDoctorsCategorysPediatrics,
     ),
     CategoryModel(
       id: 6,
       name: 'Gynecology',
-      icon: Assets.assetsImagesDoctorsCategorysGynecology,
+      icon: Assets.imagesDoctorsCategorysGynecology,
     ),
     CategoryModel(
       id: 7,
       name: 'Ophthalmology',
-      icon: Assets.assetsImagesDoctorsCategorysOphthalmology,
+      icon: Assets.imagesDoctorsCategorysOphthalmology,
     ),
     CategoryModel(
       id: 8,
       name: 'Urology',
-      icon: Assets.assetsImagesDoctorsCategorysUrology,
+      icon: Assets.imagesDoctorsCategorysUrology,
     ),
     CategoryModel(
       id: 9,
       name: 'Gastroenterology',
-      icon: Assets.assetsImagesDoctorsCategorysGastroenterology,
+      icon: Assets.imagesDoctorsCategorysGastroenterology,
     ),
     CategoryModel(
       id: 10,
       name: 'Psychiatry',
-      icon: Assets.assetsImagesDoctorsCategorysPsychiatry,
+      icon: Assets.imagesDoctorsCategorysPsychiatry,
     ),
   ];
 

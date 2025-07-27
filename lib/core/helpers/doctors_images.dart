@@ -6,17 +6,17 @@ class DoctorsImages {
 
   // List of male doctor images
   static const List<String> maleDoctorImages = [
-    Assets.assetsImagesDoctorMale1,
-    Assets.assetsImagesDoctorMale2,
-    Assets.assetsImagesDoctorMale3,
-    Assets.assetsImagesDoctorMale4,
+    Assets.imagesDoctorMale1,
+    Assets.imagesDoctorMale2,
+    Assets.imagesDoctorMale3,
+    Assets.imagesDoctorMale4,
   ];
 
   // List of female doctor images
   static const List<String> femaleDoctorImages = [
-    Assets.assetsImagesDoctorFemale1,
-    Assets.assetsImagesDoctorFemale2,
-    Assets.assetsImagesDoctorFemale3,
+    Assets.imagesDoctorFemale1,
+    Assets.imagesDoctorFemale2,
+    Assets.imagesDoctorFemale3,
   ];
 
   // Random number generator

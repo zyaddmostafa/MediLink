@@ -304,7 +304,7 @@ class _SelectionContainer extends StatelessWidget {
             ),
             Transform.rotate(
               angle: isExpanded ? 1.5708 : 0, // 90 degrees if expanded
-              child: SvgPicture.asset(Assets.assetsSvgsShowmore),
+              child: SvgPicture.asset(Assets.svgsShowmore),
             ),
           ],
         ),

@@ -33,7 +33,7 @@ class FavoriteScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('Favorite Doctors', style: AppTextStyles.font18Bold),
-                  SvgPicture.asset(Assets.assetsSvgsNotselected),
+                  SvgPicture.asset(Assets.svgsNotselected),
                 ],
               ),
             ),

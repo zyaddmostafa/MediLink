@@ -144,7 +144,7 @@ Widget _buildSuccessState(List<DoctorModel> doctors) {
     return Expanded(
       child: ListView(
         children: [
-          Center(child: Lottie.asset(Assets.assetsLottieNoSearchResult)),
+          Center(child: Lottie.asset(Assets.lottieNoSearchResult)),
           Text(
             'No results found',
             style: AppTextStyles.font18Bold,
@@ -181,6 +181,6 @@ Widget _buildErrorState(ApiErrorModel error) {
 /// Builds the default state when no search has been performed
 Widget _buildDefaultState() {
   return Expanded(
-    child: Center(child: Lottie.asset(Assets.assetsLottieNoSearchResult)),
+    child: Center(child: Lottie.asset(Assets.lottieNoSearchResult)),
   );
 }
