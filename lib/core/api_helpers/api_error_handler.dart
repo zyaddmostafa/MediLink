@@ -43,3 +43,15 @@ ApiErrorModel _handleError(data) {
     errors: data['data'],
   );
 }
+
+List<dynamic> extractErrorMessages(Map<String, dynamic> errors) {
+  return errors.entries.map((entry) {
+    if (entry.value is Map<String, dynamic>) {
+      return entry.value['message'] ?? 'Unknown error';
+    } else if (entry.value is String) {
+      return entry.value;
+    } else {
+      return 'Unknown error format';
+    }
+  }).toList();
+}

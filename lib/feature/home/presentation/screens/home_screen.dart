@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
-import '../../../../core/theme/app_text_styles.dart';
-import '../widgets/categories_grid_view.dart';
-import '../widgets/doctors_list_view.dart';
-import '../widgets/home_body_header.dart';
+import '../widgets/categories/categories_section.dart';
+import '../widgets/doctors/doctors_section.dart';
 import '../widgets/home_header.dart';
-import '../widgets/upcoming_appoinments_list_view.dart';
+import '../widgets/upcomping/upcoming_appointments_section.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,36 +25,18 @@ class HomeScreen extends StatelessWidget {
                 onFavoriteTap: () => context.pushNamed(Routes.favoriteScreen),
               ),
             ),
+
             verticalSpacing(40),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Text(
-                'Upcoming Appointments',
-                style: AppTextStyles.font18Bold,
-              ),
-            ),
-            verticalSpacing(24),
-            const UpcomingAppoinmentsListView(),
+
+            const UpcomingAppointmentsSection(),
 
             verticalSpacing(24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: HomeBodyHeader(
-                title: 'Categories',
-                onSeeAllTap: () => context.pushNamed(Routes.seeAllCategory),
-              ),
-            ),
+
+            const CategoriesSection(),
+
             verticalSpacing(24),
-            const Expanded(child: CategoriesGridView()),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: HomeBodyHeader(
-                title: 'Find Doctors',
-                onSeeAllTap: () => context.pushNamed(Routes.seeAllDoctors),
-              ),
-            ),
-            verticalSpacing(24),
-            const Expanded(child: DoctorListView(isFavorite: false)),
+
+            const Expanded(child: DoctorsSection()),
           ],
         ),
       ),

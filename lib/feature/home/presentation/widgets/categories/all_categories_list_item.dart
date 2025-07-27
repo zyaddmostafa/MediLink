@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/helpers/spacing.dart';
-import '../../../../core/routing/routes.dart';
-import '../../../../core/theme/app_color.dart';
-import '../../../../core/theme/app_text_styles.dart';
+import '../../../../../core/helpers/spacing.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_color.dart';
+import '../../../../../core/theme/app_text_styles.dart';
+import '../../../data/model/category_model.dart';
 
-class SeeAllCategoriesListItem extends StatelessWidget {
-  final String categoryName;
-  final String imagePath;
+class AllCategoriesListItem extends StatelessWidget {
+  final CategoryModel category;
 
-  const SeeAllCategoriesListItem({
-    super.key,
-    required this.categoryName,
-    required this.imagePath,
-  });
+  const AllCategoriesListItem({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +20,7 @@ class SeeAllCategoriesListItem extends StatelessWidget {
         Navigator.pushNamed(
           context,
           Routes.doctorsByCategory,
-          arguments: categoryName,
+          arguments: category,
         );
       },
       child: Container(
@@ -40,7 +36,7 @@ class SeeAllCategoriesListItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(12),
               child: Image.asset(
-                imagePath,
+                category.icon,
                 width: 36.r,
                 height: 36.r,
                 fit: BoxFit.contain,
@@ -59,7 +55,7 @@ class SeeAllCategoriesListItem extends StatelessWidget {
             // Category Title
             Expanded(
               child: Text(
-                categoryName,
+                category.name,
                 style: AppTextStyles.font16Medium.copyWith(
                   color: AppColor.black,
                 ),

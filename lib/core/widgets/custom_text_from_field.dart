@@ -1,13 +1,13 @@
 import '../theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextFromField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final TextInputType? keyboardType;
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final int? maxLines;
-  const CustomTextFromField({
+  const CustomTextFormField({
     super.key,
     required this.hintText,
     this.keyboardType = TextInputType.text,

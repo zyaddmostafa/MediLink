@@ -1,13 +1,13 @@
 import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
-import '../../../../core/api_helpers/api_service.dart';
+import '../apis/auth_api_service.dart';
 import '../models/login_request_body.dart';
 import '../models/login_response.dart';
 import '../models/sign_up_request_body.dart';
 import '../models/sign_up_response.dart';
 
 class AuthRepoImpl {
-  final ApiService _apiService;
+  final AuthApiService _apiService;
   AuthRepoImpl(this._apiService);
 
   Future<ApiResult<LoginResponse>> login(

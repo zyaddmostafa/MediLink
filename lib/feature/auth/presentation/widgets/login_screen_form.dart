@@ -26,7 +26,7 @@ class LoginScreenForm extends StatelessWidget {
         children: [
           LabelAndTextField(
             label: 'Email Address',
-            textFormField: CustomTextFromField(
+            textFormField: CustomTextFormField(
               hintText: 'Enter your email',
               controller: emailController,
               validator: (value) {

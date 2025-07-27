@@ -12,7 +12,7 @@ import '../widgets/auth_rich_text.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/set_password_screen_form.dart';
-import '../widgets/signup_bloc_listener.dart';
+import '../widgets/auth_bloc_listener.dart';
 
 class SetPasswordScreen extends StatefulWidget {
   final Map<String, dynamic> signupData;
@@ -64,7 +64,7 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
                   ),
                 ),
               ),
-              const SignupBlocListener(),
+              const AuthBlocListener(),
             ],
           ),
         ),

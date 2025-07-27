@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'upcoming_appoinment_list_item.dart';
+import 'upcoming_appointment_list_item.dart';
 
 class UpcomingAppoinmentsListView extends StatelessWidget {
   const UpcomingAppoinmentsListView({super.key});
