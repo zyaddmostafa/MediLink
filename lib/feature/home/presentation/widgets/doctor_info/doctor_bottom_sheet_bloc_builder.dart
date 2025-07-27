@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/theme/app_color.dart';
 import '../../../data/model/doctor_model.dart';
 import '../../cubit/home_cubit.dart';
 import 'book_appoinment_bottom_sheet.dart';
@@ -64,7 +65,9 @@ class DoctorBottomSheetBlocBuilder extends StatelessWidget {
               ),
             ),
           ),
-          child: const Center(child: CircularProgressIndicator()),
+          child: const Center(
+            child: CircularProgressIndicator(color: AppColor.primary),
+          ),
         );
       },
     );

@@ -2,13 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/api_helpers/api_error_handler.dart';
+import '../../../../core/api_helpers/api_error_model.dart';
+import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../data/model/doctor_model.dart';
 import '../cubit/home_cubit.dart';
 import '../widgets/doctors/doctors_list_view.dart';
 import '../widgets/search_text_field.dart';
@@ -107,30 +111,74 @@ Widget _doctorsListViewBlocBuilder(BuildContext context) {
         current is SearchDoctorsLoading ||
         current is SearchDoctorsError,
     builder: (context, state) {
-      if (state is SearchDoctorsSuccess || state is SearchDoctorsLoading) {
-        return Expanded(
-          child: Skeletonizer(
-            enabled: state is SearchDoctorsLoading,
-            child: DoctorListView(
-              isFavorite: false,
-              doctors: state is SearchDoctorsSuccess
-                  ? state.doctors
-                  : generateSkeletonDoctors(),
-            ),
-          ),
-        );
-      } else if (state is SearchDoctorsError) {
-        return Center(
-          child: Text(
-            extractErrorMessages(
-              state.error.errors ??
-                  {'message': state.error.message ?? 'Unknown error'},
-            ).join(', '),
-          ),
-        );
-      } else {
-        return const Center(child: Text('No results found'));
+      switch (state) {
+        case SearchDoctorsLoading():
+          return _buildLoadingState();
+        case SearchDoctorsSuccess():
+          return _buildSuccessState(state.doctors);
+        case SearchDoctorsError():
+          return _buildErrorState(state.error);
+        default:
+          return _buildDefaultState();
       }
     },
   );
+}
+
+/// Builds the loading state with skeleton doctors
+Widget _buildLoadingState() {
+  return Expanded(
+    child: Skeletonizer(
+      enabled: true,
+      child: DoctorListView(
+        isFavorite: false,
+        doctors: generateSkeletonDoctors(),
+      ),
+    ),
+  );
+}
+
+/// Builds the success state with actual doctors data
+Widget _buildSuccessState(List<DoctorModel> doctors) {
+  if (doctors.isEmpty) {
+    return Expanded(
+      child: ListView(
+        children: [
+          Center(child: Lottie.asset(Assets.assetsLottieNoSearchResult)),
+          Text(
+            'No results found',
+            style: AppTextStyles.font18Bold,
+            textAlign: TextAlign.center,
+          ),
+          verticalSpacing(16),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              'Try searching with different keywords or check the spelling.',
+              style: AppTextStyles.font14Regular,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          verticalSpacing(24),
+        ],
+      ),
+    );
+  }
+  return Expanded(child: DoctorListView(isFavorite: false, doctors: doctors));
+}
+
+/// Builds the error state with error message
+Widget _buildErrorState(ApiErrorModel error) {
+  return Center(
+    child: Text(
+      extractErrorMessages(
+        error.errors ?? {'message': error.message ?? 'Unknown error'},
+      ).join(', '),
+    ),
+  );
+}
+
+/// Builds the default state when no search has been performed
+Widget _buildDefaultState() {
+  return Center(child: Lottie.asset(Assets.assetsLottieNoSearchResult));
 }

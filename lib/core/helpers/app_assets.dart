@@ -78,6 +78,10 @@ class Assets {
   /// assets/images/heart_background_shadow.png
   static const String assetsImagesHeartBackgroundShadow = "assets/images/heart_background_shadow.png";
 
+  /// Assets for assetsLottieNoSearchResult
+  /// assets/lottie/no_search_result.json
+  static const String assetsLottieNoSearchResult = "assets/lottie/no_search_result.json";
+
   /// Assets for assetsSvgs3dots
   /// assets/svgs/3dots.svg
   static const String assetsSvgs3dots = "assets/svgs/3dots.svg";
