@@ -51,7 +51,7 @@ class NavItem extends StatelessWidget {
             // Label
             Text(
               label,
-              style: AppTextStyles.font12Medium.copyWith(
+              style: AppTextStyles.font14Medium.copyWith(
                 color: isSelected ? AppColor.white : AppColor.grey,
               ),
             ),

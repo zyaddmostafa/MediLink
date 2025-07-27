@@ -26,7 +26,7 @@ class AppTheme {
       //   ),
 
       // Scaffold Background
-      scaffoldBackgroundColor: const Color(0xFFF8F9FA),
+      scaffoldBackgroundColor: Colors.white,
 
       // Text Theme
       textTheme: TextTheme(
@@ -107,7 +107,7 @@ class AppTheme {
       //   ),
 
       // Scaffold Background
-      scaffoldBackgroundColor: const Color(0xFF121212),
+      scaffoldBackgroundColor: const Color(0xFF232528),
 
       // Card Theme
 

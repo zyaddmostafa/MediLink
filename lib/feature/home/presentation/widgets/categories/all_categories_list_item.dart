@@ -54,12 +54,7 @@ class AllCategoriesListItem extends StatelessWidget {
 
             // Category Title
             Expanded(
-              child: Text(
-                category.name,
-                style: AppTextStyles.font16Medium.copyWith(
-                  color: AppColor.black,
-                ),
-              ),
+              child: Text(category.name, style: AppTextStyles.font16Medium),
             ),
 
             // Arrow Icon

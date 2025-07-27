@@ -71,9 +71,7 @@ class DoctorsCard extends StatelessWidget {
           verticalSpacing(4),
           Text(
             doctor?.specialization?.name ?? 'Default Specialization',
-            style: AppTextStyles.font14Regular.copyWith(
-              color: AppColor.doctorCardSubtitle,
-            ),
+            style: AppTextStyles.font14Regular,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

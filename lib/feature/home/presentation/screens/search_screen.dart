@@ -180,5 +180,7 @@ Widget _buildErrorState(ApiErrorModel error) {
 
 /// Builds the default state when no search has been performed
 Widget _buildDefaultState() {
-  return Center(child: Lottie.asset(Assets.assetsLottieNoSearchResult));
+  return Expanded(
+    child: Center(child: Lottie.asset(Assets.assetsLottieNoSearchResult)),
+  );
 }

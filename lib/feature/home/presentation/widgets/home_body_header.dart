@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class HomeBodyHeader extends StatelessWidget {
@@ -16,10 +15,7 @@ class HomeBodyHeader extends StatelessWidget {
         Text(title, style: AppTextStyles.font18Bold),
         GestureDetector(
           onTap: onSeeAllTap,
-          child: Text(
-            'See All',
-            style: AppTextStyles.font18Medium.copyWith(color: AppColor.primary),
-          ),
+          child: Text('See All', style: AppTextStyles.font18Medium),
         ),
       ],
     );
