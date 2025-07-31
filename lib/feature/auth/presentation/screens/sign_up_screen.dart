@@ -3,7 +3,9 @@ import 'dart:developer';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/gender_selection_helper.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/theme/app_color.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/models/sing_up_form_data.dart';
@@ -78,10 +80,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   CustomElevatedButton _continueToSetPasswordScreen() {
     return CustomElevatedButton(
-      text: 'Continue',
-      onPressed: () {
-        validateThenDoSignUp(context);
-      },
+      properties: ButtonPropertiesModel(
+        text: 'Continue',
+        textColor: AppColor.white,
+        backgroundColor: AppColor.primary,
+        onPressed: () {
+          validateThenDoSignUp(context);
+        },
+      ),
     );
   }
 

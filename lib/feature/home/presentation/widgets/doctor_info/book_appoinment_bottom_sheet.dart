@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/helpers/app_assets.dart';
 import '../../../../../core/helpers/spacing.dart';
+import '../../../../../core/model/button_properties_model.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
@@ -142,8 +143,12 @@ class _BookAppointmentBottomSheetState
                     ),
                     verticalSpacing(40),
                     CustomElevatedButton(
-                      text: 'Book Appointment',
-                      onPressed: () {},
+                      properties: ButtonPropertiesModel(
+                        text: 'Book Appointment',
+                        textColor: AppColor.white,
+                        backgroundColor: AppColor.primary,
+                        onPressed: () {},
+                      ),
                     ),
                     verticalSpacing(
                       24,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../booking/presentation/screen/booking_screen.dart';
 import '../home/presentation/screens/favorite_screen.dart';
 import '../home/presentation/screens/home_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
@@ -17,7 +18,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   // List of screens for bottom navigation
   final List<Widget> _screens = [
     const HomeScreen(),
-    const BookingsScreen(),
+    const BookingScreen(),
     const FavoriteScreen(),
     const ProfileScreen(),
   ];
@@ -53,25 +54,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           currentIndex: _currentIndex,
           onTabTapped: _onTabTapped,
         ),
-      ),
-    );
-  }
-}
-
-// Placeholder screens for demonstration
-class BookingsScreen extends StatelessWidget {
-  const BookingsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Bookings', style: AppTextStyles.font18Bold),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: const Center(
-        child: Text('Bookings Screen', style: TextStyle(fontSize: 24)),
       ),
     );
   }
