@@ -51,14 +51,17 @@ class DoctorsSection extends StatelessWidget {
           current is AllDoctorsError,
       builder: (context, state) {
         if (state is AllDoctorsLoading || state is AllDoctorsSuccess) {
-          return Skeletonizer(
-            enabled: state is AllDoctorsLoading,
-            child: DoctorListView(
-              isFavorite: false,
-              shrinkWrap: true, // Allow full scrolling
-              doctors: state is AllDoctorsSuccess
-                  ? state.doctors.take(5).toList()
-                  : generateSkeletonDoctors(),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Skeletonizer(
+              enabled: state is AllDoctorsLoading,
+              child: DoctorListView(
+                isFavorite: false,
+                shrinkWrap: true, // Allow full scrolling
+                doctors: state is AllDoctorsSuccess
+                    ? state.doctors.take(5).toList()
+                    : generateSkeletonDoctors(),
+              ),
             ),
           );
         } else if (state is AllDoctorsError) {

@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+import '../../../../core/helpers/spacing.dart';
+import '../../../../core/theme/app_color.dart';
+import '../../../../core/theme/app_text_styles.dart';
+import 'appointment_tab_bar_body.dart';
+
+class AppointmentTabBarView extends StatefulWidget {
+  const AppointmentTabBarView({super.key});
+
+  @override
+  State<AppointmentTabBarView> createState() => _AppointmentTabBarViewState();
+}
+
+class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TabBar(
+          controller: _tabController,
+          labelColor: AppColor.primary,
+          unselectedLabelColor: Colors.grey,
+          labelStyle: AppTextStyles.font16Regular,
+          unselectedLabelStyle: AppTextStyles.font16Regular,
+          indicatorColor: AppColor.primary,
+          indicatorWeight: 3,
+          indicatorSize: TabBarIndicatorSize.tab,
+          dividerColor: Colors.grey.shade300,
+          tabs: const [
+            Tab(text: 'Upcoming'),
+            Tab(text: 'Completed'),
+            Tab(text: 'Cancelled'),
+          ],
+        ),
+        verticalSpacing(24),
+        Expanded(child: AppointmentTabBarBody(tabController: _tabController)),
+      ],
+    );
+  }
+}

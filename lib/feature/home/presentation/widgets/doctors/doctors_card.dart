@@ -4,10 +4,9 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/helpers/app_assets.dart';
 import '../../../../../core/helpers/doctors_images.dart';
-import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/doctors_helper.dart';
 import '../../../../../core/helpers/spacing.dart';
-import '../../../../../core/routing/routes.dart';
+import '../../../../../core/model/button_properties_model.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
@@ -17,7 +16,14 @@ import 'doctor_rate.dart';
 class DoctorsCard extends StatelessWidget {
   final bool isFavorite;
   final DoctorModel? doctor;
-  const DoctorsCard({super.key, this.isFavorite = false, this.doctor});
+  final ButtonPropertiesModel buttonProperties;
+
+  const DoctorsCard({
+    super.key,
+    this.isFavorite = false,
+    this.doctor,
+    required this.buttonProperties,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +51,13 @@ class DoctorsCard extends StatelessWidget {
           ),
           verticalSpacing(16),
           CustomElevatedButton(
-            textColor: AppColor.primary,
-            backgroundColor: AppColor.doctorCardButton,
-            text: 'Book Appointment',
-            onPressed: () {
-              context.pushNamed(Routes.doctorInfo, arguments: doctor?.id ?? 0);
-            },
+            properties: ButtonPropertiesModel(
+              textColor: buttonProperties.textColor,
+              backgroundColor: buttonProperties.backgroundColor,
+              text: buttonProperties.text,
+              onPressed: buttonProperties.onPressed,
+              isLoading: buttonProperties.isLoading,
+            ),
           ),
         ],
       ),

@@ -2,7 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/theme/app_color.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/models/sign_up_request_body.dart';
@@ -87,11 +89,15 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
   CustomElevatedButton _signupElevatedButton(BuildContext context) {
     final signupCubit = context.watch<AuthCubit>();
     return CustomElevatedButton(
-      text: 'Sign Up',
-      onPressed: () {
-        validateThenDoSignUp(context);
-      },
-      isLoading: signupCubit.state is SignupLoading,
+      properties: ButtonPropertiesModel(
+        text: 'Sign Up',
+        textColor: AppColor.white,
+        backgroundColor: AppColor.primary,
+        onPressed: () {
+          validateThenDoSignUp(context);
+        },
+        isLoading: signupCubit.state is SignupLoading,
+      ),
     );
   }
 
