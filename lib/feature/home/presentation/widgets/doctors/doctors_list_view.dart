@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/model/button_properties_model.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../data/model/doctor_model.dart';
 import 'doctors_card.dart';
@@ -45,7 +47,9 @@ class DoctorListView extends StatelessWidget {
                 text: 'Book Appointment',
                 textColor: AppColor.primary,
                 backgroundColor: AppColor.doctorCardButton,
-                onPressed: () {},
+                onPressed: () {
+                  context.pushNamed(Routes.doctorInfo);
+                },
               ),
         );
       },

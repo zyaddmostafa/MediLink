@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import '../helpers/app_assets.dart';
 import '../helpers/extentions.dart';
 import '../helpers/spacing.dart';
 import '../theme/app_color.dart';
@@ -174,27 +176,16 @@ class CustomDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColor.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(32),
           ),
           contentPadding: const EdgeInsets.all(24),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               // Warning Icon
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.warning_amber,
-                  color: Colors.orange,
-                  size: 40,
-                ),
-              ),
+              SvgPicture.asset(Assets.svgsSeccessful),
               const SizedBox(height: 16),
 
               // Title
@@ -219,19 +210,19 @@ class CustomDialog {
               Row(
                 children: [
                   Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      style: OutlinedButton.styleFrom(
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.of(context).pop(true),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        side: BorderSide(color: AppColor.grey),
                       ),
                       child: Text(
-                        cancelText ?? 'Cancel',
-                        style: AppTextStyles.font14Regular.copyWith(
-                          color: AppColor.grey,
+                        cancelText ?? 'Close',
+                        style: AppTextStyles.font16SemiBold.copyWith(
+                          color: AppColor.primary,
                         ),
                       ),
                     ),
@@ -244,12 +235,12 @@ class CustomDialog {
                         backgroundColor: confirmColor ?? AppColor.primary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       child: Text(
-                        confirmText ?? 'Confirm',
-                        style: AppTextStyles.font16Medium.copyWith(
+                        confirmText ?? 'Okay',
+                        style: AppTextStyles.font16SemiBold.copyWith(
                           color: AppColor.white,
                         ),
                       ),

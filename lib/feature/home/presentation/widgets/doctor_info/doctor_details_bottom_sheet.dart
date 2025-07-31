@@ -12,18 +12,17 @@ import '../../../data/model/doctor_model.dart';
 import '../doctors/select_appointment_date.dart';
 import 'doctor_info_details.dart';
 
-class BookAppointmentBottomSheet extends StatefulWidget {
+class DoctorDetailsBottomSheet extends StatefulWidget {
   final DoctorModel doctor;
 
-  const BookAppointmentBottomSheet({super.key, required this.doctor});
+  const DoctorDetailsBottomSheet({super.key, required this.doctor});
 
   @override
-  State<BookAppointmentBottomSheet> createState() =>
-      _BookAppointmentBottomSheetState();
+  State<DoctorDetailsBottomSheet> createState() =>
+      _DoctorDetailsBottomSheetState();
 }
 
-class _BookAppointmentBottomSheetState
-    extends State<BookAppointmentBottomSheet> {
+class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
   final TextEditingController _noteController = TextEditingController();
   DateTime selectedDate = DateTime.now();
 

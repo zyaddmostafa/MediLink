@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../booking/presentation/screen/booking_screen.dart';
+import '../home/presentation/screens/doctor_info_screen.dart';
 import '../home/presentation/screens/favorite_screen.dart';
 import '../home/presentation/screens/home_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
@@ -19,7 +20,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const BookingScreen(),
-    const FavoriteScreen(),
+    const DoctorInfoScreen(),
     const ProfileScreen(),
   ];
 
