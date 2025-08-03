@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/model/button_properties_model.dart';
+import '../../../../core/routing/routes.dart';
+import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../widgets/doctors/doctors_list_view.dart';
@@ -38,8 +42,19 @@ class FavoriteScreen extends StatelessWidget {
               ),
             ),
             verticalSpacing(24),
-            const Expanded(
-              child: DoctorListView(isFavorite: true, doctors: []),
+            Expanded(
+              child: DoctorListView(
+                isFavorite: true,
+                doctors: [],
+                buttonProperties: ButtonPropertiesModel(
+                  text: 'Book Appointment',
+                  textColor: AppColor.primary,
+                  backgroundColor: AppColor.doctorCardButton,
+                  onPressed: () {
+                    context.pushNamed(Routes.doctorInfo);
+                  },
+                ),
+              ),
             ),
           ],
         ),

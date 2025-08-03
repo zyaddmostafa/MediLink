@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/checkout/presentation/screens/appointment_detail_screen.dart';
+import '../../feature/checkout/presentation/screens/appointmet_payment_methods_screen.dart';
 import '../../feature/home/data/model/category_model.dart';
 import '../../feature/home/data/model/doctor_model.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
@@ -106,6 +108,15 @@ class AppRoute {
             create: (context) => HomeCubit(getIt())..getDoctorById(doctorId),
             child: const DoctorInfoScreen(),
           ),
+        );
+
+      case Routes.appointmentDetailsScreen:
+        return MaterialPageRoute(
+          builder: (_) => const AppointmentDetailsScreen(),
+        );
+      case Routes.appointmentPaymentMethodsScreen:
+        return MaterialPageRoute(
+          builder: (_) => const AppointmentPaymentMethodsScreen(),
         );
       default:
         return null;

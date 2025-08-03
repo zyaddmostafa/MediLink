@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/helpers/app_assets.dart';
+import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/model/button_properties_model.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
@@ -70,7 +72,12 @@ class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
                     ),
                     Row(
                       children: [
-                        Text('4.8', style: AppTextStyles.font14Regular),
+                        Text(
+                          '4.8',
+                          style: AppTextStyles.font14Regular.copyWith(
+                            color: AppColor.black,
+                          ),
+                        ),
                         horizontalSpacing(4),
                         SvgPicture.asset(Assets.svgsStar),
                       ],
@@ -146,7 +153,9 @@ class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
                         text: 'Book Appointment',
                         textColor: AppColor.white,
                         backgroundColor: AppColor.primary,
-                        onPressed: () {},
+                        onPressed: () {
+                          context.pushNamed(Routes.appointmentDetailsScreen);
+                        },
                       ),
                     ),
                     verticalSpacing(
