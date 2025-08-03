@@ -48,7 +48,10 @@ class DoctorListView extends StatelessWidget {
                 textColor: AppColor.primary,
                 backgroundColor: AppColor.doctorCardButton,
                 onPressed: () {
-                  context.pushNamed(Routes.doctorInfo);
+                  context.pushNamed(
+                    Routes.doctorInfo,
+                    arguments: doctors[index].id,
+                  );
                 },
               ),
         );

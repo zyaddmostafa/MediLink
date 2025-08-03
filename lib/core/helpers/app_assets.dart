@@ -50,7 +50,11 @@ class Assets {
 
   static const String svgsCalender = "assets/svgs/Calender.svg";
 
+  static const String svgsCashPaySvgrepoCom = "assets/svgs/cash-pay-svgrepo-com.svg";
+
   static const String svgsClose = "assets/svgs/close.svg";
+
+  static const String svgsEtisalatAndLogo = "assets/svgs/etisalat-and-logo.svg";
 
   static const String svgsFavactive = "assets/svgs/favactive.svg";
 
@@ -58,9 +62,13 @@ class Assets {
 
   static const String svgsHome = "assets/svgs/Home.svg";
 
+  static const String svgsMastercard = "assets/svgs/Mastercard.svg";
+
   static const String svgsNotselected = "assets/svgs/notselected.svg";
 
   static const String svgsNotvisiable = "assets/svgs/notvisiable.svg";
+
+  static const String svgsOrange3 = "assets/svgs/orange-3.svg";
 
   static const String svgsProfile = "assets/svgs/Profile.svg";
 
@@ -76,6 +84,10 @@ class Assets {
 
   static const String svgsTime = "assets/svgs/Time.svg";
 
+  static const String svgsVisa = "assets/svgs/Visa.svg";
+
   static const String svgsVisible = "assets/svgs/Visible.svg";
+
+  static const String svgsVodafoneIcon = "assets/svgs/vodafone-icon.svg";
 }
 

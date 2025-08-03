@@ -17,4 +17,5 @@ class AppColor {
   static const Color doctorCardButtonDarkMode = Color(0xFF545C6B);
   static const Color divider = Color(0xFFF1F2F6);
   static const Color datePickerBorder = Color(0xFFF9FAFB);
+  static const Color shadowTextColor = Color(0xFFC0D4FB);
 }
