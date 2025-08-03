@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../core/helpers/spacing.dart';
 import '../../../core/theme/app_color.dart';
 import '../../../core/theme/app_text_styles.dart';
 
@@ -43,16 +44,16 @@ class NavItem extends StatelessWidget {
               width: 24,
               height: 24,
               colorFilter: ColorFilter.mode(
-                isSelected ? AppColor.white : AppColor.grey,
+                isSelected ? AppColor.white : AppColor.shadowTextColor,
                 BlendMode.srcIn,
               ),
             ),
-            const SizedBox(height: 4),
+            verticalSpacing(8),
             // Label
             Text(
               label,
               style: AppTextStyles.font14Medium.copyWith(
-                color: isSelected ? AppColor.white : AppColor.grey,
+                color: isSelected ? AppColor.white : AppColor.shadowTextColor,
               ),
             ),
           ],
