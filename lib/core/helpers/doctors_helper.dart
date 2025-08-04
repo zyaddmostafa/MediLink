@@ -77,7 +77,7 @@ class DoctorsHelpers {
         final parts = time.split(' ');
         if (parts.length >= 2) {
           timeOnly = parts[0];
-          suffix = ' ${parts[1]}';
+          suffix = '${parts[1]}';
         }
       }
 
@@ -86,11 +86,91 @@ class DoctorsHelpers {
         return '${timeParts[0]}:${timeParts[1]}$suffix';
       }
     }
-    return time;
+    return time.toLowerCase();
   }
 
   /// Format time range from start and end time
   static String formatTimeRange(String startTime, String endTime) {
     return '${formatTime(startTime)} - ${formatTime(endTime)}';
+  }
+
+  /// Format date from "day/month" to "day Month dayName" format
+  /// Example: "4/8" -> "4 August Sunday"
+  static String formatDayMonth(String dayMonth, {int? year}) {
+    try {
+      final parts = dayMonth.split('/');
+      if (parts.length != 2) return dayMonth;
+
+      final day = int.parse(parts[0]);
+      final month = int.parse(parts[1]);
+      final currentYear = year ?? DateTime.now().year;
+
+      // Create DateTime object
+      final date = DateTime(currentYear, month, day);
+
+      // Month names
+      const monthNames = [
+        '',
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ];
+
+      // Day names
+      const dayNames = [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ];
+
+      final monthName = monthNames[month];
+      final dayName = dayNames[date.weekday - 1];
+
+      return '$day $monthName $dayName';
+    } catch (e) {
+      return dayMonth; // Return original if parsing fails
+    }
+  }
+
+  /// Format DateTime to "day Month dayName" format
+  /// Example: DateTime(2025, 8, 4) -> "4 August Sunday"
+  static String formatDateToDayMonth(DateTime date) {
+    // Month names
+    const monthNames = [
+      '',
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    // Day names
+    const dayNames = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+
+    final monthName = monthNames[date.month];
+    final dayName = dayNames[date.weekday - 1];
+
+    return '${date.day} $monthName $dayName';
   }
 }

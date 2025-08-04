@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/checkout/presentation/screens/appointment_detail_screen.dart';
 import '../../feature/checkout/presentation/screens/appointmet_payment_methods_screen.dart';
 import '../../feature/home/data/model/category_model.dart';
@@ -112,8 +113,11 @@ class AppRoute {
         );
 
       case Routes.appointmentDetailsScreen:
+        final AppointmentDetailsModel appointmentDetails =
+            args as AppointmentDetailsModel;
         return MaterialPageRoute(
-          builder: (_) => const AppointmentDetailsScreen(),
+          builder: (_) =>
+              AppointmentDetailsScreen(appointmentDetails: appointmentDetails),
         );
       case Routes.appointmentPaymentMethodsScreen:
         return MaterialPageRoute(

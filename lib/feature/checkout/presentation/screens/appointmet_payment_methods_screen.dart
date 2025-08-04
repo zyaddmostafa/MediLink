@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/paymob/paymob_manager.dart';
 import '../../../../core/paymob/paymob_getway.dart';
 import '../../../../core/paymob/paymob_mobile_getway.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
@@ -33,112 +35,114 @@ class _AppointmentPaymentMethodsScreenState
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomAppBar(
-                appBarwidget: Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: Text(
-                    'Payment Methods',
-                    style: AppTextStyles.font16Bold,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomAppBar(
+                  appBarwidget: Padding(
+                    padding: const EdgeInsets.only(left: 24),
+                    child: Text(
+                      'Payment Methods',
+                      style: AppTextStyles.font16Bold,
+                    ),
                   ),
                 ),
-              ),
-              verticalSpacing(32),
-              Text('Select method', style: AppTextStyles.font18Bold),
-              verticalSpacing(24),
+                verticalSpacing(32),
+                Text('Select method', style: AppTextStyles.font18Bold),
+                verticalSpacing(24),
 
-              // Visa Payment Method
-              PaymentMethodWidget(
-                paymentType: 'visa',
-                title: 'Visa Card',
-                iconAsset: Assets.svgsVisa,
-                isSelected: selectedPaymentMethod == 'visa',
-                onTap: () {
-                  setState(() {
-                    selectedPaymentMethod = 'visa';
-                  });
-                },
-              ),
-
-              verticalSpacing(16),
-
-              // Mastercard Payment Method
-              PaymentMethodWidget(
-                paymentType: 'mastercard',
-                title: 'Mastercard',
-                iconAsset: Assets.svgsMastercard,
-                isSelected: selectedPaymentMethod == 'mastercard',
-                onTap: () {
-                  setState(() {
-                    selectedPaymentMethod = 'mastercard';
-                  });
-                },
-              ),
-              verticalSpacing(16),
-
-              // Cash Payment Method
-              PaymentMethodWidget(
-                paymentType: 'Cash',
-                title: 'Cash',
-                iconAsset: Assets.svgsCashPaySvgrepoCom,
-                isSelected: selectedPaymentMethod == 'Cash',
-                onTap: () {
-                  setState(() {
-                    selectedPaymentMethod = 'Cash';
-                  });
-                },
-              ),
-              verticalSpacing(16),
-              // Wallet Payment Method
-              PaymentMethodWidget(
-                paymentType: 'Vodafone',
-                title: 'Vodafone Cash',
-                iconAsset: Assets.svgsVodafoneIcon,
-                isSelected: selectedPaymentMethod == 'Vodafone',
-                onTap: () {
-                  setState(() {
-                    selectedPaymentMethod = 'Vodafone';
-                  });
-                },
-              ),
-              verticalSpacing(16),
-              // Etisalat Payment Method
-              PaymentMethodWidget(
-                paymentType: 'Etisalat',
-                title: 'Etisalat Cash',
-                iconAsset: Assets.svgsEtisalatAndLogo,
-                isSelected: selectedPaymentMethod == 'Etisalat',
-                onTap: () {
-                  setState(() {
-                    selectedPaymentMethod = 'Etisalat';
-                  });
-                },
-              ),
-              verticalSpacing(16),
-              // Orange Payment Method
-              PaymentMethodWidget(
-                paymentType: 'Orange',
-                title: 'Orange Cash',
-                iconAsset: Assets.svgsOrange3,
-                isSelected: selectedPaymentMethod == 'Orange',
-                onTap: () {
-                  setState(() {
-                    selectedPaymentMethod = 'Orange';
-                  });
-                },
-              ),
-              verticalSpacing(80),
-              CustomElevatedButton(
-                properties: ButtonPropertiesModel(
-                  text: 'Continue',
-                  textColor: AppColor.white,
-                  backgroundColor: AppColor.primary,
-                  onPressed: () => _handlePaymentContinue(context),
+                // Visa Payment Method
+                PaymentMethodWidget(
+                  paymentType: 'visa',
+                  title: 'Visa Card',
+                  iconAsset: Assets.svgsVisa,
+                  isSelected: selectedPaymentMethod == 'visa',
+                  onTap: () {
+                    setState(() {
+                      selectedPaymentMethod = 'visa';
+                    });
+                  },
                 ),
-              ),
-            ],
+
+                verticalSpacing(16),
+
+                // Mastercard Payment Method
+                PaymentMethodWidget(
+                  paymentType: 'mastercard',
+                  title: 'Mastercard',
+                  iconAsset: Assets.svgsMastercard,
+                  isSelected: selectedPaymentMethod == 'mastercard',
+                  onTap: () {
+                    setState(() {
+                      selectedPaymentMethod = 'mastercard';
+                    });
+                  },
+                ),
+                verticalSpacing(16),
+
+                // Cash Payment Method
+                PaymentMethodWidget(
+                  paymentType: 'Cash',
+                  title: 'Cash',
+                  iconAsset: Assets.svgsCashPaySvgrepoCom,
+                  isSelected: selectedPaymentMethod == 'Cash',
+                  onTap: () {
+                    setState(() {
+                      selectedPaymentMethod = 'Cash';
+                    });
+                  },
+                ),
+                verticalSpacing(16),
+                // Wallet Payment Method
+                PaymentMethodWidget(
+                  paymentType: 'Vodafone',
+                  title: 'Vodafone Cash',
+                  iconAsset: Assets.svgsVodafoneIcon,
+                  isSelected: selectedPaymentMethod == 'Vodafone',
+                  onTap: () {
+                    setState(() {
+                      selectedPaymentMethod = 'Vodafone';
+                    });
+                  },
+                ),
+                verticalSpacing(16),
+                // Etisalat Payment Method
+                PaymentMethodWidget(
+                  paymentType: 'Etisalat',
+                  title: 'Etisalat Cash',
+                  iconAsset: Assets.svgsEtisalatAndLogo,
+                  isSelected: selectedPaymentMethod == 'Etisalat',
+                  onTap: () {
+                    setState(() {
+                      selectedPaymentMethod = 'Etisalat';
+                    });
+                  },
+                ),
+                verticalSpacing(16),
+                // Orange Payment Method
+                PaymentMethodWidget(
+                  paymentType: 'Orange',
+                  title: 'Orange Cash',
+                  iconAsset: Assets.svgsOrange3,
+                  isSelected: selectedPaymentMethod == 'Orange',
+                  onTap: () {
+                    setState(() {
+                      selectedPaymentMethod = 'Orange';
+                    });
+                  },
+                ),
+                verticalSpacing(80),
+                CustomElevatedButton(
+                  properties: ButtonPropertiesModel(
+                    text: 'Continue',
+                    textColor: AppColor.white,
+                    backgroundColor: AppColor.primary,
+                    onPressed: () => _handlePaymentContinue(context),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -152,29 +156,17 @@ class _AppointmentPaymentMethodsScreenState
     if (selectedPaymentMethod == 'Cash') {
       log('Processing cash payment...');
       // Handle cash payment
-      final confirmed = await CustomDialog.showConfirmationDialog(
+      await CustomDialog.showConfirmationDialog(
         context: context,
         title: 'Cash Payment',
         message:
             'Please pay 150 EGP on Reception to complete your appointment.',
         confirmText: 'Confirm',
         cancelText: 'Cancel',
+        onConfirm: () {
+          context.pushAndRemoveUntil(Routes.mainNavigation);
+        },
       );
-
-      if (confirmed == true) {
-        await CustomDialog.showSuccessDialog(
-          context: context,
-          title: 'Appointment Confirmed!',
-          message:
-              'Your appointment is confirmed. Please pay 150 EGP at reception.',
-          buttonText: 'Got it',
-          onPressed: () {
-            Navigator.pop(context); // Close dialog
-            Navigator.pop(context); // Go back to previous screen
-          },
-        );
-      }
-      return; // Early return for cash payment
     }
 
     final paymobManager = PaymobManager();
@@ -346,16 +338,15 @@ class _AppointmentPaymentMethodsScreenState
       final message = result['message'];
 
       if (status == 'success') {
-        await CustomDialog.showSuccessDialog(
+        await CustomDialog.showConfirmationDialog(
           context: context,
           title: 'Payment Successful!',
+          confirmText: 'Okay',
           message:
               message ??
               'Your payment has been completed successfully. Your appointment is confirmed.',
-          buttonText: 'Great!',
-          onPressed: () {
-            Navigator.pop(context); // Close dialog
-            Navigator.pop(context); // Go back to previous screen
+          onConfirm: () {
+            context.pushAndRemoveUntil(Routes.mainNavigation);
           },
         );
       } else {

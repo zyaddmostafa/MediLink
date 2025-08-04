@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../../core/helpers/app_assets.dart';
+import '../../../../../core/helpers/doctors_helper.dart';
 import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/model/button_properties_model.dart';
@@ -10,6 +13,7 @@ import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../../core/widgets/custom_text_from_field.dart';
+import '../../../../checkout/data/model/appointment_details_model.dart';
 import '../../../data/model/doctor_model.dart';
 import '../doctors/select_appointment_date.dart';
 import 'doctor_info_details.dart';
@@ -26,7 +30,7 @@ class DoctorDetailsBottomSheet extends StatefulWidget {
 
 class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
   final TextEditingController _noteController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
+  DateTime? selectedDate; // Make it nullable for validation
 
   @override
   Widget build(BuildContext context) {
@@ -129,14 +133,39 @@ class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
                       ),
                     ),
                     verticalSpacing(24),
-                    Text('Select Date', style: AppTextStyles.font18Bold),
+                    Row(
+                      children: [
+                        Text('Select Date', style: AppTextStyles.font18Bold),
+                        if (selectedDate == null)
+                          Text(
+                            ' *',
+                            style: AppTextStyles.font18Bold.copyWith(
+                              color: AppColor.red,
+                            ),
+                          ),
+                      ],
+                    ),
                     verticalSpacing(16),
-                    SelectAppointmentDate(
-                      onDateSelected: (DateTime selectedDate) {
-                        this.selectedDate = selectedDate;
-                        // Handle date selection
-                        setState(() {});
-                      },
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: selectedDate == null
+                              ? AppColor.red.withOpacity(0.3)
+                              : Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: SelectAppointmentDate(
+                        onDateSelected: (DateTime selectedDate) {
+                          this.selectedDate = selectedDate;
+                          log(
+                            'Selected date: ${DoctorsHelpers.formatDayMonth(selectedDate.toString())}',
+                          );
+                          // Handle date selection
+                          setState(() {});
+                        },
+                      ),
                     ),
                     verticalSpacing(24),
                     Text('Note', style: AppTextStyles.font18Bold),
@@ -154,7 +183,7 @@ class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
                         textColor: AppColor.white,
                         backgroundColor: AppColor.primary,
                         onPressed: () {
-                          context.pushNamed(Routes.appointmentDetailsScreen);
+                          _validateAndBookAppointment();
                         },
                       ),
                     ),
@@ -167,6 +196,38 @@ class _DoctorDetailsBottomSheetState extends State<DoctorDetailsBottomSheet> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _validateAndBookAppointment() {
+    if (selectedDate == null) {
+      // Show error message for date selection
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Please select an appointment date'),
+          backgroundColor: AppColor.red,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
+      return;
+    }
+
+    // If validation passes, proceed to appointment details
+    context.pushNamed(
+      Routes.appointmentDetailsScreen,
+      arguments: AppointmentDetailsModel(
+        appointmentId: widget.doctor.id!,
+        doctorName: widget.doctor.name!,
+        doctorSpecialization: widget.doctor.specialization!.name!,
+        appointmentPrice: widget.doctor.appointPrice!,
+        appointmentDate: DoctorsHelpers.formatDateToDayMonth(selectedDate!),
+        appointmentTime: DoctorsHelpers.formatTimeRange(
+          widget.doctor.startTime.toString(),
+          widget.doctor.endTime.toString(),
+        ),
+        message: _noteController.text,
       ),
     );
   }

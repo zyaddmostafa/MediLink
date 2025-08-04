@@ -167,6 +167,7 @@ class CustomDialog {
     required BuildContext context,
     required String title,
     required String message,
+    required VoidCallback onConfirm,
     String? confirmText,
     String? cancelText,
     Color? confirmColor,
@@ -230,7 +231,9 @@ class CustomDialog {
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        onConfirm();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: confirmColor ?? AppColor.primary,
                         padding: const EdgeInsets.symmetric(vertical: 14),

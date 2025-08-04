@@ -13,9 +13,11 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_text_from_field.dart';
+import '../../data/model/appointment_details_model.dart';
 
 class AppointmentDetailsScreen extends StatelessWidget {
-  const AppointmentDetailsScreen({super.key});
+  final AppointmentDetailsModel appointmentDetails;
+  const AppointmentDetailsScreen({super.key, required this.appointmentDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -36,18 +38,23 @@ class AppointmentDetailsScreen extends StatelessWidget {
                 ),
               ),
               verticalSpacing(32),
-              const DoctorAppointmentDetails(),
+              DoctorAppointmentDetails(appointmentDetails: appointmentDetails),
               verticalSpacing(24),
               Text('Schedule', style: AppTextStyles.font18Bold),
               verticalSpacing(24),
 
-              const AppointmentSchedule(),
+              AppointmentSchedule(
+                date: appointmentDetails.appointmentDate,
+                time: appointmentDetails.appointmentTime,
+              ),
               verticalSpacing(24),
               Text('Message', style: AppTextStyles.font18Bold),
               verticalSpacing(24),
               CustomTextFormField(
-                hintText: 'Enter your message here',
-                controller: TextEditingController(),
+                hintText: appointmentDetails.message?.isNotEmpty == true
+                    ? appointmentDetails.message!
+                    : 'No message provided',
+
                 maxLines: 6,
               ),
               verticalSpacing(82),
@@ -70,7 +77,12 @@ class AppointmentDetailsScreen extends StatelessWidget {
 }
 
 class AppointmentSchedule extends StatelessWidget {
-  const AppointmentSchedule({super.key});
+  final String date, time;
+  const AppointmentSchedule({
+    super.key,
+    required this.date,
+    required this.time,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +98,7 @@ class AppointmentSchedule extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text('8 October, Sat', style: AppTextStyles.font16Bold),
+              Text(date, style: AppTextStyles.font16Bold),
               verticalSpacing(8),
               Text('Date ', style: AppTextStyles.font16Regular),
             ],
@@ -101,7 +113,7 @@ class AppointmentSchedule extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text('10:00am-11:00am', style: AppTextStyles.font16Bold),
+              Text(time, style: AppTextStyles.font16Bold),
               verticalSpacing(8),
               Text('Time', style: AppTextStyles.font16Regular),
             ],
@@ -113,7 +125,8 @@ class AppointmentSchedule extends StatelessWidget {
 }
 
 class DoctorAppointmentDetails extends StatelessWidget {
-  const DoctorAppointmentDetails({super.key});
+  final AppointmentDetailsModel appointmentDetails;
+  const DoctorAppointmentDetails({super.key, required this.appointmentDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +142,11 @@ class DoctorAppointmentDetails extends StatelessWidget {
         children: [
           _doctorCardImage(),
           horizontalSpacing(16),
-          _appointmentDetails(),
+          _appointmentDetails(
+            doctorName: appointmentDetails.doctorName,
+            doctorSpecialization: appointmentDetails.doctorSpecialization,
+            appointmentRate: appointmentDetails.appointmentPrice.toString(),
+          ),
           _doctorRate(),
         ],
       ),
@@ -153,24 +170,28 @@ ClipRRect _doctorCardImage() {
   );
 }
 
-Widget _appointmentDetails() {
+Widget _appointmentDetails({
+  required String doctorName,
+  required String doctorSpecialization,
+  required String appointmentRate,
+}) {
   return Expanded(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Dr. John Doe',
+          doctorName,
           style: AppTextStyles.font14SemiBold,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         verticalSpacing(4),
-        Text(
-          'Cardiologist | Heart Specialist',
-          style: AppTextStyles.font14Regular,
-        ),
+        Text(doctorSpecialization, style: AppTextStyles.font14Regular),
         verticalSpacing(8),
-        Text('Appointment Rate: \$150', style: AppTextStyles.font14SemiBold),
+        Text(
+          'Appointment Rate: \$$appointmentRate',
+          style: AppTextStyles.font14SemiBold,
+        ),
       ],
     ),
   );

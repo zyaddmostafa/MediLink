@@ -2,7 +2,7 @@ class AppointmentDetailsModel {
   final int appointmentId;
   final String doctorName;
   final String doctorSpecialization;
-  final String appointmentPrice;
+  final int appointmentPrice;
   final String appointmentDate;
   final String appointmentTime;
   final String? message;
