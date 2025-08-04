@@ -30,7 +30,7 @@ class DioFactory {
     dio?.options.headers = {
       'Accept': 'application/json',
       'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3ZjYXJlLmludGVncmF0aW9uMjUuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzU0MTgyMzU0LCJleHAiOjE3NTQyNjg3NTQsIm5iZiI6MTc1NDE4MjM1NCwianRpIjoiV3VEQld2a1h6SXd2S2xTayIsInN1YiI6IjQ0MTkiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.TmwZ9QbWN9Xx8LbC33uyrQ4K6skL88gKMGbLLjG3Koc',
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3ZjYXJlLmludGVncmF0aW9uMjUuY29tL2FwaS9hdXRoL2xvZ2luIiwiaWF0IjoxNzU0MjcxODI2LCJleHAiOjE3NTQzNTgyMjYsIm5iZiI6MTc1NDI3MTgyNiwianRpIjoiQkFIdktOVHNwYWczaEY0MyIsInN1YiI6IjQ0MTkiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.oT3ch2dBVdXg0rxg8ZBnUS9NZR1jmm-OX_rxEWHCP78',
     };
   }
 

@@ -211,7 +211,7 @@ class CustomDialog {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () => Navigator.of(context).pop(false),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -220,7 +220,7 @@ class CustomDialog {
                         ),
                       ),
                       child: Text(
-                        cancelText ?? 'Close',
+                        cancelText ?? 'Cancel',
                         style: AppTextStyles.font16SemiBold.copyWith(
                           color: AppColor.primary,
                         ),
@@ -239,7 +239,7 @@ class CustomDialog {
                         ),
                       ),
                       child: Text(
-                        confirmText ?? 'Okay',
+                        confirmText ?? 'Confirm',
                         style: AppTextStyles.font16SemiBold.copyWith(
                           color: AppColor.white,
                         ),
@@ -284,6 +284,119 @@ class CustomDialog {
           ),
         );
       },
+    );
+  }
+
+  static Future<String?> showMobileNumberDialog({
+    required BuildContext context,
+    required String walletName,
+    required Color walletColor,
+  }) async {
+    final controller = TextEditingController();
+
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        contentPadding: const EdgeInsets.all(24),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Wallet Icon
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: walletColor.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.phone_android, color: walletColor, size: 30),
+            ),
+            verticalSpacing(16),
+
+            // Title
+            Text(
+              'Enter Mobile Number',
+              style: AppTextStyles.font18Bold.copyWith(color: AppColor.black),
+              textAlign: TextAlign.center,
+            ),
+            verticalSpacing(8),
+
+            // Subtitle
+            Text(
+              'Please enter your $walletName number',
+              style: AppTextStyles.font14Regular.copyWith(color: AppColor.grey),
+              textAlign: TextAlign.center,
+            ),
+            verticalSpacing(20),
+
+            // Text Field
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.phone,
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: '01xxxxxxxxx',
+                labelText: '$walletName Number',
+                prefixIcon: Icon(Icons.phone, color: walletColor),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: walletColor, width: 2),
+                ),
+              ),
+            ),
+            verticalSpacing(24),
+
+            // Buttons
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(color: AppColor.grey),
+                      ),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: AppTextStyles.font16Medium.copyWith(
+                        color: AppColor.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context, controller.text),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: walletColor,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Continue',
+                      style: AppTextStyles.font16Medium.copyWith(
+                        color: AppColor.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -16,6 +16,7 @@ class Routes {
   static const String appointmentDetailsScreen = '/appointmentDetails';
   static const String appointmentPaymentMethodsScreen =
       '/appointmentPaymentMethods';
+  static const String paymentGetWay = '/paymentGetWay';
   static const String profileScreen = '/profile';
   static const String editProfileScreen = '/editProfile';
   static const String changePasswordScreen = '/changePassword';

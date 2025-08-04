@@ -15,6 +15,7 @@ import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
 import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
 import '../../feature/navigation/main_navigation_screen.dart';
 import '../di/dependency_injection.dart';
+import '../paymob/paymob_getway.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
 import '../../feature/auth/presentation/screens/set_password_screen.dart';
@@ -117,6 +118,12 @@ class AppRoute {
       case Routes.appointmentPaymentMethodsScreen:
         return MaterialPageRoute(
           builder: (_) => const AppointmentPaymentMethodsScreen(),
+        );
+
+      case Routes.paymentGetWay:
+        final String paymentToken = args as String;
+        return MaterialPageRoute(
+          builder: (_) => PaymobGetway(paymentToken: paymentToken),
         );
       default:
         return null;
