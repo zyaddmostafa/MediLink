@@ -173,4 +173,79 @@ class DoctorsHelpers {
 
     return '${date.day} $monthName $dayName';
   }
+
+  static List<String> generateTimeSlots({
+    required String startTime,
+    required String endTime,
+  }) {
+    final List<String> timeSlots = [];
+
+    // Parse start time (handle AM/PM format)
+    final startTime24 = _parseTimeWithAmPm(startTime);
+    final endTime24 = _parseTimeWithAmPm(endTime);
+
+    // Convert to total minutes for easier calculation
+    int currentMinutes = startTime24['hour']! * 60 + startTime24['minute']!;
+    int endMinutes = endTime24['hour']! * 60 + endTime24['minute']!;
+
+    while (currentMinutes + 30 <= endMinutes) {
+      // Calculate current time
+      int currentHour = currentMinutes ~/ 60;
+      int currentMin = currentMinutes % 60;
+
+      // Calculate end time (30 minutes later)
+      int nextMinutes = currentMinutes + 30;
+      int nextHour = nextMinutes ~/ 60;
+      int nextMin = nextMinutes % 60;
+
+      // Format times in 12-hour format with AM/PM
+      String startTimeStr = _formatTo12Hour(currentHour, currentMin);
+      String endTimeStr = _formatTo12Hour(nextHour, nextMin);
+
+      timeSlots.add('$startTimeStr - $endTimeStr');
+
+      // Move to next 30-minute slot
+      currentMinutes += 30;
+    }
+
+    return timeSlots;
+  }
+
+  // Parse time with AM/PM format (e.g., "14:00 am", "2:30 pm", "14:00")
+  static Map<String, int> _parseTimeWithAmPm(String timeStr) {
+    String cleanTime = timeStr.trim().toLowerCase();
+    bool isAm = cleanTime.contains('am');
+    bool isPm = cleanTime.contains('pm');
+
+    // Remove AM/PM from string
+    cleanTime = cleanTime.replaceAll(RegExp(r'\s*(am|pm)\s*'), '');
+
+    final parts = cleanTime.split(':');
+    int hour = int.parse(parts[0]);
+    int minute = parts.length > 1 ? int.parse(parts[1]) : 0;
+
+    // Convert to 24-hour format
+    if (isPm && hour != 12) {
+      hour += 12;
+    } else if (isAm && hour == 12) {
+      hour = 0;
+    }
+    // If no AM/PM specified, assume it's already in 24-hour format
+
+    return {'hour': hour, 'minute': minute};
+  }
+
+  // Format time to 12-hour format with AM/PM
+  static String _formatTo12Hour(int hour, int minute) {
+    String period = hour >= 12 ? 'PM' : 'AM';
+    int displayHour = hour;
+
+    if (hour == 0) {
+      displayHour = 12;
+    } else if (hour > 12) {
+      displayHour = hour - 12;
+    }
+
+    return '${displayHour.toString()}:${minute.toString().padLeft(2, '0')} $period';
+  }
 }
