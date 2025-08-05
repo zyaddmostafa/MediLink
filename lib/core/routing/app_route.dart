@@ -120,8 +120,12 @@ class AppRoute {
               AppointmentDetailsScreen(appointmentDetails: appointmentDetails),
         );
       case Routes.appointmentPaymentMethodsScreen:
+        final AppointmentDetailsModel appointmentDetails =
+            args as AppointmentDetailsModel;
         return MaterialPageRoute(
-          builder: (_) => const AppointmentPaymentMethodsScreen(),
+          builder: (_) => AppointmentPaymentMethodsScreen(
+            appointmentDetails: appointmentDetails,
+          ),
         );
 
       case Routes.paymentGetWay:
