@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/helpers/doctors_helper.dart';
 import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/model/button_properties_model.dart';
@@ -83,7 +82,7 @@ class AppointmentBookingActions extends StatelessWidget {
         doctorName: doctorName,
         doctorSpecialization: doctorSpecialization,
         appointmentPrice: appointmentPrice,
-        appointmentDate: DoctorsHelpers.formatDateToDayMonth(selectedDate!),
+        appointmentDate: selectedDate!,
         appointmentTime: selectedTimeSlot!,
       ),
     );

@@ -94,57 +94,6 @@ class DoctorsHelpers {
     return '${formatTime(startTime)} - ${formatTime(endTime)}';
   }
 
-  /// Format date from "day/month" to "day Month dayName" format
-  /// Example: "4/8" -> "4 August Sunday"
-  static String formatDayMonth(String dayMonth, {int? year}) {
-    try {
-      final parts = dayMonth.split('/');
-      if (parts.length != 2) return dayMonth;
-
-      final day = int.parse(parts[0]);
-      final month = int.parse(parts[1]);
-      final currentYear = year ?? DateTime.now().year;
-
-      // Create DateTime object
-      final date = DateTime(currentYear, month, day);
-
-      // Month names
-      const monthNames = [
-        '',
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ];
-
-      // Day names
-      const dayNames = [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday',
-      ];
-
-      final monthName = monthNames[month];
-      final dayName = dayNames[date.weekday - 1];
-
-      return '$day $monthName $dayName';
-    } catch (e) {
-      return dayMonth; // Return original if parsing fails
-    }
-  }
-
   /// Format DateTime to "day Month dayName" format
   /// Example: DateTime(2025, 8, 4) -> "4 August Sunday"
   static String formatDateToDayMonth(DateTime date) {
@@ -173,6 +122,7 @@ class DoctorsHelpers {
 
     return '${date.day} $monthName $dayName';
   }
+  //
 
   static List<String> generateTimeSlots({
     required String startTime,
@@ -211,7 +161,7 @@ class DoctorsHelpers {
     return timeSlots;
   }
 
-  // Parse time with AM/PM format (e.g., "14:00 am", "2:30 pm", "14:00")
+  // Parse time with AM/PM format (e.g., "2:30 pm", "10:00 am")
   static Map<String, int> _parseTimeWithAmPm(String timeStr) {
     String cleanTime = timeStr.trim().toLowerCase();
     bool isAm = cleanTime.contains('am');
@@ -224,20 +174,19 @@ class DoctorsHelpers {
     int hour = int.parse(parts[0]);
     int minute = parts.length > 1 ? int.parse(parts[1]) : 0;
 
-    // Convert to 24-hour format
+    // Convert to 24-hour format for calculation
     if (isPm && hour != 12) {
       hour += 12;
     } else if (isAm && hour == 12) {
       hour = 0;
     }
-    // If no AM/PM specified, assume it's already in 24-hour format
 
     return {'hour': hour, 'minute': minute};
   }
 
-  // Format time to 12-hour format with AM/PM
+  // Format time to 12-hour format with am/pm (lowercase)
   static String _formatTo12Hour(int hour, int minute) {
-    String period = hour >= 12 ? 'PM' : 'AM';
+    String period = hour >= 12 ? 'pm' : 'am';
     int displayHour = hour;
 
     if (hour == 0) {
@@ -246,6 +195,88 @@ class DoctorsHelpers {
       displayHour = hour - 12;
     }
 
-    return '${displayHour.toString()}:${minute.toString().padLeft(2, '0')} $period';
+    return '${displayHour}:${minute.toString().padLeft(2, '0')} $period';
+  }
+
+  /// Convert DateTime string from "2025-08-06 00:00:00.000" to "2025-08-06"
+  /// Example: "2025-08-06 00:00:00.000" -> "2025-08-06"
+  static String formatDateTimeToDateOnly(DateTime dateTimeString) {
+    return '${dateTimeString.year}-${dateTimeString.month.toString().padLeft(2, '0')}-${dateTimeString.day.toString().padLeft(2, '0')}';
+  }
+
+  /// Extract start time from time slot range
+  /// Example: "19:00 PM - 19:30 PM" -> "19:00 PM"
+  static String extractStartTimeFromSlot(String timeSlot) {
+    if (timeSlot.contains(' - ')) {
+      return timeSlot.split(' - ')[0].trim();
+    }
+    return timeSlot.trim();
+  }
+
+  // store appointment start date
+
+  static String storeAppointmentStartDate(
+    DateTime dateTimeString,
+    String timeSlot,
+  ) {
+    // Convert "2025-08-06 00:00:00.000" to "2025-08-06"
+    final formattedDate = formatDateTimeToDateOnly(dateTimeString);
+    final formatedTime = extractStartTimeFromSlot(timeSlot);
+
+    return '$formattedDate $formatedTime';
+  }
+
+  /// Convert time format from "14:00:00 PM" to "2:00 pm"
+  /// Handles cases where 24-hour format is mixed with AM/PM
+  /// Example: "14:00:00 PM" -> "2:00 pm", "09:30:00 AM" -> "9:30 am"
+  static String convertTime12hFormat(String timeWithAmPm) {
+    if (!timeWithAmPm.contains(':')) {
+      return timeWithAmPm
+          .toLowerCase(); // Return as is if not in expected format
+    }
+
+    // Split time and AM/PM parts
+    final parts = timeWithAmPm.trim().split(' ');
+    if (parts.length < 2) {
+      return timeWithAmPm.toLowerCase(); // Return as is if no AM/PM found
+    }
+
+    String timePart = parts[0];
+    String period = parts[1].toLowerCase();
+
+    // Split time into hour, minute, second
+    final timeParts = timePart.split(':');
+    if (timeParts.length < 2) {
+      return timeWithAmPm
+          .toLowerCase(); // Return as is if not properly formatted
+    }
+
+    int hour = int.tryParse(timeParts[0]) ?? 0;
+    String minute = timeParts[1];
+
+    // Convert 24-hour format to 12-hour format
+    if (hour == 0) {
+      hour = 12; // Midnight becomes 12
+      period = 'am';
+    } else if (hour > 12) {
+      hour = hour - 12; // Convert PM hours
+      period = 'pm';
+    } else if (hour == 12) {
+      period = 'pm';
+    } else {
+      period = 'am';
+    }
+
+    return '$hour:$minute $period';
+  }
+
+  static String convertStartAndEndTimeTo12HourFormat(
+    String startTime,
+    String endTime,
+  ) {
+    final start = convertTime12hFormat(startTime);
+    final end = convertTime12hFormat(endTime);
+
+    return '$start - $end';
   }
 }

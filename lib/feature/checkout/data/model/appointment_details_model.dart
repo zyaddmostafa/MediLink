@@ -3,7 +3,7 @@ class AppointmentDetailsModel {
   final String doctorName;
   final String doctorSpecialization;
   final int appointmentPrice;
-  final String appointmentDate;
+  final DateTime appointmentDate;
   final String appointmentTime;
   final String? message;
 
@@ -22,7 +22,7 @@ class AppointmentDetailsModel {
     String? doctorName,
     String? doctorSpecialization,
     int? appointmentPrice,
-    String? appointmentDate,
+    DateTime? appointmentDate,
     String? appointmentTime,
     String? message,
   }) {

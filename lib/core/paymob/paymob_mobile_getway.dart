@@ -1,14 +1,24 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+import '../../feature/checkout/data/model/appointment_details_model.dart';
+import '../../feature/checkout/data/model/store_appointment_request.dart';
+import '../../feature/checkout/presentation/cubit/store_appointment_cubit.dart';
+import '../helpers/doctors_helper.dart';
+import '../widgets/store_appointment_listener.dart';
 
 class PaymobMobileGetway extends StatefulWidget {
   final String webUri;
   final String walletType;
+  final AppointmentDetailsModel appointmentDetails;
+
   const PaymobMobileGetway({
     super.key,
     required this.webUri,
     required this.walletType,
+    required this.appointmentDetails,
   });
 
   @override
@@ -20,14 +30,17 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${_getWalletDisplayName()} Payment'),
-        backgroundColor: _getWalletColor(),
-        foregroundColor: Colors.white,
-      ),
-      body: Stack(
-        children: [_buildWebView(), if (_isLoading) _buildLoadingOverlay()],
+    return StoreAppointmentListener(
+      appointmentDetails: widget.appointmentDetails,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('${_getWalletDisplayName()} Payment'),
+          backgroundColor: _getWalletColor(),
+          foregroundColor: Colors.white,
+        ),
+        body: Stack(
+          children: [_buildWebView(), if (_isLoading) _buildLoadingOverlay()],
+        ),
       ),
     );
   }
@@ -97,17 +110,37 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
     log('Checking URL: $url');
 
     if (url.contains('success') || url.contains('approved')) {
-      _returnResult('success', 'Payment completed successfully');
+      log('Payment successful, storing appointment...');
+      _storeAppointment(context);
     } else if (url.contains('failed') || url.contains('cancelled')) {
       _returnResult('failed', 'Payment failed or cancelled');
     } else if (url.contains('post_pay')) {
       final uri = Uri.parse(url);
       final success = uri.queryParameters['success'] == 'true';
-      _returnResult(
-        success ? 'success' : 'failed',
-        success ? 'Payment completed successfully' : 'Payment failed',
-      );
+      if (success) {
+        log('Payment successful, storing appointment...');
+        _storeAppointment(context);
+      } else {
+        _returnResult('failed', 'Payment failed');
+      }
     }
+  }
+
+  void _storeAppointment(BuildContext context) {
+    final cubit = context.read<StoreAppointmentCubit>();
+    final request = StoreAppointmentRequest(
+      doctorId: widget.appointmentDetails.doctorId.toString(),
+      appointmentDateAndTime: DoctorsHelpers.storeAppointmentStartDate(
+        widget.appointmentDetails.appointmentDate,
+        widget.appointmentDetails.appointmentTime,
+      ),
+      message: widget.appointmentDetails.message ?? '',
+    );
+    log(
+      " doctorId: ${widget.appointmentDetails.doctorId} appointmentDateAndTime: ${request.appointmentDateAndTime}, message: ${request.message}",
+    );
+
+    cubit.storeAppointment(request);
   }
 
   void _returnResult(String status, String message) {

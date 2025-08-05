@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/helpers/doctors_helper.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../widgets/appointment_details_actions.dart';
@@ -32,36 +33,42 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header section
-              const AppointmentDetailsHeader(),
-              verticalSpacing(32),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header section
+                const AppointmentDetailsHeader(),
+                verticalSpacing(32),
 
-              // Doctor appointment details section
-              DoctorAppointmentDetails(
-                appointmentDetails: widget.appointmentDetails,
-              ),
-              verticalSpacing(24),
+                // Doctor appointment details section
+                DoctorAppointmentDetails(
+                  appointmentDetails: widget.appointmentDetails,
+                ),
+                verticalSpacing(24),
 
-              // Schedule section
-              AppointmentScheduleSection(
-                appointmentDate: widget.appointmentDetails.appointmentDate,
-                appointmentTime: widget.appointmentDetails.appointmentTime,
-              ),
-              verticalSpacing(24),
+                // Schedule section
+                AppointmentScheduleSection(
+                  appointmentDate: DoctorsHelpers.formatDateToDayMonth(
+                    widget.appointmentDetails.appointmentDate,
+                  ),
+                  appointmentTime: widget.appointmentDetails.appointmentTime,
+                ),
+                verticalSpacing(24),
 
-              // Message section
-              AppointmentMessageSection(messageController: _messageController),
-              verticalSpacing(82),
+                // Message section
+                AppointmentMessageSection(
+                  messageController: _messageController,
+                ),
+                verticalSpacing(82),
 
-              // Actions section
-              AppointmentDetailsActions(
-                appointmentDetails: widget.appointmentDetails,
-                message: _messageController.text,
-              ),
-            ],
+                // Actions section
+                AppointmentDetailsActions(
+                  appointmentDetails: widget.appointmentDetails,
+                  message: _messageController.text,
+                ),
+              ],
+            ),
           ),
         ),
       ),

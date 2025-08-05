@@ -99,7 +99,7 @@ class DoctorsCard extends StatelessWidget {
               horizontalSpacing(4),
               Flexible(
                 child: Text(
-                  DoctorsHelpers.formatTimeRange(
+                  DoctorsHelpers.convertStartAndEndTimeTo12HourFormat(
                     doctor?.startTime ?? '',
                     doctor?.endTime ?? '',
                   ),

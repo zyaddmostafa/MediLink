@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../core/helpers/doctors_helper.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../data/model/doctor_model.dart';
 import 'appointment_booking_action.dart';
@@ -80,8 +81,12 @@ class _DoctorInfoBottomSheetState extends State<DoctorInfoBottomSheet> {
                     // Appointment schedule selection section
                     AppointmentScheduleSelector(
                       selectedTimeSlot: selectedTimeSlot,
-                      startTime: widget.doctor.startTime!,
-                      endTime: widget.doctor.endTime!,
+                      startTime: DoctorsHelpers.convertTime12hFormat(
+                        widget.doctor.startTime!,
+                      ),
+                      endTime: DoctorsHelpers.convertTime12hFormat(
+                        widget.doctor.endTime!,
+                      ),
                       onTimeSelected: (String timeSlot) {
                         setState(() {
                           selectedTimeSlot = timeSlot;

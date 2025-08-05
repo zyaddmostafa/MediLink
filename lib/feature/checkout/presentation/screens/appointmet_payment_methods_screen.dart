@@ -7,14 +7,12 @@ import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/paymob/paymob_manager.dart';
-import '../../../../core/paymob/paymob_getway.dart';
-import '../../../../core/paymob/paymob_mobile_getway.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_dioalog.dart';
+import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../widgets/payment_method_widget.dart';
 
@@ -168,9 +166,7 @@ class _AppointmentPaymentMethodsScreenState
             'Your appointment With dr ${widget.appointmentDetails.doctorName} is confirmed. Please pay ${widget.appointmentDetails.appointmentPrice} EGP on Reception to complete your appointment.',
         confirmText: 'Confirm',
         cancelText: 'Cancel',
-        onConfirm: () {
-          context.pushAndRemoveUntil(Routes.mainNavigation);
-        },
+        onConfirm: () {},
       );
     }
 
@@ -204,14 +200,15 @@ class _AppointmentPaymentMethodsScreenState
 
         if (context.mounted) {
           log('Navigating to PaymobGetway...');
-          final result = await Navigator.push<Map<String, dynamic>>(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymobGetway(paymentToken: paymentKey),
-            ),
+          final result = await context.pushNamed(
+            Routes.paymentGetWay,
+            arguments: {
+              'paymentToken': paymentKey,
+              'appointmentDetails': widget.appointmentDetails,
+            },
           );
           log('Payment result: $result');
-          await _handlePaymentResult(result);
+          // No need to handle result here as it's handled in the gateway
         }
       } catch (e) {
         log('Card payment error: $e');
@@ -280,17 +277,16 @@ class _AppointmentPaymentMethodsScreenState
         // Navigate to mobile wallet WebView
         if (context.mounted) {
           log('Navigating to PaymobMobileGetway...');
-          final result = await Navigator.push<Map<String, dynamic>>(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PaymobMobileGetway(
-                webUri: redirectUrl,
-                walletType: selectedPaymentMethod.toLowerCase(),
-              ),
-            ),
+          final result = await context.pushNamed(
+            Routes.paymobMobileGetway,
+            arguments: {
+              'webUri': redirectUrl,
+              'walletType': selectedPaymentMethod.toLowerCase(),
+              'appointmentDetails': widget.appointmentDetails,
+            },
           );
           log('Mobile wallet result: $result');
-          await _handlePaymentResult(result);
+          // No need to handle result here as it's handled in the gateway
         }
       } catch (e) {
         log('Mobile wallet payment error: $e');
@@ -337,36 +333,6 @@ class _AppointmentPaymentMethodsScreenState
       walletName: _getWalletDisplayName(),
       walletColor: _getWalletColor(),
     );
-  }
-
-  Future<void> _handlePaymentResult(Map<String, dynamic>? result) async {
-    if (result != null) {
-      final status = result['status'];
-      final message = result['message'];
-
-      if (status == 'success') {
-        log('Payment successful: confirmation dialog shown');
-        await CustomDialog.showConfirmationDialog(
-          context: context,
-          title: 'Payment Successful!',
-          confirmText: 'Okay',
-          message:
-              'Your Appointment with ${widget.appointmentDetails.doctorName} has been confirmed.',
-          onConfirm: () {
-            context.pushAndRemoveUntil(Routes.mainNavigation);
-          },
-        );
-      } else {
-        await CustomDialog.showErrorDialog(
-          context: context,
-          title: 'Payment Failed',
-          message:
-              message ??
-              'Payment could not be completed. Please try again or use a different payment method.',
-          buttonText: 'Try Again',
-        );
-      }
-    }
   }
 
   String _getWalletDisplayName() {

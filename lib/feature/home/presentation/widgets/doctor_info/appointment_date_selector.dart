@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
-import '../../../../../core/helpers/doctors_helper.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
@@ -47,9 +44,6 @@ class AppointmentDateSelector extends StatelessWidget {
           child: SelectAppointmentDate(
             onDateSelected: (DateTime selectedDate) {
               onDateSelected(selectedDate);
-              log(
-                'Selected date: ${DoctorsHelpers.formatDayMonth(selectedDate.toString())}',
-              );
             },
           ),
         ),
