@@ -55,6 +55,7 @@ class AppointmentBookingActions extends StatelessWidget {
           backgroundColor: AppColor.red,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          duration: const Duration(milliseconds: 300),
         ),
       );
       return;
@@ -68,6 +69,7 @@ class AppointmentBookingActions extends StatelessWidget {
           backgroundColor: AppColor.red,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          duration: const Duration(milliseconds: 300),
         ),
       );
       return;
@@ -77,7 +79,7 @@ class AppointmentBookingActions extends StatelessWidget {
     context.pushNamed(
       Routes.appointmentDetailsScreen,
       arguments: AppointmentDetailsModel(
-        appointmentId: doctorId,
+        doctorId: doctorId,
         doctorName: doctorName,
         doctorSpecialization: doctorSpecialization,
         appointmentPrice: appointmentPrice,

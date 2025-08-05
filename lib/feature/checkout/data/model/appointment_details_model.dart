@@ -1,5 +1,5 @@
 class AppointmentDetailsModel {
-  final int appointmentId;
+  final int doctorId;
   final String doctorName;
   final String doctorSpecialization;
   final int appointmentPrice;
@@ -8,7 +8,7 @@ class AppointmentDetailsModel {
   final String? message;
 
   AppointmentDetailsModel({
-    required this.appointmentId,
+    required this.doctorId,
     required this.doctorName,
     required this.doctorSpecialization,
     required this.appointmentPrice,
@@ -16,4 +16,24 @@ class AppointmentDetailsModel {
     required this.appointmentTime,
     this.message,
   });
+
+  AppointmentDetailsModel copyWith({
+    int? doctorId,
+    String? doctorName,
+    String? doctorSpecialization,
+    int? appointmentPrice,
+    String? appointmentDate,
+    String? appointmentTime,
+    String? message,
+  }) {
+    return AppointmentDetailsModel(
+      doctorId: doctorId ?? this.doctorId,
+      doctorName: doctorName ?? this.doctorName,
+      doctorSpecialization: doctorSpecialization ?? this.doctorSpecialization,
+      appointmentPrice: appointmentPrice ?? this.appointmentPrice,
+      appointmentDate: appointmentDate ?? this.appointmentDate,
+      appointmentTime: appointmentTime ?? this.appointmentTime,
+      message: message ?? this.message,
+    );
+  }
 }

@@ -77,7 +77,7 @@ class AppointmentBookingActions extends StatelessWidget {
     context.pushNamed(
       Routes.appointmentDetailsScreen,
       arguments: AppointmentDetailsModel(
-        appointmentId: doctorId,
+        doctorId: doctorId,
         doctorName: doctorName,
         doctorSpecialization: doctorSpecialization,
         appointmentPrice: appointmentPrice,
