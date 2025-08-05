@@ -64,7 +64,10 @@ class AppointmentDetailsScreen extends StatelessWidget {
                   backgroundColor: AppColor.primary,
                   textColor: AppColor.white,
                   onPressed: () {
-                    context.pushNamed(Routes.appointmentPaymentMethodsScreen);
+                    context.pushNamed(
+                      Routes.appointmentPaymentMethodsScreen,
+                      arguments: appointmentDetails,
+                    );
                   },
                 ),
               ),

@@ -15,10 +15,15 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_dioalog.dart';
+import '../../data/model/appointment_details_model.dart';
 import '../widgets/payment_method_widget.dart';
 
 class AppointmentPaymentMethodsScreen extends StatefulWidget {
-  const AppointmentPaymentMethodsScreen({super.key});
+  final AppointmentDetailsModel appointmentDetails;
+  const AppointmentPaymentMethodsScreen({
+    super.key,
+    required this.appointmentDetails,
+  });
 
   @override
   State<AppointmentPaymentMethodsScreen> createState() =>
@@ -160,7 +165,7 @@ class _AppointmentPaymentMethodsScreenState
         context: context,
         title: 'Cash Payment',
         message:
-            'Please pay 150 EGP on Reception to complete your appointment.',
+            'Your appointment With dr ${widget.appointmentDetails.doctorName} is confirmed. Please pay ${widget.appointmentDetails.appointmentPrice} EGP on Reception to complete your appointment.',
         confirmText: 'Confirm',
         cancelText: 'Cancel',
         onConfirm: () {
@@ -185,7 +190,9 @@ class _AppointmentPaymentMethodsScreenState
 
         // Handle card payments (Visa/Mastercard)
         log('Calling payWithPaymob...');
-        final paymentKey = await paymobManager.payWithPaymob(amount: 150);
+        final paymentKey = await paymobManager.payWithPaymob(
+          amount: widget.appointmentDetails.appointmentPrice,
+        );
         log('Got payment key: $paymentKey');
 
         // Hide loading
@@ -258,7 +265,7 @@ class _AppointmentPaymentMethodsScreenState
 
         log('Calling mobileWalletPayment...');
         final redirectUrl = await PaymobManager().mobileWalletPayment(
-          amount: 150,
+          amount: widget.appointmentDetails.appointmentPrice,
           walletMobileNumber: mobileNumber,
         );
         log('Got redirect URL: $redirectUrl');
@@ -338,13 +345,13 @@ class _AppointmentPaymentMethodsScreenState
       final message = result['message'];
 
       if (status == 'success') {
+        log('Payment successful: confirmation dialog shown');
         await CustomDialog.showConfirmationDialog(
           context: context,
           title: 'Payment Successful!',
           confirmText: 'Okay',
           message:
-              message ??
-              'Your payment has been completed successfully. Your appointment is confirmed.',
+              'Your Appointment with ${widget.appointmentDetails.doctorName} has been confirmed.',
           onConfirm: () {
             context.pushAndRemoveUntil(Routes.mainNavigation);
           },
