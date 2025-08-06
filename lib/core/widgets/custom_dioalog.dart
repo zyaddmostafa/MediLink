@@ -5,6 +5,7 @@ import '../helpers/extentions.dart';
 import '../helpers/spacing.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_styles.dart';
+import 'custom_text_from_field.dart';
 
 class CustomDialog {
   static Future<void> showSuccessDialog({
@@ -167,6 +168,7 @@ class CustomDialog {
     required BuildContext context,
     required String title,
     required String message,
+    required VoidCallback onConfirm,
     String? confirmText,
     String? cancelText,
     Color? confirmColor,
@@ -211,7 +213,7 @@ class CustomDialog {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () => Navigator.of(context).pop(false),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -220,7 +222,7 @@ class CustomDialog {
                         ),
                       ),
                       child: Text(
-                        cancelText ?? 'Close',
+                        cancelText ?? 'Cancel',
                         style: AppTextStyles.font16SemiBold.copyWith(
                           color: AppColor.primary,
                         ),
@@ -230,7 +232,9 @@ class CustomDialog {
                   const SizedBox(width: 12),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(true),
+                      onPressed: () {
+                        onConfirm();
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: confirmColor ?? AppColor.primary,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -239,7 +243,7 @@ class CustomDialog {
                         ),
                       ),
                       child: Text(
-                        confirmText ?? 'Okay',
+                        confirmText ?? 'Confirm',
                         style: AppTextStyles.font16SemiBold.copyWith(
                           color: AppColor.white,
                         ),
@@ -284,6 +288,106 @@ class CustomDialog {
           ),
         );
       },
+    );
+  }
+
+  static Future<String?> showMobileNumberDialog({
+    required BuildContext context,
+    required String walletName,
+    required Color walletColor,
+  }) async {
+    final controller = TextEditingController();
+
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        contentPadding: const EdgeInsets.all(24),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Wallet Icon
+            Container(
+              width: 60,
+              height: 60,
+              decoration: BoxDecoration(
+                color: walletColor.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.phone_android, color: walletColor, size: 30),
+            ),
+            verticalSpacing(16),
+
+            // Title
+            Text(
+              'Enter Mobile Number',
+              style: AppTextStyles.font18Bold.copyWith(color: AppColor.black),
+              textAlign: TextAlign.center,
+            ),
+            verticalSpacing(8),
+
+            // Subtitle
+            Text(
+              'Please enter your $walletName number',
+              style: AppTextStyles.font14Regular.copyWith(color: AppColor.grey),
+              textAlign: TextAlign.center,
+            ),
+            verticalSpacing(20),
+
+            // Text Field
+            CustomTextFormField(
+              hintText: '01xxxxxxxxx',
+              controller: controller,
+            ),
+            verticalSpacing(24),
+
+            // Buttons
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColor.white,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(color: AppColor.grey),
+                      ),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: AppTextStyles.font16Medium.copyWith(
+                        color: AppColor.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pop(context, controller.text),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: walletColor,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Continue',
+                      style: AppTextStyles.font16Medium.copyWith(
+                        color: AppColor.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

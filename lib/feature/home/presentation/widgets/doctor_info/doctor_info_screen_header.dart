@@ -22,7 +22,10 @@ class DoctorInfoScreenHeader extends StatelessWidget {
           child: Row(
             children: [
               horizontalSpacing(16),
-              Text('Doctor Info', style: AppTextStyles.font16Bold),
+              Text(
+                'Doctor Info',
+                style: AppTextStyles.font18Bold.copyWith(color: AppColor.white),
+              ),
               const Spacer(),
               GestureDetector(
                 onTap: () {

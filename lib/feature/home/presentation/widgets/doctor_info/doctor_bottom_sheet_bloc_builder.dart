@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../data/model/doctor_model.dart';
 import '../../cubit/home_cubit.dart';
-import 'doctor_details_bottom_sheet.dart';
+import 'doctor_info_bottom_sheet.dart';
 
 class DoctorBottomSheetBlocBuilder extends StatelessWidget {
   const DoctorBottomSheetBlocBuilder({super.key});
@@ -51,7 +51,7 @@ class DoctorBottomSheetBlocBuilder extends StatelessWidget {
           );
         } else if (state is DoctorByIdSuccess) {
           final DoctorModel doctor = state.doctor!;
-          return DoctorDetailsBottomSheet(doctor: doctor);
+          return DoctorInfoBottomSheet(doctor: doctor);
         }
         return Container(
           height: MediaQuery.sizeOf(context).height * 0.615,
