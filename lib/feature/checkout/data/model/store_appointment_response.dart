@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../../home/data/model/doctor_model.dart';
+
 part 'store_appointment_response.g.dart';
 
 @JsonSerializable()
@@ -25,7 +27,7 @@ class StoreAppointmentResponse {
 @JsonSerializable()
 class AppointmentData {
   final int id;
-  final DoctorResponse doctor;
+  final DoctorModel doctor;
   final PatientResponse patient;
   @JsonKey(name: 'appointment_time')
   final String appointmentTime;
@@ -54,49 +56,6 @@ class AppointmentData {
 }
 
 @JsonSerializable()
-class DoctorResponse {
-  final int id;
-  final String name;
-  final String email;
-  final String phone;
-  final String photo;
-  final String gender;
-  final String address;
-  final String description;
-  final String degree;
-  final SpecializationResponse specialization;
-  final CityResponse city;
-  @JsonKey(name: 'appoint_price')
-  final int appointPrice;
-  @JsonKey(name: 'start_time')
-  final String startTime;
-  @JsonKey(name: 'end_time')
-  final String endTime;
-
-  DoctorResponse({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.photo,
-    required this.gender,
-    required this.address,
-    required this.description,
-    required this.degree,
-    required this.specialization,
-    required this.city,
-    required this.appointPrice,
-    required this.startTime,
-    required this.endTime,
-  });
-
-  factory DoctorResponse.fromJson(Map<String, dynamic> json) =>
-      _$DoctorResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$DoctorResponseToJson(this);
-}
-
-@JsonSerializable()
 class PatientResponse {
   final int id;
   final String name;
@@ -116,48 +75,4 @@ class PatientResponse {
       _$PatientResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$PatientResponseToJson(this);
-}
-
-@JsonSerializable()
-class SpecializationResponse {
-  final int id;
-  final String name;
-
-  SpecializationResponse({required this.id, required this.name});
-
-  factory SpecializationResponse.fromJson(Map<String, dynamic> json) =>
-      _$SpecializationResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SpecializationResponseToJson(this);
-}
-
-@JsonSerializable()
-class CityResponse {
-  final int id;
-  final String name;
-  final GovernrateResponse governrate;
-
-  CityResponse({
-    required this.id,
-    required this.name,
-    required this.governrate,
-  });
-
-  factory CityResponse.fromJson(Map<String, dynamic> json) =>
-      _$CityResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CityResponseToJson(this);
-}
-
-@JsonSerializable()
-class GovernrateResponse {
-  final int id;
-  final String name;
-
-  GovernrateResponse({required this.id, required this.name});
-
-  factory GovernrateResponse.fromJson(Map<String, dynamic> json) =>
-      _$GovernrateResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$GovernrateResponseToJson(this);
 }

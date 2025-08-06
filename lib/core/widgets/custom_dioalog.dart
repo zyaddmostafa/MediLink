@@ -5,6 +5,7 @@ import '../helpers/extentions.dart';
 import '../helpers/spacing.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_styles.dart';
+import 'custom_text_from_field.dart';
 
 class CustomDialog {
   static Future<void> showSuccessDialog({
@@ -335,22 +336,9 @@ class CustomDialog {
             verticalSpacing(20),
 
             // Text Field
-            TextField(
+            CustomTextFormField(
+              hintText: '01xxxxxxxxx',
               controller: controller,
-              keyboardType: TextInputType.phone,
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: '01xxxxxxxxx',
-                labelText: '$walletName Number',
-                prefixIcon: Icon(Icons.phone, color: walletColor),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: walletColor, width: 2),
-                ),
-              ),
             ),
             verticalSpacing(24),
 
@@ -365,7 +353,7 @@ class CustomDialog {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
-                        side: BorderSide(color: AppColor.grey),
+                        side: const BorderSide(color: AppColor.grey),
                       ),
                     ),
                     child: Text(

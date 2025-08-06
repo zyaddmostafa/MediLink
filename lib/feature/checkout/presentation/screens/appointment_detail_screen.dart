@@ -37,17 +37,14 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header section
                 const AppointmentDetailsHeader(),
                 verticalSpacing(32),
 
-                // Doctor appointment details section
                 DoctorAppointmentDetails(
                   appointmentDetails: widget.appointmentDetails,
                 ),
                 verticalSpacing(24),
 
-                // Schedule section
                 AppointmentScheduleSection(
                   appointmentDate: DoctorsHelpers.formatDateToDayMonth(
                     widget.appointmentDetails.appointmentDate,
@@ -56,13 +53,11 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                 ),
                 verticalSpacing(24),
 
-                // Message section
                 AppointmentMessageSection(
                   messageController: _messageController,
                 ),
                 verticalSpacing(82),
 
-                // Actions section
                 AppointmentDetailsActions(
                   appointmentDetails: widget.appointmentDetails,
                   message: _messageController.text,

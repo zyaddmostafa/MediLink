@@ -30,17 +30,20 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
 
   @override
   Widget build(BuildContext context) {
-    return StoreAppointmentListener(
-      appointmentDetails: widget.appointmentDetails,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('${_getWalletDisplayName()} Payment'),
-          backgroundColor: _getWalletColor(),
-          foregroundColor: Colors.white,
-        ),
-        body: Stack(
-          children: [_buildWebView(), if (_isLoading) _buildLoadingOverlay()],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${_getWalletDisplayName()} Payment'),
+        backgroundColor: _getWalletColor(),
+        foregroundColor: Colors.white,
+      ),
+      body: Stack(
+        children: [
+          _buildWebView(),
+          if (_isLoading) _buildLoadingOverlay(),
+          StoreAppointmentListener(
+            appointmentDetails: widget.appointmentDetails,
+          ),
+        ],
       ),
     );
   }

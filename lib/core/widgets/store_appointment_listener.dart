@@ -8,14 +8,9 @@ import '../routing/routes.dart';
 import '../widgets/custom_dioalog.dart';
 
 class StoreAppointmentListener extends StatelessWidget {
-  final Widget child;
   final AppointmentDetailsModel appointmentDetails;
 
-  const StoreAppointmentListener({
-    super.key,
-    required this.child,
-    required this.appointmentDetails,
-  });
+  const StoreAppointmentListener({super.key, required this.appointmentDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +52,6 @@ class StoreAppointmentListener extends StatelessWidget {
           );
         }
       },
-      child: child,
     );
   }
 }
