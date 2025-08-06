@@ -12,4 +12,6 @@ class ApiConstants {
   static const String getDoctorById = "doctor/show";
   static const String getDoctorsByCategory = "specialization/show";
   static const String searchDoctors = "doctor/doctor-search";
+  // Appointment endpoints
+  static const String bookAppointment = "appointment/store";
 }

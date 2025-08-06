@@ -120,6 +120,7 @@ class UpcomingAppointmentListItem extends StatelessWidget {
                                     title: 'Cancle Successfuly',
                                     message:
                                         'Your Appointment With Doctor Name is Cancelld ',
+                                    onConfirm: () {},
                                   );
                                 },
                               ),
