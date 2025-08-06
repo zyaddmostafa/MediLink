@@ -4,22 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/di/dependency_injection.dart';
-import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/model/button_properties_model.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
-import '../../../../core/widgets/custom_dioalog.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/store_appointment_listener.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../../data/model/payment_method_helper.dart';
 import '../../data/model/payment_utility.dart';
 import '../cubit/store_appointment_cubit.dart';
 import '../widgets/card_payment_confirmation_bottom_sheet.dart';
-import '../widgets/cash_paymnet_bottom_sheet_bloc_listener.dart';
 import '../widgets/payment_methods_list.dart';
 
 class AppointmentPaymentMethodsScreen extends StatefulWidget {
@@ -97,7 +92,7 @@ class _AppointmentPaymentMethodsScreenState
             isScrollControlled: true,
             builder: (bottomSheetContext) => BlocProvider.value(
               value: getIt<StoreAppointmentCubit>(),
-              child: CashPaymentBottomSheetBlocListener(
+              child: CashPaymentBottomSheet(
                 appointmentDetails: widget.appointmentDetails,
               ),
             ),

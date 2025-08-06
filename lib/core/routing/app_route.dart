@@ -64,16 +64,16 @@ class AppRoute {
 
       case Routes.homeScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(getIt())..getAllDoctors(),
+          builder: (_) => BlocProvider.value(
+            value: getIt<HomeCubit>(),
             child: const HomeScreen(),
           ),
         );
 
       case Routes.searchScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(getIt()),
+          builder: (_) => BlocProvider.value(
+            value: getIt<HomeCubit>(),
             child: const SearchScreen(),
           ), // Assuming SearchScreen is defined
         );
@@ -92,8 +92,8 @@ class AppRoute {
       case Routes.doctorsByCategory:
         final CategoryModel categoryModel = args as CategoryModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(getIt())..getDoctorsByCategory(categoryModel.id),
+          builder: (_) => BlocProvider.value(
+            value: getIt<HomeCubit>()..getDoctorsByCategory(categoryModel.id),
             child: DoctorsByCategoriesScreen(categoryModel: categoryModel),
           ),
         );

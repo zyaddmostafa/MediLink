@@ -22,10 +22,6 @@ class StoreAppointmentListener extends StatelessWidget {
             message: 'Storing your appointment...',
           );
         } else if (state is StoreAppointmentSuccess) {
-          // Hide loading dialog
-          Navigator.pop(context);
-
-          // Show success confirmation dialog
           CustomDialog.showConfirmationDialog(
             context: context,
             title: 'Payment Successful',
@@ -37,9 +33,6 @@ class StoreAppointmentListener extends StatelessWidget {
             },
           );
         } else if (state is StoreAppointmentFailure) {
-          // Hide loading dialog
-          Navigator.pop(context);
-
           // Show error dialog
           CustomDialog.showErrorDialog(
             context: context,
@@ -52,6 +45,7 @@ class StoreAppointmentListener extends StatelessWidget {
           );
         }
       },
+      child: const SizedBox.shrink(),
     );
   }
 }

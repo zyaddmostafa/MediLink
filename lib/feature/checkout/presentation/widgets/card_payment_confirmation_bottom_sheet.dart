@@ -7,6 +7,7 @@ import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../core/widgets/store_appointment_listener.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../../data/model/store_appointment_request.dart';
 import '../cubit/store_appointment_cubit.dart';
@@ -139,6 +140,8 @@ class CashPaymentBottomSheet extends StatelessWidget {
             },
             child: Text('Cancel', style: AppTextStyles.font18Bold),
           ),
+
+          StoreAppointmentListener(appointmentDetails: appointmentDetails),
         ],
       ),
     );
