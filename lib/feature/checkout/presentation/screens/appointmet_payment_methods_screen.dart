@@ -13,7 +13,7 @@ import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../../data/model/payment_method_helper.dart';
 import '../../data/model/payment_utility.dart';
-import '../cubit/store_appointment_cubit.dart';
+import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../widgets/card_payment_confirmation_bottom_sheet.dart';
 import '../widgets/payment_methods_list.dart';
 
@@ -91,7 +91,7 @@ class _AppointmentPaymentMethodsScreenState
             context: context,
             isScrollControlled: true,
             builder: (bottomSheetContext) => BlocProvider.value(
-              value: getIt<StoreAppointmentCubit>(),
+              value: getIt<BookingAppointmentCubit>(),
               child: CashPaymentBottomSheet(
                 appointmentDetails: widget.appointmentDetails,
               ),

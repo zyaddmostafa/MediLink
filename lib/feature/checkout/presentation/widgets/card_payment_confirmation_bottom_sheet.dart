@@ -9,12 +9,12 @@ import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/store_appointment_listener.dart';
 import '../../data/model/appointment_details_model.dart';
-import '../../data/model/store_appointment_request.dart';
-import '../cubit/store_appointment_cubit.dart';
+import '../../../booking/data/model/store_appointment_request.dart';
+import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 
 class CashPaymentBottomSheet extends StatelessWidget {
   final AppointmentDetailsModel appointmentDetails;
-  final StoreAppointmentCubit? storeAppointmentCubit;
+  final BookingAppointmentCubit? storeAppointmentCubit;
 
   const CashPaymentBottomSheet({
     super.key,
@@ -117,7 +117,7 @@ class CashPaymentBottomSheet extends StatelessWidget {
               onPressed: () {
                 final cubit =
                     storeAppointmentCubit ??
-                    context.read<StoreAppointmentCubit>();
+                    context.read<BookingAppointmentCubit>();
                 cubit.storeAppointment(
                   StoreAppointmentRequest(
                     doctorId: appointmentDetails.doctorId.toString(),

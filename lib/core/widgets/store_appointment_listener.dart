@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/checkout/data/model/appointment_details_model.dart';
-import '../../feature/checkout/presentation/cubit/store_appointment_cubit.dart';
+import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../helpers/extentions.dart';
 import '../routing/routes.dart';
 import '../widgets/custom_dioalog.dart';
@@ -14,7 +14,7 @@ class StoreAppointmentListener extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<StoreAppointmentCubit, StoreAppointmentState>(
+    return BlocListener<BookingAppointmentCubit, BookingAppointmentState>(
       listener: (context, state) {
         if (state is StoreAppointmentLoading) {
           CustomDialog.showLoadingDialog(
