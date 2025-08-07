@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../core/di/dependency_injection.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../booking/presentation/screen/booking_screen.dart';
-import '../home/presentation/screens/doctor_info_screen.dart';
+import '../home/presentation/cubit/home_cubit.dart';
 import '../home/presentation/screens/home_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 
@@ -17,9 +20,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   // List of screens for bottom navigation
   final List<Widget> _screens = [
-    const HomeScreen(),
-    const BookingScreen(),
-    const DoctorInfoScreen(),
+    BlocProvider.value(
+      value: getIt<HomeCubit>()..getAllDoctors(),
+      child: const HomeScreen(),
+    ),
+    BlocProvider.value(
+      value: getIt<BookingAppointmentCubit>()..getStoredAppointments(),
+      child: const BookingScreen(),
+    ),
     const ProfileScreen(),
   ];
 

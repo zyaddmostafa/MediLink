@@ -19,7 +19,7 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
@@ -44,7 +44,6 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
           dividerColor: Colors.grey.shade300,
           tabs: const [
             Tab(text: 'Upcoming'),
-            Tab(text: 'Completed'),
             Tab(text: 'Cancelled'),
           ],
         ),

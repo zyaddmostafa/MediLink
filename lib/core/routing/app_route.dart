@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/booking/presentation/screen/booking_screen.dart';
 import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../../feature/checkout/presentation/screens/appointment_detail_screen.dart';
@@ -55,12 +56,7 @@ class AppRoute {
         );
 
       case Routes.mainNavigation:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(getIt())..getAllDoctors(),
-            child: const MainNavigationScreen(),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => const MainNavigationScreen());
 
       case Routes.homeScreen:
         return MaterialPageRoute(
@@ -124,8 +120,8 @@ class AppRoute {
         final AppointmentDetailsModel appointmentDetails =
             args as AppointmentDetailsModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => BookingAppointmentCubit(getIt()),
+          builder: (_) => BlocProvider.value(
+            value: getIt<BookingAppointmentCubit>(),
             child: AppointmentPaymentMethodsScreen(
               appointmentDetails: appointmentDetails,
             ),
@@ -154,6 +150,14 @@ class AppRoute {
               walletType: mobileData['walletType'],
               appointmentDetails: mobileData['appointmentDetails'],
             ),
+          ),
+        );
+
+      case Routes.bookingScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<BookingAppointmentCubit>(),
+            child: const BookingScreen(),
           ),
         );
       default:
