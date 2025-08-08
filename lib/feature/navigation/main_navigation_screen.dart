@@ -25,7 +25,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       child: const HomeScreen(),
     ),
     BlocProvider.value(
-      value: getIt<BookingAppointmentCubit>()..getStoredAppointments(),
+      value: getIt<BookingAppointmentCubit>(),
       child: const BookingScreen(),
     ),
     const ProfileScreen(),

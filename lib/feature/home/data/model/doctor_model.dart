@@ -1,24 +1,40 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:hive/hive.dart';
 part 'doctor_model.g.dart';
 
 @JsonSerializable()
-class DoctorModel {
+@HiveType(typeId: 0)
+class DoctorModel extends HiveObject {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final String? name;
+  @HiveField(2)
   final String? email;
+  @HiveField(3)
   final String? phone;
+  @HiveField(4)
   final String? photo;
+  @HiveField(5)
   final String? gender;
+  @HiveField(6)
   final String? address;
+  @HiveField(7)
   final String? description;
+  @HiveField(8)
   final String? degree;
+  @HiveField(9)
   final Specialization? specialization;
+  @HiveField(10)
   final City? city;
   @JsonKey(name: 'appoint_price')
+  @HiveField(11)
   final int? appointPrice;
   @JsonKey(name: 'start_time')
+  @HiveField(12)
   final String? startTime;
   @JsonKey(name: 'end_time')
+  @HiveField(13)
   final String? endTime;
 
   DoctorModel({
@@ -43,8 +59,11 @@ class DoctorModel {
 }
 
 @JsonSerializable()
-class Specialization {
+@HiveType(typeId: 1)
+class Specialization extends HiveObject {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final String? name;
 
   Specialization({this.id, this.name});
@@ -54,9 +73,13 @@ class Specialization {
 }
 
 @JsonSerializable()
-class City {
+@HiveType(typeId: 2)
+class City extends HiveObject {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final String? name;
+  @HiveField(2)
   final Governrate? governrate;
 
   City({this.id, this.name, this.governrate});
@@ -65,8 +88,11 @@ class City {
 }
 
 @JsonSerializable()
-class Governrate {
+@HiveType(typeId: 3)
+class Governrate extends HiveObject {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final String? name;
 
   Governrate({this.id, this.name});

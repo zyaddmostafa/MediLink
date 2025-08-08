@@ -5,6 +5,7 @@ import '../../feature/auth/data/apis/auth_api_service.dart';
 import '../../feature/auth/data/repos/auth_repo_impl.dart';
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
 import '../../feature/booking/data/apis/booking_appointment_api_service.dart';
+import '../../feature/booking/data/local/cancle_appoinmets_local_service.dart';
 import '../../feature/booking/data/repo/booking_appointment_repo.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../../feature/home/data/apis/home_api_service.dart';
@@ -31,8 +32,11 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<BookingAppointmentApiService>(
     () => BookingAppointmentApiService(dio),
   );
+  getIt.registerLazySingleton<CancelledAppointmentsLocalService>(
+    () => CancelledAppointmentsLocalService(),
+  );
   getIt.registerLazySingleton<BookingAppointmentRepo>(
-    () => BookingAppointmentRepo(getIt()),
+    () => BookingAppointmentRepo(getIt(), getIt()),
   );
   getIt.registerFactory<BookingAppointmentCubit>(
     () => BookingAppointmentCubit(getIt()),

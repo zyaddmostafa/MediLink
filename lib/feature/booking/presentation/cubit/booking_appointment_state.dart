@@ -28,3 +28,12 @@ final class GetStoredAppointmentsFailure extends BookingAppointmentState {
   final String errorMessage;
   GetStoredAppointmentsFailure(this.errorMessage);
 }
+
+final class CancelAppointmentLoading extends BookingAppointmentState {}
+
+final class CancelAppointmentSuccess extends BookingAppointmentState {}
+
+final class CancelAppointmentFailure extends BookingAppointmentState {
+  final String errorMessage;
+  CancelAppointmentFailure(this.errorMessage);
+}

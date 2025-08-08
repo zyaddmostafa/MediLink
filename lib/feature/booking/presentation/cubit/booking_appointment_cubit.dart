@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'dart:developer';
 
 import '../../../../core/api_helpers/api_error_model.dart';
+import '../../../home/data/model/doctor_model.dart';
 import '../../data/model/store_appointment_request.dart';
 import '../../data/model/store_appointment_response.dart';
 import '../../data/repo/booking_appointment_repo.dart';
@@ -39,6 +41,23 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
         emit(
           GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
         );
+      },
+    );
+  }
+
+  void cancelAppointment(DoctorModel doctor) async {
+    log('Cancel appointment called for doctor: ${doctor.name}');
+    emit(CancelAppointmentLoading());
+    final result = await _storeAppointmentRepo.cancelAppointment(doctor);
+
+    result.when(
+      onSuccess: (_) {
+        log('Cancel appointment successful');
+        emit(CancelAppointmentSuccess());
+      },
+      onError: (ApiErrorModel error) {
+        log('Cancel appointment failed: ${error.message}');
+        emit(CancelAppointmentFailure(error.message ?? 'An error occurred'));
       },
     );
   }

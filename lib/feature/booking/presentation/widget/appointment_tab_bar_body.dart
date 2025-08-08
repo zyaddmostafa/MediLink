@@ -28,15 +28,23 @@ class AppointmentTabBarBody extends StatelessWidget {
   _upcomingAppointmentBlocBuilder() {
     return BlocBuilder<BookingAppointmentCubit, BookingAppointmentState>(
       builder: (context, state) {
+        // Refresh data after cancellation
+        if (state is CancelAppointmentSuccess) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            context.read<BookingAppointmentCubit>().getStoredAppointments();
+          });
+        }
+
         if (state is GetStoredAppointmentsLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetStoredAppointmentsFailure) {
           return Center(child: Text(state.errorMessage));
         } else if (state is GetStoredAppointmentsSuccess) {
-          // Use the appointments from the state
           return UpcomingAppointmentListView(appointments: state.response);
         }
-        return const SizedBox.shrink();
+
+        // Show loading initially while waiting for data
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
