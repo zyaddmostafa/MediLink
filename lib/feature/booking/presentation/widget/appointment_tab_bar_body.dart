@@ -30,9 +30,7 @@ class AppointmentTabBarBody extends StatelessWidget {
       builder: (context, state) {
         // Refresh data after cancellation
         if (state is CancelAppointmentSuccess) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            context.read<BookingAppointmentCubit>().getStoredAppointments();
-          });
+          context.read<BookingAppointmentCubit>().getFilteredAppointments();
         }
 
         if (state is GetStoredAppointmentsLoading) {

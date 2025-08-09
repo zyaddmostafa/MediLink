@@ -18,7 +18,7 @@ class CancelAppointmentBlocListener extends StatelessWidget {
           current is CancelAppointmentSuccess ||
           current is CancelAppointmentFailure,
 
-      listener: (context, state) {
+      listener: (context, state) async {
         log(
           'CancelAppointmentBlocListener: State changed to ${state.runtimeType}',
         );
@@ -35,7 +35,7 @@ class CancelAppointmentBlocListener extends StatelessWidget {
           log('CancelAppointmentBlocListener: Showing success dialog');
           // Show success dialog
 
-          CustomDialog.showConfirmationDialog(
+          await CustomDialog.showConfirmationDialog(
             context: context,
             title: 'Successfully',
             message: 'Appointment cancelled successfully',
@@ -47,9 +47,11 @@ class CancelAppointmentBlocListener extends StatelessWidget {
             'CancelAppointmentBlocListener: Failure state received: ${state.errorMessage}',
           );
           // Close the loading dialog first
-          Navigator.pop(context);
-
-          // Show error snackbar
+          await CustomDialog.showErrorDialog(
+            context: context,
+            title: 'Error',
+            message: state.errorMessage,
+          );
         }
       },
       child: const SizedBox.shrink(),

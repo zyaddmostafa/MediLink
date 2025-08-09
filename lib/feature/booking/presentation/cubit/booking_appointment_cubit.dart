@@ -3,17 +3,21 @@ import 'package:meta/meta.dart';
 import 'dart:developer';
 
 import '../../../../core/api_helpers/api_error_model.dart';
-import '../../../home/data/model/doctor_model.dart';
+import '../../data/model/appoitmnet_data.dart';
 import '../../data/model/store_appointment_request.dart';
-import '../../data/model/store_appointment_response.dart';
 import '../../data/repo/booking_appointment_repo.dart';
+import '../../domain/use_case/filtered_appointment_use_case.dart';
 
 part 'booking_appointment_state.dart';
 
 class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
   final BookingAppointmentRepo _storeAppointmentRepo;
-  BookingAppointmentCubit(this._storeAppointmentRepo)
-    : super(BookingAppointmentInitial());
+  final FilteredAppointmentUseCase _filteredAppointmentUseCase;
+
+  BookingAppointmentCubit(
+    this._storeAppointmentRepo,
+    this._filteredAppointmentUseCase,
+  ) : super(BookingAppointmentInitial());
 
   void storeAppointment(StoreAppointmentRequest request) async {
     emit(StoreAppointmentLoading());
@@ -45,15 +49,36 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
     );
   }
 
-  void cancelAppointment(DoctorModel doctor) async {
-    log('Cancel appointment called for doctor: ${doctor.name}');
+  void getFilteredAppointments() async {
+    emit(GetStoredAppointmentsLoading());
+    final result = await _filteredAppointmentUseCase
+        .filteredAppointmentsFromTheCanceled();
+
+    result.when(
+      onSuccess: (filteredAppointments) {
+        log('Filtered appointments count: ${filteredAppointments.length}');
+        emit(GetStoredAppointmentsSuccess(filteredAppointments));
+      },
+      onError: (ApiErrorModel error) {
+        log('Error getting filtered appointments: ${error.message}');
+        emit(
+          GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
+        );
+      },
+    );
+  }
+
+  void cancelAppointment(AppointmentData appointment) async {
+    log('Cancel appointment called for doctor: ${appointment.doctor.name}');
     emit(CancelAppointmentLoading());
-    final result = await _storeAppointmentRepo.cancelAppointment(doctor);
+    final result = await _storeAppointmentRepo.cancelAppointment(appointment);
 
     result.when(
       onSuccess: (_) {
-        log('Cancel appointment successful');
+        log('Cancel appointment successful - refreshing filtered appointments');
         emit(CancelAppointmentSuccess());
+        // Automatically refresh the filtered appointments list
+        getFilteredAppointments();
       },
       onError: (ApiErrorModel error) {
         log('Cancel appointment failed: ${error.message}');

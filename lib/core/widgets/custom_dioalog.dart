@@ -213,7 +213,7 @@ class CustomDialog {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(false),
+                      onPressed: () => context.pop(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),

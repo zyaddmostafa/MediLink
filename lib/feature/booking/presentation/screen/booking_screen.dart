@@ -17,12 +17,8 @@ class _BookingScreenState extends State<BookingScreen> {
   @override
   void initState() {
     super.initState();
-    // Trigger data loading when the booking screen is first initialized
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        context.read<BookingAppointmentCubit>().getStoredAppointments();
-      }
-    });
+
+    context.read<BookingAppointmentCubit>().getFilteredAppointments();
   }
 
   @override

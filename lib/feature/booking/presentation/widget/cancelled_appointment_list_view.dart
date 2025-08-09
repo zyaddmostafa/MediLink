@@ -11,7 +11,7 @@ class CancelledAppointmentListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return DoctorListView(
       isFavorite: false,
-      doctors: CancelledAppointmentsLocalService.getCancelledAppointments(),
+      doctors: CancelledAppointmentsLocalService.getCancelledDoctors(),
       buttonProperties: ButtonPropertiesModel(
         text: 'Reschedule ',
         textColor: AppColor.white,

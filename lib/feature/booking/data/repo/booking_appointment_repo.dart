@@ -5,6 +5,7 @@ import '../../../../core/api_helpers/api_result.dart';
 import '../../../home/data/model/doctor_model.dart';
 import '../apis/booking_appointment_api_service.dart';
 import '../local/cancle_appoinmets_local_service.dart';
+import '../model/appoitmnet_data.dart';
 import '../model/get_stored_appoinnmnet_response.dart';
 import '../model/store_appointment_request.dart';
 import '../model/store_appointment_response.dart';
@@ -39,10 +40,14 @@ class BookingAppointmentRepo {
     }
   }
 
-  Future<ApiResult<void>> cancelAppointment(DoctorModel doctor) async {
+  Future<ApiResult<void>> cancelAppointment(AppointmentData appointment) async {
     try {
-      log('Repo: Attempting to cancel appointment for doctor: ${doctor.name}');
-      await cancelledAppointmentsLocalService.addCancelledAppointment(doctor);
+      log(
+        'Repo: Attempting to cancel appointment for doctor: ${appointment.doctor.name}',
+      );
+      await cancelledAppointmentsLocalService.addCancelledAppointment(
+        appointment,
+      );
       log('Repo: Successfully added doctor to cancelled appointments');
       return ApiResult.success(null);
     } catch (error) {

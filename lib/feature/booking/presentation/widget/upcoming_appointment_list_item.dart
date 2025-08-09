@@ -13,7 +13,7 @@ import '../../../home/data/model/doctor_model.dart';
 import '../../../home/presentation/widgets/date_and_time.dart';
 import '../../../home/presentation/widgets/doctors/doctor_rate.dart';
 import '../../../home/presentation/widgets/doctors/doctors_card.dart';
-import '../../data/model/store_appointment_response.dart';
+import '../../data/model/appoitmnet_data.dart';
 import '../cubit/booking_appointment_cubit.dart';
 import 'cancle_appointment_bloc_listener.dart';
 
@@ -138,7 +138,7 @@ class UpcomingAppointmentListItem extends StatelessWidget {
                   onPressed: () async {
                     context.pop();
                     // Use the context cubit since it's now provided via BlocProvider.value
-                    bookingCubit.cancelAppointment(doctor);
+                    bookingCubit.cancelAppointment(appointmentsDate);
                   },
                 ),
               ),

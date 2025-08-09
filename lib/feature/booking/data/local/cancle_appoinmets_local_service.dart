@@ -2,6 +2,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:developer';
 
 import '../../../home/data/model/doctor_model.dart';
+import '../model/appoitmnet_data.dart';
+import '../model/store_appointment_response.dart';
 
 class CancelledAppointmentsLocalService {
   // Your service methods for cancelled appointments
@@ -18,7 +20,7 @@ class CancelledAppointmentsLocalService {
 
   // Adapter registration
   static void _registerAdaptersIfNeeded() {
-    // Register DoctorModel adapter (typeId: 0)
+    // Register AppointmentData adapter (typeId: 0)
     if (!Hive.isAdapterRegistered(0)) {
       Hive.registerAdapter(DoctorModelAdapter());
     }
@@ -34,11 +36,19 @@ class CancelledAppointmentsLocalService {
     if (!Hive.isAdapterRegistered(3)) {
       Hive.registerAdapter(GovernrateAdapter());
     }
+    // Register AppointmentData adapter (typeId: 4)
+    if (!Hive.isAdapterRegistered(4)) {
+      Hive.registerAdapter(AppointmentDataAdapter());
+    }
+    // Register PatientResponse adapter (typeId: 5)
+    if (!Hive.isAdapterRegistered(5)) {
+      Hive.registerAdapter(PatientResponseAdapter());
+    }
   }
 
   // Open core boxes used across the app
   static Future<void> _openCoreBoxes() async {
-    await Hive.openBox<DoctorModel>(_cancelledAppointmentsBoxName);
+    await Hive.openBox<AppointmentData>(_cancelledAppointmentsBoxName);
   }
 
   // Generic helpers
@@ -54,13 +64,13 @@ class CancelledAppointmentsLocalService {
   }
 
   // Domain-specific helpers: Cancelled Appointments
-  static Box<DoctorModel> get _cancelledAppointmentsBox =>
-      Hive.box<DoctorModel>(_cancelledAppointmentsBoxName);
+  static Box<AppointmentData> get _cancelledAppointmentsBox =>
+      Hive.box<AppointmentData>(_cancelledAppointmentsBoxName);
 
-  Future<void> addCancelledAppointment(DoctorModel appointment) async {
+  Future<void> addCancelledAppointment(AppointmentData appointment) async {
     try {
       log(
-        'LocalService: Adding cancelled appointment for doctor: ${appointment.name}',
+        'LocalService: Adding cancelled appointment for doctor: ${appointment.doctor.name}',
       );
       await _cancelledAppointmentsBox.add(appointment);
       log('LocalService: Successfully added to Hive box');
@@ -70,7 +80,7 @@ class CancelledAppointmentsLocalService {
     }
   }
 
-  static List<DoctorModel> getCancelledAppointments() {
+  static List<AppointmentData> getCancelledAppointments() {
     return _cancelledAppointmentsBox.values.toList(growable: false);
   }
 
@@ -79,6 +89,13 @@ class CancelledAppointmentsLocalService {
   }
 
   static Future<void> clearCancelledAppointments() async {
+    log('Clearing all cancelled appointments from Hive box');
     await _cancelledAppointmentsBox.clear();
+  }
+
+  static List<DoctorModel> getCancelledDoctors() {
+    return _cancelledAppointmentsBox.values
+        .map((appointment) => appointment.doctor)
+        .toList(growable: false);
   }
 }

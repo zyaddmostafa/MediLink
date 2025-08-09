@@ -1,6 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../home/data/model/doctor_model.dart';
+import 'appoitmnet_data.dart';
 
 part 'store_appointment_response.g.dart';
 
@@ -22,57 +23,4 @@ class StoreAppointmentResponse {
       _$StoreAppointmentResponseFromJson(json);
 
   Map<String, dynamic> toJson() => _$StoreAppointmentResponseToJson(this);
-}
-
-@JsonSerializable()
-class AppointmentData {
-  final int id;
-  final DoctorModel doctor;
-  final PatientResponse patient;
-  @JsonKey(name: 'appointment_time')
-  final String appointmentTime;
-  @JsonKey(name: 'appointment_end_time')
-  final String appointmentEndTime;
-  final String status;
-  final String notes;
-  @JsonKey(name: 'appointment_price')
-  final int appointmentPrice;
-
-  AppointmentData({
-    required this.id,
-    required this.doctor,
-    required this.patient,
-    required this.appointmentTime,
-    required this.appointmentEndTime,
-    required this.status,
-    required this.notes,
-    required this.appointmentPrice,
-  });
-
-  factory AppointmentData.fromJson(Map<String, dynamic> json) =>
-      _$AppointmentDataFromJson(json);
-
-  Map<String, dynamic> toJson() => _$AppointmentDataToJson(this);
-}
-
-@JsonSerializable()
-class PatientResponse {
-  final int id;
-  final String name;
-  final String email;
-  final String phone;
-  final String gender;
-
-  PatientResponse({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.phone,
-    required this.gender,
-  });
-
-  factory PatientResponse.fromJson(Map<String, dynamic> json) =>
-      _$PatientResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$PatientResponseToJson(this);
 }
