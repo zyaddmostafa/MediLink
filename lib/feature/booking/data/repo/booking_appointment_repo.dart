@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
-import '../../../home/data/model/doctor_model.dart';
 import '../apis/booking_appointment_api_service.dart';
 import '../local/cancle_appoinmets_local_service.dart';
 import '../model/appoitmnet_data.dart';
@@ -30,6 +29,16 @@ class BookingAppointmentRepo {
     }
   }
 
+  ApiResult<List<AppointmentData>> getCancelledAppointments() {
+    try {
+      final response = cancelledAppointmentsLocalService
+          .getCancelledAppointments();
+      return ApiResult.success(response);
+    } catch (e) {
+      return ApiResult.failure(ApiErrorHandler.handle(e));
+    }
+  }
+
   Future<ApiResult<GetStoredAppointmentResponse>>
   getStoredAppointments() async {
     try {
@@ -40,19 +49,25 @@ class BookingAppointmentRepo {
     }
   }
 
-  Future<ApiResult<void>> cancelAppointment(AppointmentData appointment) async {
+  Future<ApiResult<List<AppointmentData>>> cancelAppointment(
+    AppointmentData appointment,
+  ) async {
     try {
-      log(
-        'Repo: Attempting to cancel appointment for doctor: ${appointment.doctor.name}',
-      );
       await cancelledAppointmentsLocalService.addCancelledAppointment(
         appointment,
       );
-      log('Repo: Successfully added doctor to cancelled appointments');
-      return ApiResult.success(null);
+      final cancelledAppointment = cancelledAppointmentsLocalService
+          .getCancelledAppointments();
+      log('Repo: Successfully added appointment to cancelled appointments');
+      return ApiResult.success(cancelledAppointment);
     } catch (error) {
       log('Repo: Error cancelling appointment: $error');
+      log('Repo: Error type: ${error.runtimeType}');
       return ApiResult.failure(ApiErrorHandler.handle(error));
     }
+  }
+
+  Future<void> rescheduleAppointment(int id) async {
+    await cancelledAppointmentsLocalService.deleteCancelledAppointmentById(id);
   }
 }

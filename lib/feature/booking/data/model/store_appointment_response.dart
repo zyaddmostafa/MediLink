@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../home/data/model/doctor_model.dart';
 import 'appoitmnet_data.dart';
 
 part 'store_appointment_response.g.dart';

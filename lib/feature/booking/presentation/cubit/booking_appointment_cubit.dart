@@ -68,22 +68,54 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
     );
   }
 
+  void getCancelledAppointments() {
+    log('getCancelledAppointments called');
+    emit(GetCancelledAppointmentsLoading());
+
+    final result = _storeAppointmentRepo.getCancelledAppointments();
+
+    result.when(
+      onSuccess: (cancelledAppointments) {
+        log('Found ${cancelledAppointments.length} cancelled appointments');
+        emit(GetCancelledAppointmentsSuccess(cancelledAppointments));
+      },
+      onError: (ApiErrorModel error) {
+        log('Error getting cancelled appointments: ${error.message}');
+        emit(
+          GetCancelledAppointmentsFailure(error.message ?? 'An error occurred'),
+        );
+      },
+    );
+  }
+
   void cancelAppointment(AppointmentData appointment) async {
     log('Cancel appointment called for doctor: ${appointment.doctor.name}');
     emit(CancelAppointmentLoading());
     final result = await _storeAppointmentRepo.cancelAppointment(appointment);
 
     result.when(
-      onSuccess: (_) {
-        log('Cancel appointment successful - refreshing filtered appointments');
-        emit(CancelAppointmentSuccess());
-        // Automatically refresh the filtered appointments list
-        getFilteredAppointments();
+      onSuccess: (cancelledAppointment) {
+        log('Cancel appointment successful');
+        emit(CancelAppointmentSuccess(cancelledAppointment));
+        // Note: Don't refresh here - let the listener handle it
       },
       onError: (ApiErrorModel error) {
         log('Cancel appointment failed: ${error.message}');
         emit(CancelAppointmentFailure(error.message ?? 'An error occurred'));
       },
     );
+  }
+
+  void rescheduleAppointment(int id) async {
+    log('Reschedule appointment called for ID: $id');
+    emit(RescheduleAppointmentLoading());
+    try {
+      await _storeAppointmentRepo.rescheduleAppointment(id);
+      getCancelledAppointments(); // Refresh cancelled appointments
+      emit(RescheduleAppointmentSuccess());
+    } catch (e) {
+      log('Reschedule appointment failed: ${e.toString()}');
+      emit(RescheduleAppointmentFailure(e.toString()));
+    }
   }
 }

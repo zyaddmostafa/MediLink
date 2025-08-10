@@ -262,7 +262,7 @@ class CustomDialog {
   static Future<void> showLoadingDialog({
     required BuildContext context,
     String? message,
-  }) async {
+  }) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,

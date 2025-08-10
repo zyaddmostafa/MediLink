@@ -3,13 +3,12 @@ import 'dart:developer';
 
 import '../../../home/data/model/doctor_model.dart';
 import '../model/appoitmnet_data.dart';
-import '../model/store_appointment_response.dart';
 
 class CancelledAppointmentsLocalService {
   // Your service methods for cancelled appointments
   // Box names
   static const String _cancelledAppointmentsBoxName =
-      'cancelled_appointments_box';
+      'cancelled_appointment_data_box'; // Changed to avoid conflicts
 
   // Initialization
   static Future<void> init() async {
@@ -68,19 +67,10 @@ class CancelledAppointmentsLocalService {
       Hive.box<AppointmentData>(_cancelledAppointmentsBoxName);
 
   Future<void> addCancelledAppointment(AppointmentData appointment) async {
-    try {
-      log(
-        'LocalService: Adding cancelled appointment for doctor: ${appointment.doctor.name}',
-      );
-      await _cancelledAppointmentsBox.add(appointment);
-      log('LocalService: Successfully added to Hive box');
-    } catch (error) {
-      log('LocalService: Error adding to Hive: $error');
-      rethrow;
-    }
+    await _cancelledAppointmentsBox.add(appointment);
   }
 
-  static List<AppointmentData> getCancelledAppointments() {
+  List<AppointmentData> getCancelledAppointments() {
     return _cancelledAppointmentsBox.values.toList(growable: false);
   }
 
@@ -93,9 +83,18 @@ class CancelledAppointmentsLocalService {
     await _cancelledAppointmentsBox.clear();
   }
 
-  static List<DoctorModel> getCancelledDoctors() {
-    return _cancelledAppointmentsBox.values
+  static List<DoctorModel> getCancelledDoctorsByAppointments(
+    List<AppointmentData> list,
+  ) {
+    return list
         .map((appointment) => appointment.doctor)
         .toList(growable: false);
+  }
+
+  Future<void> deleteCancelledAppointmentById(int id) async {
+    log('Deleting cancelled appointment with id: $id');
+    _cancelledAppointmentsBox.values.firstWhere(
+      (appointment) => appointment.id == id,
+    );
   }
 }

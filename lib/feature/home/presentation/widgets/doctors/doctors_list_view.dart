@@ -11,6 +11,7 @@ class DoctorListView extends StatelessWidget {
   final List<DoctorModel> doctors;
   final bool shrinkWrap; // Control shrinkWrap behavior
   final ButtonPropertiesModel? buttonProperties; // Optional button properties
+  final Function(int)? onPressedWithArgument;
 
   const DoctorListView({
     super.key,
@@ -18,6 +19,7 @@ class DoctorListView extends StatelessWidget {
     required this.doctors,
     this.shrinkWrap = false,
     this.buttonProperties,
+    this.onPressedWithArgument,
   });
 
   @override
@@ -47,7 +49,11 @@ class DoctorListView extends StatelessWidget {
                 text: 'Book Appointment',
                 textColor: AppColor.primary,
                 backgroundColor: AppColor.doctorCardButton,
+                argument: index,
+
                 onPressed: () {
+                  // Call the parent callback if provided
+
                   context.pushNamed(
                     Routes.doctorInfo,
                     arguments: doctors[index].id,

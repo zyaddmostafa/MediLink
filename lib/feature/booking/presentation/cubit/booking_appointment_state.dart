@@ -31,9 +31,33 @@ final class GetStoredAppointmentsFailure extends BookingAppointmentState {
 
 final class CancelAppointmentLoading extends BookingAppointmentState {}
 
-final class CancelAppointmentSuccess extends BookingAppointmentState {}
+final class CancelAppointmentSuccess extends BookingAppointmentState {
+  final List<AppointmentData> response;
+  CancelAppointmentSuccess(this.response);
+}
 
 final class CancelAppointmentFailure extends BookingAppointmentState {
   final String errorMessage;
   CancelAppointmentFailure(this.errorMessage);
+}
+
+final class GetCancelledAppointmentsLoading extends BookingAppointmentState {}
+
+final class GetCancelledAppointmentsSuccess extends BookingAppointmentState {
+  final List<AppointmentData> response;
+  GetCancelledAppointmentsSuccess(this.response);
+}
+
+final class GetCancelledAppointmentsFailure extends BookingAppointmentState {
+  final String errorMessage;
+  GetCancelledAppointmentsFailure(this.errorMessage);
+}
+
+final class RescheduleAppointmentLoading extends BookingAppointmentState {}
+
+final class RescheduleAppointmentSuccess extends BookingAppointmentState {}
+
+final class RescheduleAppointmentFailure extends BookingAppointmentState {
+  final String errorMessage;
+  RescheduleAppointmentFailure(this.errorMessage);
 }

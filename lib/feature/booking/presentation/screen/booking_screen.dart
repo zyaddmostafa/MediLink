@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../cubit/booking_appointment_cubit.dart';
 import '../widget/appointment_tab_bar_view.dart';
+import '../widget/cancel_appointment_bloc_listener.dart';
 
-class BookingScreen extends StatefulWidget {
+class BookingScreen extends StatelessWidget {
   const BookingScreen({super.key});
-
-  @override
-  State<BookingScreen> createState() => _BookingScreenState();
-}
-
-class _BookingScreenState extends State<BookingScreen> {
-  @override
-  void initState() {
-    super.initState();
-
-    context.read<BookingAppointmentCubit>().getFilteredAppointments();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +14,17 @@ class _BookingScreenState extends State<BookingScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Column(
+          child: Stack(
             children: [
-              Text('Appointments', style: AppTextStyles.font16Bold),
-
-              verticalSpacing(24),
-
-              const Expanded(child: AppointmentTabBarView()),
+              Column(
+                children: [
+                  Text('Appointments', style: AppTextStyles.font16Bold),
+                  verticalSpacing(24),
+                  const Expanded(child: AppointmentTabBarView()),
+                ],
+              ),
+              // Place the listener at screen level so it doesn't get disposed
+              const CancelAppointmentBlocListener(),
             ],
           ),
         ),

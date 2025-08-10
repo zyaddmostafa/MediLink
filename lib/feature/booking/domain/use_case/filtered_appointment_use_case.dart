@@ -5,14 +5,18 @@ import '../../data/repo/booking_appointment_repo.dart';
 
 class FilteredAppointmentUseCase {
   final BookingAppointmentRepo _repository;
+  final CancelledAppointmentsLocalService _cancelledAppointmentsLocalService;
 
-  FilteredAppointmentUseCase(this._repository);
+  FilteredAppointmentUseCase(
+    this._repository,
+    this._cancelledAppointmentsLocalService,
+  );
 
   Future<ApiResult<List<AppointmentData>>>
   filteredAppointmentsFromTheCanceled() async {
     final filteredList = <AppointmentData>[];
-    final canceledAppointmentList =
-        CancelledAppointmentsLocalService.getCancelledAppointments();
+    final canceledAppointmentList = await _cancelledAppointmentsLocalService
+        .getCancelledAppointments();
 
     final storedAppointments = await _repository.getStoredAppointments();
 

@@ -24,8 +24,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       value: getIt<HomeCubit>()..getAllDoctors(),
       child: const HomeScreen(),
     ),
-    BlocProvider.value(
-      value: getIt<BookingAppointmentCubit>(),
+    BlocProvider(
+      create: (context) => BookingAppointmentCubit(getIt(), getIt()),
       child: const BookingScreen(),
     ),
     const ProfileScreen(),

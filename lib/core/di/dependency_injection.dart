@@ -40,9 +40,6 @@ Future<void> setupGetIt() async {
     () => BookingAppointmentRepo(getIt(), getIt()),
   );
   getIt.registerLazySingleton<FilteredAppointmentUseCase>(
-    () => FilteredAppointmentUseCase(getIt()),
-  );
-  getIt.registerFactory<BookingAppointmentCubit>(
-    () => BookingAppointmentCubit(getIt(), getIt()),
+    () => FilteredAppointmentUseCase(getIt(), getIt()),
   );
 }
