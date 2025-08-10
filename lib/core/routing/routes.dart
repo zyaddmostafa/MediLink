@@ -19,6 +19,7 @@ class Routes {
   static const String paymentGetWay = '/paymentGetWay';
   static const String paymobMobileGetway = '/paymobMobileGetway';
   static const String cashWhenArriveScreen = '/cashWhenArrive';
+  static const String bookingScreen = '/bookingScreen';
   static const String profileScreen = '/profile';
   static const String editProfileScreen = '/editProfile';
   static const String changePasswordScreen = '/changePassword';

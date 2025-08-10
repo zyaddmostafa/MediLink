@@ -1,8 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
+import '../../feature/booking/presentation/screen/booking_screen.dart';
 import '../../feature/checkout/data/model/appointment_details_model.dart';
-import '../../feature/checkout/presentation/cubit/store_appointment_cubit.dart';
+import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../../feature/checkout/presentation/screens/appointment_detail_screen.dart';
 import '../../feature/checkout/presentation/screens/appointmet_payment_methods_screen.dart';
 import '../../feature/home/data/model/category_model.dart';
@@ -55,12 +56,7 @@ class AppRoute {
         );
 
       case Routes.mainNavigation:
-        return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => HomeCubit(getIt())..getAllDoctors(),
-            child: const MainNavigationScreen(),
-          ),
-        );
+        return MaterialPageRoute(builder: (_) => const MainNavigationScreen());
 
       case Routes.homeScreen:
         return MaterialPageRoute(
@@ -124,8 +120,8 @@ class AppRoute {
         final AppointmentDetailsModel appointmentDetails =
             args as AppointmentDetailsModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (context) => StoreAppointmentCubit(getIt()),
+          builder: (_) => BlocProvider.value(
+            value: getIt<BookingAppointmentCubit>(),
             child: AppointmentPaymentMethodsScreen(
               appointmentDetails: appointmentDetails,
             ),
@@ -136,7 +132,7 @@ class AppRoute {
         final Map<String, dynamic> paymentData = args as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: getIt<StoreAppointmentCubit>(),
+            value: getIt<BookingAppointmentCubit>(),
             child: PaymobGetway(
               paymentToken: paymentData['paymentToken'],
               appointmentDetails: paymentData['appointmentDetails'],
@@ -148,12 +144,20 @@ class AppRoute {
         final Map<String, dynamic> mobileData = args as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
-            value: getIt<StoreAppointmentCubit>(),
+            value: getIt<BookingAppointmentCubit>(),
             child: PaymobMobileGetway(
               webUri: mobileData['webUri'],
               walletType: mobileData['walletType'],
               appointmentDetails: mobileData['appointmentDetails'],
             ),
+          ),
+        );
+
+      case Routes.bookingScreen:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<BookingAppointmentCubit>(),
+            child: const BookingScreen(),
           ),
         );
       default:

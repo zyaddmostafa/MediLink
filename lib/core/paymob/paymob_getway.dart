@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import '../../feature/checkout/data/model/appointment_details_model.dart';
-import '../../feature/checkout/data/model/store_appointment_request.dart';
-import '../../feature/checkout/presentation/cubit/store_appointment_cubit.dart';
+import '../../feature/booking/data/model/store_appointment_request.dart';
+import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../widgets/store_appointment_listener.dart';
 import 'paymob_constants.dart';
 
@@ -89,7 +89,7 @@ class _PaymobGetwayState extends State<PaymobGetway> {
   }
 
   void _storeAppointment(BuildContext context) {
-    final cubit = context.read<StoreAppointmentCubit>();
+    final cubit = context.read<BookingAppointmentCubit>();
     final request = StoreAppointmentRequest(
       doctorId: widget.appointmentDetails.doctorId.toString(),
       appointmentDateAndTime:

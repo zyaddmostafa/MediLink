@@ -213,7 +213,7 @@ class CustomDialog {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => Navigator.of(context).pop(false),
+                      onPressed: () => context.pop(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -262,7 +262,7 @@ class CustomDialog {
   static Future<void> showLoadingDialog({
     required BuildContext context,
     String? message,
-  }) async {
+  }) {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,

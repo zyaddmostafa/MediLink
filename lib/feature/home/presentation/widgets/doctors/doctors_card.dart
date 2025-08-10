@@ -56,6 +56,7 @@ class DoctorsCard extends StatelessWidget {
               backgroundColor: buttonProperties.backgroundColor,
               text: buttonProperties.text,
               onPressed: buttonProperties.onPressed,
+              onPressedWithArgument: buttonProperties.onPressedWithArgument,
               isLoading: buttonProperties.isLoading,
             ),
           ),
