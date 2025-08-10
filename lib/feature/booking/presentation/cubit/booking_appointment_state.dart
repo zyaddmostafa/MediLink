@@ -32,8 +32,7 @@ final class GetStoredAppointmentsFailure extends BookingAppointmentState {
 final class CancelAppointmentLoading extends BookingAppointmentState {}
 
 final class CancelAppointmentSuccess extends BookingAppointmentState {
-  final List<AppointmentData> response;
-  CancelAppointmentSuccess(this.response);
+  CancelAppointmentSuccess();
 }
 
 final class CancelAppointmentFailure extends BookingAppointmentState {

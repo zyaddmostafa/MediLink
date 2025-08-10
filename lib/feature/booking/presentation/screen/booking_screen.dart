@@ -14,16 +14,11 @@ class BookingScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Stack(
+          child: Column(
             children: [
-              Column(
-                children: [
-                  Text('Appointments', style: AppTextStyles.font16Bold),
-                  verticalSpacing(24),
-                  const Expanded(child: AppointmentTabBarView()),
-                ],
-              ),
-              // Place the listener at screen level so it doesn't get disposed
+              Text('Appointments', style: AppTextStyles.font16Bold),
+              verticalSpacing(24),
+              const Expanded(child: AppointmentTabBarView()),
               const CancelAppointmentBlocListener(),
             ],
           ),

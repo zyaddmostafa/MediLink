@@ -15,7 +15,7 @@ class FilteredAppointmentUseCase {
   Future<ApiResult<List<AppointmentData>>>
   filteredAppointmentsFromTheCanceled() async {
     final filteredList = <AppointmentData>[];
-    final canceledAppointmentList = await _cancelledAppointmentsLocalService
+    final canceledAppointmentList = _cancelledAppointmentsLocalService
         .getCancelledAppointments();
 
     final storedAppointments = await _repository.getStoredAppointments();

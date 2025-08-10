@@ -10,6 +10,18 @@ class CancelledAppointmentsLocalService {
   static const String _cancelledAppointmentsBoxName =
       'cancelled_appointment_data_box'; // Changed to avoid conflicts
 
+  // Generic helpers
+  static Future<Box<T>> openBox<T>(String boxName) async {
+    if (Hive.isBoxOpen(boxName)) {
+      return Hive.box<T>(boxName);
+    }
+    return Hive.openBox<T>(boxName);
+  }
+
+  static Box<T> box<T>(String boxName) {
+    return Hive.box<T>(boxName);
+  }
+
   // Initialization
   static Future<void> init() async {
     await Hive.initFlutter();
@@ -50,23 +62,11 @@ class CancelledAppointmentsLocalService {
     await Hive.openBox<AppointmentData>(_cancelledAppointmentsBoxName);
   }
 
-  // Generic helpers
-  static Future<Box<T>> openBox<T>(String boxName) async {
-    if (Hive.isBoxOpen(boxName)) {
-      return Hive.box<T>(boxName);
-    }
-    return Hive.openBox<T>(boxName);
-  }
-
-  static Box<T> box<T>(String boxName) {
-    return Hive.box<T>(boxName);
-  }
-
   // Domain-specific helpers: Cancelled Appointments
   static Box<AppointmentData> get _cancelledAppointmentsBox =>
       Hive.box<AppointmentData>(_cancelledAppointmentsBoxName);
 
-  Future<void> addCancelledAppointment(AppointmentData appointment) async {
+  Future<void> addCanceledAppointment(AppointmentData appointment) async {
     await _cancelledAppointmentsBox.add(appointment);
   }
 
