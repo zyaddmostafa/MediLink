@@ -3,9 +3,12 @@ import 'dart:developer';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/gender_selection_helper.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/theme/app_color.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../data/models/sing_up_form_data.dart';
 import '../widgets/gender_selection_widget.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
@@ -77,10 +80,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   CustomElevatedButton _continueToSetPasswordScreen() {
     return CustomElevatedButton(
-      text: 'Continue',
-      onPressed: () {
-        validateThenDoSignUp(context);
-      },
+      properties: ButtonPropertiesModel(
+        text: 'Continue',
+        textColor: AppColor.white,
+        backgroundColor: AppColor.primary,
+        onPressed: () {
+          validateThenDoSignUp(context);
+        },
+      ),
     );
   }
 
@@ -123,12 +130,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void validateThenDoSignUp(BuildContext context) {
     if (_formKey.currentState!.validate()) {
       // Create signup data object to pass
-      final signupData = {
-        'name': nameController.text,
-        'email': emailController.text,
-        'phone': phoneController.text,
-        'gender': GenderSelectionHelper.selectedGender(selectedGender),
-      };
+      final signupData = SignUpFormData(
+        name: nameController.text,
+        email: emailController.text,
+        phone: phoneController.text,
+        gender: GenderSelectionHelper.selectedGender(selectedGender),
+      );
 
       context.pushNamed(Routes.setPasswordScreen, arguments: signupData);
     }

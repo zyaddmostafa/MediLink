@@ -2,13 +2,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
+import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/theme/app_color.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/models/login_request_body.dart';
 import '../cubit/auth_cubit.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
-import '../widgets/login_bloc_listener.dart';
+import '../widgets/auth_bloc_listener.dart';
 import '../widgets/login_screen_form.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       verticalSpacing(32),
                       _dontHaveAnAccount(context),
                       verticalSpacing(32),
-                      const LoginBlocListener(),
+                      const AuthBlocListener(),
                     ],
                   ),
                 ),
@@ -72,11 +74,15 @@ class _LoginScreenState extends State<LoginScreen> {
   CustomElevatedButton _loginElevatedButton(BuildContext context) {
     final authCubit = context.watch<AuthCubit>();
     return CustomElevatedButton(
-      text: 'Login',
-      onPressed: () {
-        validateThenDoLogin(context);
-      },
-      isLoading: authCubit.state is LoginLoading,
+      properties: ButtonPropertiesModel(
+        text: 'Login',
+        textColor: AppColor.white,
+        backgroundColor: AppColor.primary,
+        onPressed: () {
+          validateThenDoLogin(context);
+        },
+        isLoading: authCubit.state is LoginLoading,
+      ),
     );
   }
 

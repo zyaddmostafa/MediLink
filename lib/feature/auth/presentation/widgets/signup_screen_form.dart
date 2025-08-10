@@ -26,7 +26,7 @@ class SignupScreenForm extends StatelessWidget {
         children: [
           LabelAndTextField(
             label: 'Name',
-            textFormField: CustomTextFromField(
+            textFormField: CustomTextFormField(
               hintText: 'Enter your name',
               controller: nameController,
               validator: (value) {
@@ -37,7 +37,7 @@ class SignupScreenForm extends StatelessWidget {
           verticalSpacing(24),
           LabelAndTextField(
             label: 'Email',
-            textFormField: CustomTextFromField(
+            textFormField: CustomTextFormField(
               hintText: 'Enter your email',
               controller: emailController,
               validator: (value) {
@@ -48,7 +48,7 @@ class SignupScreenForm extends StatelessWidget {
           verticalSpacing(24),
           LabelAndTextField(
             label: 'Phone',
-            textFormField: CustomTextFromField(
+            textFormField: CustomTextFormField(
               hintText: 'Enter your phone number with country code',
               controller: phoneController,
               validator: (value) {

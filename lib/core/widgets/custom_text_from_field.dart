@@ -1,27 +1,30 @@
 import '../theme/app_color.dart';
 import 'package:flutter/material.dart';
 
-class CustomTextFromField extends StatelessWidget {
+class CustomTextFormField extends StatelessWidget {
   final String hintText;
   final TextInputType? keyboardType;
-  final TextEditingController controller;
-  final String? Function(String?) validator;
-  const CustomTextFromField({
+  final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final int? maxLines;
+  const CustomTextFormField({
     super.key,
     required this.hintText,
     this.keyboardType = TextInputType.text,
-    required this.controller,
-    required this.validator,
+    this.controller,
+    this.validator,
+    this.maxLines = 1,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       keyboardType: keyboardType,
       controller: controller,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-
+      maxLines: maxLines,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'app_color.dart';
 import 'app_text_styles.dart';
 
+/// i'm zyad and i will update the app theme to improve the UI consistency and user experience.
 class AppTheme {
   // Light Theme
   static ThemeData get lightTheme {
@@ -26,7 +27,7 @@ class AppTheme {
       //   ),
 
       // Scaffold Background
-      scaffoldBackgroundColor: const Color(0xFFF8F9FA),
+      scaffoldBackgroundColor: Colors.white,
 
       // Text Theme
       textTheme: TextTheme(
@@ -107,7 +108,7 @@ class AppTheme {
       //   ),
 
       // Scaffold Background
-      scaffoldBackgroundColor: const Color(0xFF121212),
+      scaffoldBackgroundColor: const Color(0xFF232528),
 
       // Card Theme
 

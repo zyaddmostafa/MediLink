@@ -10,6 +10,12 @@ class AppColor {
   static const Color lightGrey = Color(0xFFFAFAFC);
   static const Color blueGrey = Color(0xFFF4F4F6);
   static const Color veryLightGrey = Color(0xFFF0F4FB);
+  static const Color cardsTitleColor = Color(0xFFF1F4F6);
   static const Color doctorCardSubtitle = Color(0xFFAAB6C3);
+  static const Color cardDarkModeColor = Color(0xFF2B2F37);
   static const Color doctorCardButton = Color(0xFFE8F0FF);
+  static const Color doctorCardButtonDarkMode = Color(0xFF545C6B);
+  static const Color divider = Color(0xFFF1F2F6);
+  static const Color datePickerBorder = Color(0xFFF9FAFB);
+  static const Color shadowTextColor = Color(0xFFC0D4FB);
 }

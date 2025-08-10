@@ -16,7 +16,7 @@ class DateAndTime extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         SvgPicture.asset(
-          Assets.assetsSvgsCalender,
+          Assets.svgsCalender,
           width: 18.r,
           height: 18.r,
           colorFilter: const ColorFilter.mode(AppColor.white, BlendMode.srcIn),
@@ -28,7 +28,7 @@ class DateAndTime extends StatelessWidget {
         ),
         horizontalSpacing(24),
         SvgPicture.asset(
-          Assets.assetsSvgsTime,
+          Assets.svgsTime,
           width: 18.r,
           height: 18.r,
           colorFilter: const ColorFilter.mode(AppColor.white, BlendMode.srcIn),

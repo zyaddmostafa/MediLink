@@ -40,6 +40,12 @@ test_output
 .pub/
 /build/
 
+# Code generation files
+*.g.dart
+*.freezed.dart
+*.gr.dart
+*.config.dart
+
 # Symbolication related
 app.*.symbols
 

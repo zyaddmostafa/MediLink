@@ -16,18 +16,19 @@ class HomeHeader extends StatelessWidget {
     return Row(
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Welcome Back',
-              style: AppTextStyles.font14Regular.copyWith(color: AppColor.grey),
+              style: AppTextStyles.font14Medium.copyWith(color: AppColor.grey),
             ),
-            Text('Zyad Mostafa', style: AppTextStyles.font16Medium),
+            Text('Zyad Mostafa', style: AppTextStyles.font18Bold),
           ],
         ),
         const Spacer(),
         GestureDetector(
           onTap: onSearchTap,
-          child: SvgPicture.asset(Assets.assetsSvgsSearch),
+          child: SvgPicture.asset(Assets.svgsSearch),
         ),
         horizontalSpacing(24),
         GestureDetector(
