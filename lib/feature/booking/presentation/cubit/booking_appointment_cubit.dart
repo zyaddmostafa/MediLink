@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'dart:developer';
-
 import '../../../../core/api_helpers/api_error_model.dart';
 import '../../data/model/appoitmnet_data.dart';
 import '../../data/model/store_appointment_request.dart';
@@ -56,11 +54,9 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
 
     result.when(
       onSuccess: (filteredAppointments) {
-        log('Filtered appointments count: ${filteredAppointments.length}');
         emit(GetStoredAppointmentsSuccess(filteredAppointments));
       },
       onError: (ApiErrorModel error) {
-        log('Error getting filtered appointments: ${error.message}');
         emit(
           GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
         );
@@ -69,52 +65,35 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
   }
 
   void getCancelledAppointments() {
-    log('getCancelledAppointments called');
     emit(GetCancelledAppointmentsLoading());
 
-    final result = _storeAppointmentRepo.getCancelledAppointments();
-
-    result.when(
-      onSuccess: (cancelledAppointments) {
-        log('Found ${cancelledAppointments.length} cancelled appointments');
-        emit(GetCancelledAppointmentsSuccess(cancelledAppointments));
-      },
-      onError: (ApiErrorModel error) {
-        log('Error getting cancelled appointments: ${error.message}');
-        emit(
-          GetCancelledAppointmentsFailure(error.message ?? 'An error occurred'),
-        );
-      },
-    );
+    try {
+      final result = _storeAppointmentRepo.getCancelledAppointments();
+      emit(GetCancelledAppointmentsSuccess(result));
+    } catch (e) {
+      emit(GetCancelledAppointmentsFailure(e.toString()));
+    }
   }
 
   void cancelAppointment(AppointmentData appointment) async {
-    log('Cancel appointment called for doctor: ${appointment.doctor.name}');
     emit(CancelAppointmentLoading());
-    final result = await _storeAppointmentRepo.cancelAppointment(appointment);
-
-    result.when(
-      onSuccess: (cancelledAppointment) {
-        log('Cancel appointment successful');
-        emit(CancelAppointmentSuccess(cancelledAppointment));
-        // Note: Don't refresh here - let the listener handle it
-      },
-      onError: (ApiErrorModel error) {
-        log('Cancel appointment failed: ${error.message}');
-        emit(CancelAppointmentFailure(error.message ?? 'An error occurred'));
-      },
-    );
+    try {
+      await _storeAppointmentRepo.addCanceledAppointment(appointment);
+      // Refresh cancelled appointments
+      emit(CancelAppointmentSuccess());
+      getCancelledAppointments();
+    } catch (e) {
+      emit(CancelAppointmentFailure(e.toString()));
+    }
   }
 
   void rescheduleAppointment(int id) async {
-    log('Reschedule appointment called for ID: $id');
     emit(RescheduleAppointmentLoading());
     try {
       await _storeAppointmentRepo.rescheduleAppointment(id);
       getCancelledAppointments(); // Refresh cancelled appointments
       emit(RescheduleAppointmentSuccess());
     } catch (e) {
-      log('Reschedule appointment failed: ${e.toString()}');
       emit(RescheduleAppointmentFailure(e.toString()));
     }
   }

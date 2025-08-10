@@ -32,7 +32,7 @@ class UpcomingAppointmentListItem extends StatelessWidget {
           children: List.generate(
             2,
             (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 24),
+              padding: const EdgeInsets.only(bottom: 12),
               child: DoctorsCard(
                 doctor: appointmentsDate.doctor,
                 buttonProperties: ButtonPropertiesModel(

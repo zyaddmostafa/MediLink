@@ -36,7 +36,8 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
 
     final cubit = context.read<BookingAppointmentCubit>();
 
-    if (_tabController.index == 0) {
+    if (_tabController.index == 0 &&
+        cubit.state is GetStoredAppointmentsSuccess) {
       // Upcoming tab selected
       cubit.getFilteredAppointments();
     } else if (_tabController.index == 1) {
