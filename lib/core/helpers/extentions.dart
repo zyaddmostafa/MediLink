@@ -19,7 +19,7 @@ extension Navigation on BuildContext {
     );
   }
 
-  void pop() => Navigator.of(this).pop();
+  void pop() => Navigator.pop(this);
 }
 
 extension StringExtention on String? {

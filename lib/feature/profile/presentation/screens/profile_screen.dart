@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/model/button_properties_model.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_dioalog.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -119,7 +121,16 @@ class ProfileSreenHeader extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            // Handle edit profile action
+            CustomDialog.showConfirmationDialog(
+              context: context,
+              title: 'Edit Profile',
+              message:
+                  'You Dont Have to Update The Password To Update the Account Information Just Update The Rest',
+              onConfirm: () {
+                context.pop();
+                context.pushNamed(Routes.editProfileScreen);
+              },
+            );
           },
           child: const Icon(
             FontAwesomeIcons.penToSquare,

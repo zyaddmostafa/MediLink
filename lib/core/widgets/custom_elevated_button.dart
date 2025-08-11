@@ -13,7 +13,7 @@ class CustomElevatedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 56),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-        backgroundColor: properties.backgroundColor,
+        backgroundColor: properties.backgroundColor ?? AppColor.primary,
       ),
       onPressed: properties.isLoading == true
           ? null
@@ -32,7 +32,7 @@ class CustomElevatedButton extends StatelessWidget {
           : Text(
               properties.text!,
               style: AppTextStyles.font16Bold.copyWith(
-                color: properties.textColor,
+                color: properties.textColor ?? AppColor.white,
               ),
             ),
     );
