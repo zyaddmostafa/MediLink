@@ -1,12 +1,10 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
-
 import 'core/di/dependency_injection.dart';
 import 'core/helpers/bloc_observer.dart';
-
 import 'core/helpers/constants.dart';
 import 'core/helpers/shared_pref_helper.dart';
+import 'core/notification/firebase_messaging_config.dart';
 import 'doctor_app.dart';
 import 'feature/booking/data/local/cancle_appoinmets_local_service.dart';
 import 'firebase_options.dart';
@@ -20,6 +18,7 @@ void main() async {
   await setupGetIt();
   await CancelledAppointmentsLocalService.init();
   checkUserLoggedIn();
+  FirebaseMessagingConfig().configNotification();
 
   runApp(const DoctorApp());
 }
