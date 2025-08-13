@@ -40,6 +40,8 @@ class Assets {
 
   static const String imagesHeartBackgroundShadow = "assets/images/heart_background_shadow.png";
 
+  static const String imagesUser = "assets/images/user.png";
+
   static const String lottieNoSearchResult = "assets/lottie/no_search_result.json";
 
   static const String svgs3dots = "assets/svgs/3dots.svg";

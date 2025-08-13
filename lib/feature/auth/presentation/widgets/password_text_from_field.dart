@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 class PasswordTextFormField extends StatefulWidget {
   final TextEditingController controller;
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
   final String hintText;
 
   const PasswordTextFormField({
     super.key,
     required this.hintText,
     required this.controller,
-    required this.validator,
+    this.validator,
   });
 
   @override

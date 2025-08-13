@@ -21,7 +21,8 @@ class HomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: HomeHeader(
-                onSearchTap: () => context.pushNamed(Routes.searchScreen),
+                onNotificationTap: () =>
+                    context.pushNamed(Routes.notificationScreen),
                 onFavoriteTap: () => context.pushNamed(Routes.favoriteScreen),
               ),
             ),

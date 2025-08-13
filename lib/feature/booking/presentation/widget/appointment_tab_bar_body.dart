@@ -1,15 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
 import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/skeletonizer_dummy_data.dart';
+import '../../../../core/widgets/keep_alive_wrapper.dart';
 import '../../../../core/widgets/no_result_widget.dart';
 import '../../data/local/cancle_appoinmets_local_service.dart';
 import '../cubit/booking_appointment_cubit.dart';
-import 'cancelled_appointment_list_view.dart';
+import 'canceled_Appoitmnet_list_view.dart';
 import 'upcoming_appointment_list_view.dart';
 
 class AppointmentTabBarBody extends StatelessWidget {
@@ -22,11 +20,8 @@ class AppointmentTabBarBody extends StatelessWidget {
     return TabBarView(
       controller: tabController,
       children: [
-        // Upcoming appointments with keep alive
-        _upcomingAppointmentBlocBuilder(),
-
-        // Cancelled appointments with keep alive
-        _cancelledAppointmentBlocBuilder(),
+        KeepAliveWrapper(child: _upcomingAppointmentBlocBuilder()),
+        KeepAliveWrapper(child: _cancelledAppointmentBlocBuilder()),
       ],
     );
   }
@@ -42,7 +37,7 @@ class AppointmentTabBarBody extends StatelessWidget {
         if (state is GetCancelledAppointmentsLoading) {
           return Skeletonizer(
             enabled: true,
-            child: CancelledAppointmentListView(
+            child: CanceledAppoitmenttListView(
               cancelledDoctors: generateSkeletonDoctors(),
               cancelledAppointments:
                   SkeletonizerDummyData.dummyCancelledAppointments,
@@ -51,7 +46,6 @@ class AppointmentTabBarBody extends StatelessWidget {
         }
 
         if (state is GetCancelledAppointmentsFailure) {
-          log('❌ Showing failure state: ${state.errorMessage}');
           return Center(child: Text('Error: ${state.errorMessage}'));
         }
 
@@ -62,7 +56,7 @@ class AppointmentTabBarBody extends StatelessWidget {
                 cancelledAppointments,
               );
           if (cancelledAppointments.isNotEmpty) {
-            return CancelledAppointmentListView(
+            return CanceledAppoitmenttListView(
               cancelledDoctors: cancelledDoctors,
               cancelledAppointments: cancelledAppointments,
             );
@@ -73,9 +67,7 @@ class AppointmentTabBarBody extends StatelessWidget {
           }
         }
 
-        return Center(
-          child: Text('Empty state - Current: ${state.runtimeType}'),
-        );
+        return const SizedBox.shrink();
       },
     );
   }
@@ -89,7 +81,6 @@ class AppointmentTabBarBody extends StatelessWidget {
           current is GetStoredAppointmentsLoading,
       builder: (context, state) {
         if (state is GetStoredAppointmentsLoading) {
-          // Show skeleton loading with dummy data
           return Skeletonizer(
             enabled: true,
             child: UpcomingAppointmentListView(

@@ -19,7 +19,7 @@ class BottomNavBar extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(color: AppColor.primary),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+        padding: const EdgeInsets.only(bottom: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -39,7 +39,7 @@ class BottomNavBar extends StatelessWidget {
             ),
 
             NavItem(
-              index: 3,
+              index: 2,
               iconPath: Assets.svgsProfile,
               label: 'Profile',
               currentIndex: currentIndex,

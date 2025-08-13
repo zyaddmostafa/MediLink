@@ -22,5 +22,5 @@ class Routes {
   static const String bookingScreen = '/bookingScreen';
   static const String profileScreen = '/profile';
   static const String editProfileScreen = '/editProfile';
-  static const String changePasswordScreen = '/changePassword';
+  static const String notificationScreen = '/notification';
 }

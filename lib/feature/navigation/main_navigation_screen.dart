@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/di/dependency_injection.dart';
-import '../../core/theme/app_text_styles.dart';
 import '../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../booking/presentation/screen/booking_screen.dart';
 import '../home/presentation/cubit/home_cubit.dart';
 import '../home/presentation/screens/home_screen.dart';
+import '../profile/presentation/screens/profile_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -24,6 +24,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       value: getIt<HomeCubit>()..getAllDoctors(),
       child: const HomeScreen(),
     ),
+
     BlocProvider(
       create: (context) => BookingAppointmentCubit(getIt(), getIt()),
       child: const BookingScreen(),
@@ -62,24 +63,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           currentIndex: _currentIndex,
           onTabTapped: _onTabTapped,
         ),
-      ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile', style: AppTextStyles.font18Bold),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: const Center(
-        child: Text('Profile Screen', style: TextStyle(fontSize: 24)),
       ),
     );
   }

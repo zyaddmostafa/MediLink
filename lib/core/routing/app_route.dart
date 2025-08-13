@@ -12,11 +12,13 @@ import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/presentation/screens/doctor_info_screen.dart';
 import '../../feature/home/presentation/screens/doctors_by_category_screen.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
+import '../../feature/home/presentation/screens/notification_screen.dart';
 import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
 import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
 import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
 import '../../feature/navigation/main_navigation_screen.dart';
+import '../../feature/profile/presentation/screens/edit_profile_screen.dart';
 import '../di/dependency_injection.dart';
 import '../paymob/paymob_getway.dart';
 import '../paymob/paymob_mobile_getway.dart';
@@ -160,6 +162,11 @@ class AppRoute {
             child: const BookingScreen(),
           ),
         );
+
+      case Routes.editProfileScreen:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+      case Routes.notificationScreen:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
       default:
         return null;
     }
