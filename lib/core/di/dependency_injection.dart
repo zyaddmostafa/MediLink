@@ -11,6 +11,8 @@ import '../../feature/booking/domain/use_case/filtered_appointment_use_case.dart
 import '../../feature/home/data/apis/home_api_service.dart';
 import '../../feature/home/data/repo/home_repo_impl.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
+import '../../feature/profile/data/apis/user_api_service.dart';
+import '../../feature/profile/data/repo/user_repo.dart';
 import '../api_helpers/dio_factory.dart';
 
 final getIt = GetIt.instance;
@@ -41,4 +43,8 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<FilteredAppointmentUseCase>(
     () => FilteredAppointmentUseCase(getIt(), getIt()),
   );
+
+  // user dependencies
+  getIt.registerLazySingleton<UserApiService>(() => UserApiService(dio));
+  getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt()));
 }
