@@ -12,6 +12,7 @@ import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/presentation/screens/doctor_info_screen.dart';
 import '../../feature/home/presentation/screens/doctors_by_category_screen.dart';
 import '../../feature/home/presentation/screens/favorite_screen.dart';
+import '../../feature/home/presentation/screens/notification_screen.dart';
 import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
 import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
@@ -164,7 +165,8 @@ class AppRoute {
 
       case Routes.editProfileScreen:
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
-
+      case Routes.notificationScreen:
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
       default:
         return null;
     }
