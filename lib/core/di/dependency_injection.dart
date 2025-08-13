@@ -11,6 +11,7 @@ import '../../feature/booking/domain/use_case/filtered_appointment_use_case.dart
 import '../../feature/home/data/apis/home_api_service.dart';
 import '../../feature/home/data/repo/home_repo_impl.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
+import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/profile/data/apis/user_api_service.dart';
 import '../../feature/profile/data/repo/user_repo.dart';
 import '../api_helpers/dio_factory.dart';
@@ -35,7 +36,7 @@ Future<void> setupGetIt() async {
     () => BookingAppointmentApiService(dio),
   );
   getIt.registerLazySingleton<CancelledAppointmentsLocalService>(
-    () => CancelledAppointmentsLocalService(),
+    () => CancelledAppointmentsLocalService.instance,
   );
   getIt.registerLazySingleton<BookingAppointmentRepo>(
     () => BookingAppointmentRepo(getIt(), getIt()),
@@ -47,4 +48,9 @@ Future<void> setupGetIt() async {
   // user dependencies
   getIt.registerLazySingleton<UserApiService>(() => UserApiService(dio));
   getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt()));
+
+  // notification dependencies
+  getIt.registerLazySingleton<NotificationLocalService>(
+    () => NotificationLocalService(),
+  );
 }

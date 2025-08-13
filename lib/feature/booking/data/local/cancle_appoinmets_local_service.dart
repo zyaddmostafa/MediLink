@@ -1,100 +1,73 @@
-import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:developer';
 
+import '../../../../core/hive/hive_service.dart';
 import '../../../home/data/model/doctor_model.dart';
 import '../model/appoitmnet_data.dart';
 
-class CancelledAppointmentsLocalService {
-  // Your service methods for cancelled appointments
-  // Box names
-  static const String _cancelledAppointmentsBoxName =
-      'cancelled_appointment_data_box'; // Changed to avoid conflicts
+class CancelledAppointmentsLocalService extends HiveService<AppointmentData> {
+  // Singleton pattern
+  CancelledAppointmentsLocalService._();
+  static CancelledAppointmentsLocalService instance =
+      CancelledAppointmentsLocalService._();
 
-  // Generic helpers
-  static Future<Box<T>> openBox<T>(String boxName) async {
-    if (Hive.isBoxOpen(boxName)) {
-      return Hive.box<T>(boxName);
-    }
-    return Hive.openBox<T>(boxName);
-  }
+  @override
+  String get boxName => 'cancelled_appointment_data_box';
 
-  static Box<T> box<T>(String boxName) {
-    return Hive.box<T>(boxName);
-  }
-
-  // Initialization
-  static Future<void> init() async {
-    await Hive.initFlutter();
-    _registerAdaptersIfNeeded();
-    await _openCoreBoxes();
-  }
-
-  // Adapter registration
-  static void _registerAdaptersIfNeeded() {
-    // Register AppointmentData adapter (typeId: 0)
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(DoctorModelAdapter());
-    }
-    // Register Specialization adapter (typeId: 1)
-    if (!Hive.isAdapterRegistered(1)) {
-      Hive.registerAdapter(SpecializationAdapter());
-    }
-    // Register City adapter (typeId: 2)
-    if (!Hive.isAdapterRegistered(2)) {
-      Hive.registerAdapter(CityAdapter());
-    }
-    // Register Governrate adapter (typeId: 3)
-    if (!Hive.isAdapterRegistered(3)) {
-      Hive.registerAdapter(GovernrateAdapter());
-    }
-    // Register AppointmentData adapter (typeId: 4)
-    if (!Hive.isAdapterRegistered(4)) {
-      Hive.registerAdapter(AppointmentDataAdapter());
-    }
-    // Register PatientResponse adapter (typeId: 5)
-    if (!Hive.isAdapterRegistered(5)) {
-      Hive.registerAdapter(PatientResponseAdapter());
-    }
-  }
-
-  // Open core boxes used across the app
-  static Future<void> _openCoreBoxes() async {
-    await Hive.openBox<AppointmentData>(_cancelledAppointmentsBoxName);
-  }
-
-  // Domain-specific helpers: Cancelled Appointments
-  static Box<AppointmentData> get _cancelledAppointmentsBox =>
-      Hive.box<AppointmentData>(_cancelledAppointmentsBoxName);
-
+  /// Add a cancelled appointment
   Future<void> addCanceledAppointment(AppointmentData appointment) async {
-    await _cancelledAppointmentsBox.add(appointment);
+    await add(appointment);
+    log('Added cancelled appointment: ${appointment.id}');
   }
 
+  /// Get all cancelled appointments
   List<AppointmentData> getCancelledAppointments() {
-    return _cancelledAppointmentsBox.values.toList(growable: false);
+    return getAll();
   }
 
-  static Future<void> deleteCancelledAppointmentAt(int index) async {
-    await _cancelledAppointmentsBox.deleteAt(index);
+  /// Delete cancelled appointment at specific index
+  Future<void> deleteCancelledAppointmentAt(int index) async {
+    await deleteAt(index);
+    log('Deleted cancelled appointment at index: $index');
   }
 
-  static Future<void> clearCancelledAppointments() async {
-    log('Clearing all cancelled appointments from Hive box');
-    await _cancelledAppointmentsBox.clear();
+  /// Clear all cancelled appointments
+  Future<void> clearCancelledAppointments() async {
+    await clear();
   }
 
+  /// Get doctors from cancelled appointments
   static List<DoctorModel> getCancelledDoctorsByAppointments(
-    List<AppointmentData> list,
+    List<AppointmentData> appointments,
   ) {
-    return list
+    return appointments
         .map((appointment) => appointment.doctor)
         .toList(growable: false);
   }
 
+  /// Delete cancelled appointment by ID
   Future<void> deleteCancelledAppointmentById(int id) async {
-    log('Deleting cancelled appointment with id: $id');
-    _cancelledAppointmentsBox.values.firstWhere(
-      (appointment) => appointment.id == id,
-    );
+    log('Attempting to delete cancelled appointment with id: $id');
+
+    // Find and delete the appointment with the matching ID
+    final appointments = getAllValues().toList();
+    for (int i = 0; i < appointments.length; i++) {
+      if (appointments[i].id == id) {
+        await deleteAt(i);
+        log('Successfully deleted cancelled appointment with id: $id');
+        return;
+      }
+    }
+
+    log('No cancelled appointment found with id: $id');
+  }
+
+  /// Find cancelled appointment by ID
+  AppointmentData? findCancelledAppointmentById(int id) {
+    return findFirst((appointment) => appointment.id == id);
+  }
+
+  /// Get cancelled appointments by doctor ID
+  List<AppointmentData> getCancelledAppointmentsByDoctorId(int doctorId) {
+    return findWhere((appointment) => appointment.doctor.id == doctorId);
   }
 }

@@ -16,7 +16,7 @@ class NoResultWidget extends StatelessWidget {
         LottieBuilder.asset(Assets.lottieNoSearchResult),
         verticalSpacing(24),
 
-        Text(message, style: AppTextStyles.font16Medium),
+        Text(message, style: AppTextStyles.font16SemiBold),
       ],
     );
   }

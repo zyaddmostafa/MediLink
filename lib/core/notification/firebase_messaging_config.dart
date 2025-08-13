@@ -4,6 +4,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../../feature/home/data/local/notification_local_service.dart';
+import '../../feature/home/data/model/notification_model.dart';
+
 class FirebaseMessagingConfig {
   // Create an instance of FlutterLocalNotificationsPlugin
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -53,36 +56,93 @@ class FirebaseMessagingConfig {
       // Handle the the payload
       FirebaseMessaging.instance.getInitialMessage().then((
         RemoteMessage? message,
-      ) {
+      ) async {
         if (message != null) {
-          log(
-            "Initial message: ${message.notification?.title} - ${message.notification?.body}",
-          );
+          final String title = message.notification?.title ?? '';
+          final String body = message.notification?.body ?? '';
+          final DateTime timestamp = DateTime.now();
+
+          log("Initial message: $title - $body");
+
+          // Save initial notification locally
+          try {
+            final notificationLocalService = NotificationLocalService();
+            final localNotification = NotificationModel(
+              title: title,
+              body: body,
+              timestamp: timestamp,
+            );
+
+            await notificationLocalService.addNotification(localNotification);
+            log("Initial notification saved locally: $title");
+          } catch (e) {
+            log("Failed to save initial notification locally: $e");
+          }
+
           // handleNotification(navigatorKey.currentContext!, message.data);
         }
       });
       // Listen for foreground messages that are received while the app is in the foreground
-      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         final RemoteNotification notification = message.notification!;
+        final String title = message.notification?.title ?? '';
+        final String body = notification.body ?? '';
+        final DateTime timestamp = DateTime.now();
 
-        final body = notification.body;
+        log("onMessage: $title - $body");
 
-        log(
-          "onMessage: ${message.notification?.title} - ${message.notification?.body}",
-        );
-        showNotification(
-          title: message.notification?.title ?? '',
-          desc: body ?? '',
-        );
-        // handleNotification(navigatorKey.currentContext!, message.data);
+        // Save notification locally using the service
+        await _saveNotificationLocal(title, body, timestamp);
+
+        // Show the notification to user
+        showNotification(title: title, desc: body);
       });
       // Listen for messages that are received when the app is in the background
+      FirebaseMessaging.onMessageOpenedApp.listen((
+        RemoteMessage message,
+      ) async {
+        final String title = message.notification?.title ?? '';
+        final String body = message.notification?.body ?? '';
+        final DateTime timestamp = DateTime.now();
 
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        log(
-          "onMessageOpenedApp: ${message.notification?.title} - ${message.notification?.body}",
-        );
+        log("onMessageOpenedApp: $title - $body");
+
+        // Save notification locally if not already saved
+        try {
+          final notificationLocalService = NotificationLocalService();
+          final localNotification = NotificationModel(
+            title: title,
+            body: body,
+            timestamp: timestamp,
+          );
+
+          await notificationLocalService.addNotification(localNotification);
+          log("Background notification saved locally: $title");
+        } catch (e) {
+          log("Failed to save background notification locally: $e");
+        }
       });
+    }
+  }
+
+  Future<void> _saveNotificationLocal(
+    String title,
+    String body,
+    DateTime timestamp,
+  ) async {
+    // Save notification locally using the service
+    try {
+      final notificationLocalService = NotificationLocalService();
+      final localNotification = NotificationModel(
+        title: title,
+        body: body,
+        timestamp: timestamp,
+      );
+
+      await notificationLocalService.addNotification(localNotification);
+      log("Notification saved locally: $title");
+    } catch (e) {
+      log("Failed to save notification locally: $e");
     }
   }
 
