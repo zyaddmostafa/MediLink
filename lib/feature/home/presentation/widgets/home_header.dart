@@ -70,7 +70,9 @@ class NotificationIcon extends StatelessWidget {
             child: Center(
               child: Text(
                 getIt<NotificationLocalService>().getListCount().toString(),
-                style: AppTextStyles.font16Regular,
+                style: AppTextStyles.font12SemiBold.copyWith(
+                  color: AppColor.white,
+                ),
               ),
             ),
           ),
