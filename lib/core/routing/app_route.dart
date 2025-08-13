@@ -17,6 +17,7 @@ import '../../feature/home/presentation/screens/home_screen.dart';
 import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
 import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
 import '../../feature/navigation/main_navigation_screen.dart';
+import '../../feature/profile/presentation/screens/edit_profile_screen.dart';
 import '../di/dependency_injection.dart';
 import '../paymob/paymob_getway.dart';
 import '../paymob/paymob_mobile_getway.dart';
@@ -160,6 +161,10 @@ class AppRoute {
             child: const BookingScreen(),
           ),
         );
+
+      case Routes.editProfileScreen:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+
       default:
         return null;
     }

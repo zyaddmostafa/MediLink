@@ -15,4 +15,8 @@ class ApiConstants {
   // Appointment endpoints
   static const String bookAppointment = "appointment/store";
   static const String getStoredAppointments = "appointment/index";
+
+  // User endpoints
+  static const String getUserProfile = "user/profile";
+  static const String updateUserProfile = "user/update";
 }
