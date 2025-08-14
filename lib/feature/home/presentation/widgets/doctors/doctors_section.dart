@@ -6,9 +6,7 @@ import '../../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/spacing.dart';
-import '../../../../../core/model/button_properties_model.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_color.dart';
 import '../../cubit/home_cubit.dart';
 import 'doctors_list_view.dart';
 import '../home_body_header.dart';
@@ -53,17 +51,13 @@ class DoctorsSection extends StatelessWidget {
           current is AllDoctorsError,
       builder: (context, state) {
         if (state is AllDoctorsLoading || state is AllDoctorsSuccess) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Skeletonizer(
-              enabled: state is AllDoctorsLoading,
-              child: DoctorListView(
-                isFavorite: false,
-                shrinkWrap: true, // Allow full scrolling
-                doctors: state is AllDoctorsSuccess
-                    ? state.doctors.take(5).toList()
-                    : generateSkeletonDoctors(),
-              ),
+          return Skeletonizer(
+            enabled: state is AllDoctorsLoading,
+            child: DoctorListView(
+              shrinkWrap: true, // Allow full scrolling
+              doctors: state is AllDoctorsSuccess
+                  ? state.doctors.take(5).toList()
+                  : generateSkeletonDoctors(),
             ),
           );
         } else if (state is AllDoctorsError) {

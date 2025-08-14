@@ -13,38 +13,27 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.primary.withValues(alpha: 0.7),
       padding: const EdgeInsets.all(16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.notifications, color: Colors.white),
+          const Icon(Icons.notifications, color: AppColor.black),
           horizontalSpacing(16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  notification.title,
-                  style: AppTextStyles.font16Bold.copyWith(
-                    color: AppColor.white,
-                  ),
-                ),
+                Text(notification.title, style: AppTextStyles.font16Bold),
                 verticalSpacing(4),
-                Text(
-                  notification.body,
-                  style: AppTextStyles.font14SemiBold.copyWith(
-                    color: AppColor.white,
-                  ),
-                ),
+                Text(notification.body, style: AppTextStyles.font14Medium),
               ],
             ),
           ),
           horizontalSpacing(16),
           Text(
             _formatTime(notification.timestamp),
-            style: AppTextStyles.font14Regular.copyWith(color: AppColor.white),
+            style: AppTextStyles.font14Regular,
           ),
         ],
       ),

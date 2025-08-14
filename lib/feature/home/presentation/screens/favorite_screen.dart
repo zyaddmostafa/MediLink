@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../../core/di/dependency_injection.dart';
+import '../../../../core/favorites/favorite_doctor_service.dart';
 import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
@@ -9,6 +11,7 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/custom_dioalog.dart';
 import '../widgets/doctors/doctors_list_view.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -31,33 +34,105 @@ class FavoriteScreen extends StatelessWidget {
               ),
             ),
             verticalSpacing(24),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Favorite Doctors', style: AppTextStyles.font18Bold),
-                  SvgPicture.asset(Assets.svgsNotselected),
-                ],
-              ),
-            ),
+            getIt<FavoriteDoctorService>().getAllFavoriteDoctors().isNotEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Favorite Doctors',
+                          style: AppTextStyles.font18Bold,
+                        ),
+                        const ToggletoSelectAllDoctors(),
+                      ],
+                    ),
+                  )
+                : const SizedBox.shrink(),
             verticalSpacing(24),
             Expanded(
-              child: DoctorListView(
-                isFavorite: true,
-                doctors: [],
-                buttonProperties: ButtonPropertiesModel(
-                  text: 'Book Appointment',
-                  textColor: AppColor.primary,
-                  backgroundColor: AppColor.doctorCardButton,
-                  onPressed: () {
-                    context.pushNamed(Routes.doctorInfo);
-                  },
-                ),
+              child: StreamBuilder(
+                stream: getIt<FavoriteDoctorService>()
+                    .getFavoriteDoctorsStream(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('Error fetching favorites'),
+                    );
+                  }
+                  final doctors = snapshot.data ?? [];
+                  return DoctorListView(
+                    doctors: doctors,
+                    buttonProperties: ButtonPropertiesModel(
+                      text: 'Book Appointment',
+                      textColor: AppColor.primary,
+                      backgroundColor: AppColor.doctorCardButton,
+                      onPressed: () {
+                        context.pushNamed(
+                          Routes.doctorInfo,
+                          arguments: doctors.first.id,
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ToggletoSelectAllDoctors extends StatefulWidget {
+  const ToggletoSelectAllDoctors({super.key});
+
+  @override
+  State<ToggletoSelectAllDoctors> createState() =>
+      _ToggletoSelectAllDoctorsState();
+}
+
+class _ToggletoSelectAllDoctorsState extends State<ToggletoSelectAllDoctors> {
+  bool _isSelected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _isSelected = !_isSelected;
+        });
+        if (_isSelected) {
+          CustomDialog.showConfirmationDialog(
+            title: 'Delete All Doctors',
+            message: 'Are you sure you want to Delete all Favorites Doctors?',
+            onConfirm: () async {
+              await getIt<FavoriteDoctorService>().clear();
+              setState(() {
+                _isSelected = false;
+              });
+              if (context.mounted) {
+                context.pop();
+              }
+            },
+            onCancel: () {
+              setState(() {
+                _isSelected = false;
+              });
+              if (context.mounted) {
+                context.pop();
+              }
+            },
+            context: context,
+          );
+        }
+      },
+      child: SvgPicture.asset(
+        _isSelected ? Assets.svgsSelected : Assets.svgsNotselected,
       ),
     );
   }

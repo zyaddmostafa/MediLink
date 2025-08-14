@@ -33,9 +33,7 @@ class SeeAllDoctorsScreen extends StatelessWidget {
             ),
             verticalSpacing(24),
             // Here you would typically include a widget that lists all doctors
-            Expanded(
-              child: DoctorListView(isFavorite: false, doctors: doctors ?? []),
-            ),
+            Expanded(child: DoctorListView(doctors: doctors ?? [])),
           ],
         ),
       ),

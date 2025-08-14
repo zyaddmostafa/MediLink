@@ -31,13 +31,14 @@ class DoctorModelAdapter extends TypeAdapter<DoctorModel> {
       appointPrice: fields[11] as int?,
       startTime: fields[12] as String?,
       endTime: fields[13] as String?,
+      isFavorite: fields[14] == null ? false : fields[14] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, DoctorModel obj) {
     writer
-      ..writeByte(14)
+      ..writeByte(15)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -65,7 +66,9 @@ class DoctorModelAdapter extends TypeAdapter<DoctorModel> {
       ..writeByte(12)
       ..write(obj.startTime)
       ..writeByte(13)
-      ..write(obj.endTime);
+      ..write(obj.endTime)
+      ..writeByte(14)
+      ..write(obj.isFavorite);
   }
 
   @override

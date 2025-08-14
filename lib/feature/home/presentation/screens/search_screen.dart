@@ -130,10 +130,7 @@ Widget _buildLoadingState() {
   return Expanded(
     child: Skeletonizer(
       enabled: true,
-      child: DoctorListView(
-        isFavorite: false,
-        doctors: generateSkeletonDoctors(),
-      ),
+      child: DoctorListView(doctors: generateSkeletonDoctors()),
     ),
   );
 }
@@ -164,7 +161,7 @@ Widget _buildSuccessState(List<DoctorModel> doctors) {
       ),
     );
   }
-  return Expanded(child: DoctorListView(isFavorite: false, doctors: doctors));
+  return Expanded(child: DoctorListView(doctors: doctors));
 }
 
 /// Builds the error state with error message

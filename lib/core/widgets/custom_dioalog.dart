@@ -172,6 +172,7 @@ class CustomDialog {
     String? confirmText,
     String? cancelText,
     Color? confirmColor,
+    VoidCallback? onCancel,
   }) async {
     return showDialog<bool>(
       context: context,
@@ -213,7 +214,12 @@ class CustomDialog {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () {
+                        Navigator.of(context).pop(false); // Close dialog first
+                        if (onCancel != null) {
+                          onCancel();
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -233,7 +239,8 @@ class CustomDialog {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        onConfirm();
+                        Navigator.of(context).pop(true); // Close dialog first
+                        onConfirm(); // Then call the confirm action
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: confirmColor ?? AppColor.primary,

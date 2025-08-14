@@ -63,6 +63,9 @@ class HiveInitializationService {
     );
     await Hive.openBox<NotificationModel>(NotificationLocalService().boxName);
 
+    // Open favorite doctors box
+    await Hive.openBox<DoctorModel>('favorite_doctors');
+
     // Add other core boxes here as needed
     // await Hive.openBox<UserModel>('user_data_box');
     // await Hive.openBox<Settings>('settings_box');

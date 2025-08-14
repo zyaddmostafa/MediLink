@@ -61,7 +61,6 @@ Widget _doctorsListViewBlocBuilder(BuildContext context) {
           child: Skeletonizer(
             enabled: state is DoctorsByCategoryLoading,
             child: DoctorListView(
-              isFavorite: false,
               doctors: state is DoctorsByCategorySuccess
                   ? state.doctors
                   : generateSkeletonDoctors(),

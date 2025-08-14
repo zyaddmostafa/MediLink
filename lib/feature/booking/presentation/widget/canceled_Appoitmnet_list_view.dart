@@ -33,7 +33,6 @@ class CanceledAppoitmenttListView extends StatelessWidget {
       itemBuilder: (context, index) {
         return DoctorsCard(
           key: ValueKey(cancelledDoctors[index].id), // Unique key for each card
-          isFavorite: true, // Cancelled appointments are not favorites
           doctor: cancelledDoctors[index],
           buttonProperties:
               buttonProperties ??

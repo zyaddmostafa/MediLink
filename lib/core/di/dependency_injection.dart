@@ -10,11 +10,17 @@ import '../../feature/booking/data/repo/booking_appointment_repo.dart';
 import '../../feature/booking/domain/use_case/filtered_appointment_use_case.dart';
 import '../../feature/home/data/apis/home_api_service.dart';
 import '../../feature/home/data/repo/home_repo_impl.dart';
+import '../../feature/home/domain/usecases/get_all_doctors_use_case.dart';
+import '../../feature/home/domain/usecases/get_doctors_by_category_use_case.dart';
+import '../../feature/home/domain/usecases/search_doctors_use_case.dart';
+import '../../feature/home/domain/usecases/get_doctor_by_id_use_case.dart';
+import '../../feature/home/domain/usecases/toggle_favorite_use_case.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/profile/data/apis/user_api_service.dart';
 import '../../feature/profile/data/repo/user_repo.dart';
 import '../api_helpers/dio_factory.dart';
+import '../favorites/favorite_doctor_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -29,7 +35,38 @@ Future<void> setupGetIt() async {
   // Home related dependencies
   getIt.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));
   getIt.registerLazySingleton<HomeRepoImpl>(() => HomeRepoImpl(getIt()));
-  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
+
+  // Favorite service
+  getIt.registerLazySingleton<FavoriteDoctorService>(
+    () => FavoriteDoctorService(),
+  );
+
+  // Home use cases
+  getIt.registerLazySingleton<GetAllDoctorsUseCase>(
+    () => GetAllDoctorsUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<GetDoctorsByCategoryUseCase>(
+    () => GetDoctorsByCategoryUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<SearchDoctorsUseCase>(
+    () => SearchDoctorsUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<GetDoctorByIdUseCase>(
+    () => GetDoctorByIdUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<ToggleFavoriteUseCase>(
+    () => ToggleFavoriteUseCase(getIt(), getIt()),
+  );
+
+  getIt.registerFactory<HomeCubit>(
+    () => HomeCubit(
+      getIt<GetAllDoctorsUseCase>(),
+      getIt<GetDoctorsByCategoryUseCase>(),
+      getIt<SearchDoctorsUseCase>(),
+      getIt<GetDoctorByIdUseCase>(),
+      getIt<ToggleFavoriteUseCase>(),
+    ),
+  );
 
   // store appointment dependencies
   getIt.registerLazySingleton<BookingAppointmentApiService>(
