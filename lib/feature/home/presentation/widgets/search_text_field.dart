@@ -10,16 +10,19 @@ class SearchTextField extends StatelessWidget {
     super.key,
     required TextEditingController searchController,
     required bool showCloseIcon,
+    this.onChanged,
   }) : _searchController = searchController,
        _showCloseIcon = showCloseIcon;
 
   final TextEditingController _searchController;
   final bool _showCloseIcon;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: _searchController,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: 'Search By Doctor Name',
         hintStyle: AppTextStyles.font16Medium.copyWith(color: AppColor.grey),

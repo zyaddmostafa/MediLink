@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:rxdart/rxdart.dart';
+import 'dart:async';
 
 import '../../../../core/api_helpers/api_error_model.dart';
 import '../../data/model/doctor_model.dart';
@@ -19,13 +21,33 @@ class HomeCubit extends Cubit<HomeState> {
   final GetDoctorByIdUseCase _getDoctorByIdUseCase;
   final ToggleFavoriteUseCase _toggleFavoriteUseCase;
 
+  // RxDart subject for debounced search
+  final _searchSubject = BehaviorSubject<String>();
+  late StreamSubscription _searchSubscription;
+
   HomeCubit(
     this._getAllDoctorsUseCase,
     this._getDoctorsByCategoryUseCase,
     this._searchDoctorsUseCase,
     this._getDoctorByIdUseCase,
     this._toggleFavoriteUseCase,
-  ) : super(HomeCubitInitial());
+  ) : super(HomeCubitInitial()) {
+    _initializeSearchDebounce();
+  }
+
+  void _initializeSearchDebounce() {
+    _searchSubscription = _searchSubject
+        .debounceTime(const Duration(milliseconds: 500))
+        .distinct()
+        .listen((query) {
+          if (query.isNotEmpty) {
+            _performSearch(query);
+          } else {
+            // Clear search results when query is empty
+            emit(SearchDoctorsClear());
+          }
+        });
+  }
 
   void getAllDoctors() async {
     emit(AllDoctorsLoading());
@@ -41,7 +63,12 @@ class HomeCubit extends Cubit<HomeState> {
     );
   }
 
-  void searchDoctors(String query) async {
+  void searchDoctors(String query) {
+    // Add the query to the subject for debounced processing
+    _searchSubject.add(query);
+  }
+
+  void _performSearch(String query) async {
     emit(SearchDoctorsLoading());
     final response = await _searchDoctorsUseCase.call(query);
 
@@ -92,5 +119,12 @@ class HomeCubit extends Cubit<HomeState> {
     } catch (e) {
       // Handle error if needed
     }
+  }
+
+  @override
+  Future<void> close() {
+    _searchSubscription.cancel();
+    _searchSubject.close();
+    return super.close();
   }
 }

@@ -33,6 +33,8 @@ final class SearchDoctorsError extends HomeState {
   SearchDoctorsError(this.error);
 }
 
+final class SearchDoctorsClear extends HomeState {}
+
 final class DoctorsByCategoryLoading extends HomeState {}
 
 final class DoctorsByCategorySuccess extends HomeState {

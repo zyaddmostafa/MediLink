@@ -54,6 +54,7 @@ dependencies:
   meta: ^1.16.0
   pretty_dio_logger: ^1.4.0
   retrofit: ^4.6.0
+  rxdart: ^0.27.7
   shared_preferences: ^2.5.3
   skeletonizer: ^2.1.0+1
 

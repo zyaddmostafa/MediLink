@@ -5,6 +5,7 @@ import '../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../booking/presentation/screen/booking_screen.dart';
 import '../home/presentation/cubit/home_cubit.dart';
 import '../home/presentation/screens/home_screen.dart';
+import '../home/presentation/screens/search_screen.dart';
 import '../profile/presentation/screens/profile_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 
@@ -29,6 +30,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       create: (context) => BookingAppointmentCubit(getIt(), getIt()),
       child: const BookingScreen(),
     ),
+    BlocProvider.value(value: getIt<HomeCubit>(), child: const SearchScreen()),
     const ProfileScreen(),
   ];
 

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -9,7 +7,6 @@ import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/error_state_widget.dart';
 import '../../data/model/doctor_model.dart';
 import '../cubit/home_cubit.dart';
@@ -26,41 +23,10 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool _showCloseIcon = false;
-  Timer? _debounceTimer;
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(() {
-      setState(() {
-        _showCloseIcon = _searchController.text.isNotEmpty;
-      });
-      // Debounce the search
-      _onSearchChanged(_searchController.text);
-    });
-  }
 
   void _onSearchChanged(String query) {
-    // Cancel the previous timer
-    _debounceTimer?.cancel();
-
-    // Create a new timer
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () {
-      triggerSearchDoctors(query);
-    });
-  }
-
-  void triggerSearchDoctors(String doctorName) {
-    if (doctorName.isNotEmpty) {
-      context.read<HomeCubit>().searchDoctors(doctorName);
-    }
-  }
-
-  @override
-  void dispose() {
-    _debounceTimer?.cancel(); // Cancel timer on dispose
-    _searchController.dispose();
-    super.dispose();
+    // Call the cubit method, debounce is handled there
+    context.read<HomeCubit>().searchDoctors(query);
   }
 
   @override
@@ -73,16 +39,15 @@ class _SearchScreenState extends State<SearchScreen> {
             verticalSpacing(12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: CustomAppBar(
-                appBarwidget: Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 24),
-                    child: SearchTextField(
-                      searchController: _searchController,
-                      showCloseIcon: _showCloseIcon,
-                    ),
-                  ),
-                ),
+              child: SearchTextField(
+                searchController: _searchController,
+                showCloseIcon: _showCloseIcon,
+                onChanged: (query) {
+                  setState(() {
+                    _showCloseIcon = query.isNotEmpty;
+                  });
+                  _onSearchChanged(query);
+                },
               ),
             ),
 
@@ -111,7 +76,8 @@ Widget _doctorsListViewBlocBuilder(
     buildWhen: (previous, current) =>
         current is SearchDoctorsSuccess ||
         current is SearchDoctorsLoading ||
-        current is SearchDoctorsError,
+        current is SearchDoctorsError ||
+        current is SearchDoctorsClear,
     builder: (context, state) {
       switch (state) {
         case SearchDoctorsLoading():
@@ -125,6 +91,8 @@ Widget _doctorsListViewBlocBuilder(
             onRetry: () =>
                 context.read<HomeCubit>().searchDoctors(searchController.text),
           );
+        case SearchDoctorsClear():
+          return _buildDefaultState();
         default:
           return _buildDefaultState();
       }
@@ -174,6 +142,12 @@ Widget _buildSuccessState(List<DoctorModel> doctors) {
 /// Builds the default state when no search has been performed
 Widget _buildDefaultState() {
   return Expanded(
-    child: Center(child: Lottie.asset(Assets.lottieNoSearchResult)),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Lottie.asset(Assets.lottieNoSearchResult),
+        Text('Search for the doctor you need', style: AppTextStyles.font18Bold),
+      ],
+    ),
   );
 }
