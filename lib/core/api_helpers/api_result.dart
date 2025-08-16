@@ -4,9 +4,9 @@ class ApiResult<T> {
   ApiResult._();
   factory ApiResult.success(T data) = Success<T>;
   factory ApiResult.failure(ApiErrorModel e) = Failure<T>;
-  when({
-    required Function(T data) onSuccess,
-    required Function(ApiErrorModel error) onError,
+  R when<R>({
+    required R Function(T data) onSuccess,
+    required R Function(ApiErrorModel error) onError,
   }) {
     if (this is Success<T>) {
       return onSuccess((this as Success<T>).data);

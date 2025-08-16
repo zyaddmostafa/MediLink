@@ -8,6 +8,7 @@ class ButtonPropertiesModel {
   final int? argument;
   final VoidCallback? onPressed;
   final bool? isLoading;
+  final double? verticalPadding;
 
   ButtonPropertiesModel({
     this.text,
@@ -17,6 +18,7 @@ class ButtonPropertiesModel {
     this.onPressedWithArgument,
     this.argument,
     this.isLoading = false,
+    this.verticalPadding,
   });
 
   ButtonPropertiesModel copyWith({
@@ -27,6 +29,7 @@ class ButtonPropertiesModel {
     int? argument,
     VoidCallback? onPressed,
     bool? isLoading,
+    double? verticalPadding,
   }) {
     return ButtonPropertiesModel(
       text: text ?? this.text,
@@ -37,6 +40,7 @@ class ButtonPropertiesModel {
       argument: argument ?? this.argument,
       onPressed: onPressed ?? this.onPressed,
       isLoading: isLoading ?? this.isLoading,
+      verticalPadding: verticalPadding ?? this.verticalPadding,
     );
   }
 }

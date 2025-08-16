@@ -21,7 +21,7 @@ class CategoriesGridView extends StatelessWidget {
         itemCount: DoctorsHelpers.getPopularCategories().length,
         itemBuilder: (context, index) {
           final category = DoctorsHelpers.getPopularCategories()[index];
-          return RepaintBoundary(child: CategoriesGridItem(category: category));
+          return CategoriesGridItem(category: category);
         },
       ),
     );

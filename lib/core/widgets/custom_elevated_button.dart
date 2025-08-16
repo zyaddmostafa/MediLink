@@ -11,6 +11,9 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          vertical: properties.verticalPadding ?? 0,
+        ),
         minimumSize: const Size(double.infinity, 56),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         backgroundColor: properties.backgroundColor ?? AppColor.primary,

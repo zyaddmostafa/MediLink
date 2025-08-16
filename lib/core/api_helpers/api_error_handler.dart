@@ -7,7 +7,9 @@ class ApiErrorHandler {
     if (error is DioException) {
       switch (error.type) {
         case DioExceptionType.connectionError:
-          return ApiErrorModel(message: "Connection to server failed");
+          return ApiErrorModel(
+            message: "NO internet Connection Check your internet",
+          );
         case DioExceptionType.cancel:
           return ApiErrorModel(message: "Request to the server was cancelled");
         case DioExceptionType.connectionTimeout:

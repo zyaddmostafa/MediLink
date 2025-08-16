@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/skeletonizer_dummy_data.dart';
+import '../../../../core/widgets/error_state_widget.dart';
 import '../../../../core/widgets/keep_alive_wrapper.dart';
 import '../../../../core/widgets/no_result_widget.dart';
 import '../../data/local/cancle_appoinmets_local_service.dart';
@@ -88,7 +89,12 @@ class AppointmentTabBarBody extends StatelessWidget {
             ),
           );
         } else if (state is GetStoredAppointmentsFailure) {
-          return Center(child: Text(state.errorMessage));
+          return ErrorStateWidget(
+            errorMessage: state.error.message,
+            errorMessages: state.error.errors ?? {},
+            onRetry: () =>
+                context.read<BookingAppointmentCubit>().getStoredAppointments(),
+          );
         } else if (state is GetStoredAppointmentsSuccess) {
           final upcomingAppointments = state.response;
           if (upcomingAppointments.isNotEmpty) {

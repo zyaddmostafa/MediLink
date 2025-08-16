@@ -40,9 +40,7 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
         emit(GetStoredAppointmentsSuccess(response.data));
       },
       onError: (ApiErrorModel error) {
-        emit(
-          GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
-        );
+        emit(GetStoredAppointmentsFailure(error));
       },
     );
   }
@@ -57,9 +55,7 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
         emit(GetStoredAppointmentsSuccess(filteredAppointments));
       },
       onError: (ApiErrorModel error) {
-        emit(
-          GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
-        );
+        emit(GetStoredAppointmentsFailure(error));
       },
     );
   }

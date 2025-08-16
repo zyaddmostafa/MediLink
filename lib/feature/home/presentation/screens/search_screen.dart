@@ -5,13 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../core/api_helpers/api_error_handler.dart';
-import '../../../../core/api_helpers/api_error_model.dart';
 import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/error_state_widget.dart';
 import '../../data/model/doctor_model.dart';
 import '../cubit/home_cubit.dart';
 import '../widgets/doctors/doctors_list_view.dart';
@@ -95,7 +94,7 @@ class _SearchScreenState extends State<SearchScreen> {
               child: Text('Results', style: AppTextStyles.font18Bold),
             ),
             verticalSpacing(16),
-            _doctorsListViewBlocBuilder(context),
+            _doctorsListViewBlocBuilder(context, _searchController),
           ],
         ),
       ),
@@ -104,7 +103,10 @@ class _SearchScreenState extends State<SearchScreen> {
 }
 
 @override
-Widget _doctorsListViewBlocBuilder(BuildContext context) {
+Widget _doctorsListViewBlocBuilder(
+  BuildContext context,
+  TextEditingController searchController,
+) {
   return BlocBuilder<HomeCubit, HomeState>(
     buildWhen: (previous, current) =>
         current is SearchDoctorsSuccess ||
@@ -117,7 +119,12 @@ Widget _doctorsListViewBlocBuilder(BuildContext context) {
         case SearchDoctorsSuccess():
           return _buildSuccessState(state.doctors);
         case SearchDoctorsError():
-          return _buildErrorState(state.error);
+          return ErrorStateWidget(
+            errorMessage: state.error.message,
+            errorMessages: state.error.errors ?? {},
+            onRetry: () =>
+                context.read<HomeCubit>().searchDoctors(searchController.text),
+          );
         default:
           return _buildDefaultState();
       }
@@ -162,17 +169,6 @@ Widget _buildSuccessState(List<DoctorModel> doctors) {
     );
   }
   return Expanded(child: DoctorListView(doctors: doctors));
-}
-
-/// Builds the error state with error message
-Widget _buildErrorState(ApiErrorModel error) {
-  return Center(
-    child: Text(
-      extractErrorMessages(
-        error.errors ?? {'message': error.message ?? 'Unknown error'},
-      ).join(', '),
-    ),
-  );
 }
 
 /// Builds the default state when no search has been performed

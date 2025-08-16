@@ -39,9 +39,9 @@ class _DoctorsCardState extends State<DoctorsCard> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.white,
+        color: AppColor.lightGrey,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColor.grey.withValues(alpha: .2)),
+        border: Border.all(color: AppColor.blueGrey),
       ),
       child: Column(
         children: [

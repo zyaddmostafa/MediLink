@@ -28,10 +28,10 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(color: AppColor.grey),
+          borderSide: const BorderSide(color: AppColor.blueGrey),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColor.grey),
+          borderSide: const BorderSide(color: AppColor.blueGrey),
           borderRadius: BorderRadius.circular(16),
         ),
         focusedBorder: OutlineInputBorder(

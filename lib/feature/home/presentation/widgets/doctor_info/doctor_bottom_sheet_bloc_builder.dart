@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/theme/app_color.dart';
+import '../../../../../core/widgets/error_state_widget.dart';
 import '../../../data/model/doctor_model.dart';
 import '../../cubit/home_cubit.dart';
 import 'doctor_info_bottom_sheet.dart';
@@ -45,8 +46,9 @@ class DoctorBottomSheetBlocBuilder extends StatelessWidget {
                 ),
               ),
             ),
-            child: Center(
-              child: Text('Error: ${state.error.message ?? 'Unknown error'}'),
+            child: ErrorStateWidget(
+              errorMessage: state.error.message,
+              errorMessages: state.error.errors ?? {},
             ),
           );
         } else if (state is DoctorByIdSuccess) {

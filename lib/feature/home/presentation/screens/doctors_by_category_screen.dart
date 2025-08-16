@@ -6,6 +6,7 @@ import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/error_state_widget.dart';
 import '../../data/model/category_model.dart';
 import '../cubit/home_cubit.dart';
 import '../widgets/doctors/doctors_list_view.dart';
@@ -68,7 +69,10 @@ Widget _doctorsListViewBlocBuilder(BuildContext context) {
           ),
         );
       } else if (state is DoctorsByCategoryError) {
-        return const Center(child: Text('Error fetching doctors'));
+        return ErrorStateWidget(
+          errorMessage: state.error.message,
+          errorMessages: state.error.errors ?? {},
+        );
       }
       return const SizedBox.shrink();
     },
