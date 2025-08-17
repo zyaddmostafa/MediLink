@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import '../../../../core/hive/hive_service.dart';
 import '../../../home/data/model/doctor_model.dart';
-import '../model/appoitmnet_data.dart';
+import '../model/appointment_data.dart';
 
 class CancelledAppointmentsLocalService extends HiveService<AppointmentData> {
   // Singleton pattern

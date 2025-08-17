@@ -1,6 +1,6 @@
 import '../../../../core/api_helpers/api_result.dart';
 import '../../data/local/cancle_appoinmets_local_service.dart';
-import '../../data/model/appoitmnet_data.dart';
+import '../../data/model/appointment_data.dart';
 import '../../data/repo/booking_appointment_repo.dart';
 
 class FilteredAppointmentUseCase {

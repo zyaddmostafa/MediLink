@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../core/helpers/app_assets.dart';
+import '../../../../../core/helpers/doctors_images.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
+import '../../../../booking/data/model/appointment_data.dart';
 import '../date_and_time.dart';
 import '../doctors/doctor_rate.dart';
 
 class UpcomingAppoinmentListItem extends StatelessWidget {
-  const UpcomingAppoinmentListItem({super.key});
+  final AppointmentData appointmentData;
+  const UpcomingAppoinmentListItem({super.key, required this.appointmentData});
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +29,19 @@ class UpcomingAppoinmentListItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(Assets.imagesDoctorMale1, width: 32.r, height: 32.r),
+              DoctorsImages.doctorCardImage(appointmentData.doctor),
               horizontalSpacing(8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'John Doe',
+                    appointmentData.doctor.name!,
                     style: AppTextStyles.font14SemiBold.copyWith(
                       color: AppColor.white,
                     ),
                   ),
                   Text(
-                    'Cardiologist',
+                    appointmentData.doctor.specialization!.name!,
                     style: AppTextStyles.font14Medium.copyWith(
                       color: AppColor.babyBlue,
                     ),
@@ -58,7 +58,7 @@ class UpcomingAppoinmentListItem extends StatelessWidget {
             ],
           ),
           verticalSpacing(16),
-          const DateAndTime(),
+          DateAndTime(appointmentTime: appointmentData.appointmentTime),
         ],
       ),
     );

@@ -2,7 +2,7 @@ import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
 import '../apis/booking_appointment_api_service.dart';
 import '../local/cancle_appoinmets_local_service.dart';
-import '../model/appoitmnet_data.dart';
+import '../model/appointment_data.dart';
 import '../model/get_stored_appoinnmnet_response.dart';
 import '../model/store_appointment_request.dart';
 import '../model/store_appointment_response.dart';

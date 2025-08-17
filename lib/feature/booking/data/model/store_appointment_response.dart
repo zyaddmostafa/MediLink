@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'appoitmnet_data.dart';
+import 'appointment_data.dart';
 
 part 'store_appointment_response.g.dart';
 

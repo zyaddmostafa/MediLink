@@ -1,4 +1,4 @@
-import '../../feature/booking/data/model/appoitmnet_data.dart';
+import '../../feature/booking/data/model/appointment_data.dart';
 import '../../feature/home/data/model/doctor_model.dart';
 
 class SkeletonizerDummyData {
@@ -54,16 +54,39 @@ class SkeletonizerDummyData {
     appointmentPrice: 150,
   );
 
-  // List of dummy appointments for loading multiple items
+  // List of dummy appointments for loading multiple items (Home Screen Skeleton)
   static List<AppointmentData> get dummyAppointmentsList => [
-    dummyAppointment,
     dummyAppointment.copyWith(
       id: 1,
-      appointmentTime: 'Tomorrow, 2:00 PM - 3:00 PM',
+      appointmentTime: 'Monday, October 14, 2025 10:00 AM',
+      doctor: dummyDoctor.copyWith(
+        name: 'Dr.  Doctor One',
+        specialization: Specialization(id: 1, name: 'Cardiology'),
+      ),
     ),
     dummyAppointment.copyWith(
       id: 2,
-      appointmentTime: 'Friday, 9:00 AM - 10:00 AM',
+      appointmentTime: 'Tuesday, October 15, 2025 2:30 PM',
+      doctor: dummyDoctor.copyWith(
+        name: 'Dr.Doctor Two',
+        specialization: Specialization(id: 2, name: 'Dermatology'),
+      ),
+    ),
+    dummyAppointment.copyWith(
+      id: 3,
+      appointmentTime: 'Wednesday, October 16, 2025 9:15 AM',
+      doctor: dummyDoctor.copyWith(
+        name: 'Dr.Doctor Three',
+        specialization: Specialization(id: 3, name: 'Neurology'),
+      ),
+    ),
+    dummyAppointment.copyWith(
+      id: 4,
+      appointmentTime: 'Friday, October 18, 2025 4:00 PM',
+      doctor: dummyDoctor.copyWith(
+        name: 'Dr.Doctor Four',
+        specialization: Specialization(id: 4, name: 'Orthopedic'),
+      ),
     ),
   ];
 

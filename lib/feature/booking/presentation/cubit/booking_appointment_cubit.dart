@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../../core/api_helpers/api_error_model.dart';
-import '../../data/model/appoitmnet_data.dart';
+import '../../data/model/appointment_data.dart';
 import '../../data/model/store_appointment_request.dart';
 import '../../data/repo/booking_appointment_repo.dart';
 import '../../domain/use_case/filtered_appointment_use_case.dart';

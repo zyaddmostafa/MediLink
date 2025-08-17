@@ -1,4 +1,8 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../feature/home/data/model/doctor_model.dart';
 import 'app_assets.dart';
 
 class DoctorsImages {
@@ -53,5 +57,21 @@ class DoctorsImages {
   /// Get a random female doctor image
   static String getRandomFemaleDoctorImage() {
     return femaleDoctorImages[_random.nextInt(femaleDoctorImages.length)];
+  }
+
+  static ClipRRect doctorCardImage(DoctorModel doctor) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Image.asset(
+        DoctorsImages.getRandomDoctorImage(doctor.gender ?? 'male'),
+        height: 32.r,
+        width: 32.r,
+        cacheWidth: 64, // Performance optimization
+        cacheHeight: 64,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.person, size: 32),
+      ),
+    );
   }
 }

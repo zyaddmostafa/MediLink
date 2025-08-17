@@ -25,18 +25,23 @@ class _MainNavigationState extends State<MainNavigation> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final savedUser = getIt<UserLocalService>().getUser();
-      if (savedUser == null) {
-        context.read<UserCubit>().getUserProfile();
-      }
-    });
+    final savedUser = getIt<UserLocalService>().getUser();
+    if (savedUser == null) {
+      context.read<UserCubit>().getUserProfile();
+      getIt<UserLocalService>().getUser();
+    }
   }
 
   // List of screens for bottom navigation
   final List<Widget> _screens = [
-    BlocProvider.value(
-      value: getIt<HomeCubit>()..getAllDoctors(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => getIt<HomeCubit>()..getAllDoctors()),
+        BlocProvider(
+          create: (context) =>
+              getIt<BookingAppointmentCubit>()..getFilteredAppointments(),
+        ),
+      ],
       child: const HomeScreen(),
     ),
 

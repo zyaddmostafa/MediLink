@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../feature/booking/data/model/appoitmnet_data.dart';
+import '../../feature/booking/data/model/appointment_data.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_styles.dart';
 import '../widgets/custom_elevated_button.dart';

@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../../home/data/model/doctor_model.dart';
-part 'appoitmnet_data.g.dart';
+part 'appointment_data.g.dart';
 
 @JsonSerializable()
 @HiveType(typeId: 4)

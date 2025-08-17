@@ -8,7 +8,7 @@ import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../home/presentation/widgets/doctors/doctors_card.dart';
-import '../../data/model/appoitmnet_data.dart';
+import '../../data/model/appointment_data.dart';
 import '../cubit/booking_appointment_cubit.dart';
 
 class UpcomingAppointmentListItem extends StatelessWidget {

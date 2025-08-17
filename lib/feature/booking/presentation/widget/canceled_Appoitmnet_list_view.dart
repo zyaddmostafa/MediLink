@@ -8,7 +8,7 @@ import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../home/data/model/doctor_model.dart';
 import '../../../home/presentation/widgets/doctors/doctors_card.dart';
-import '../../data/model/appoitmnet_data.dart';
+import '../../data/model/appointment_data.dart';
 import '../cubit/booking_appointment_cubit.dart';
 
 class CanceledAppoitmenttListView extends StatelessWidget {

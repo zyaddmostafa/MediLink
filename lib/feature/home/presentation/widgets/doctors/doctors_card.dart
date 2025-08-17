@@ -48,7 +48,7 @@ class _DoctorsCardState extends State<DoctorsCard> {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _doctorCardImage(),
+              DoctorsImages.doctorCardImage(widget.doctor!),
               horizontalSpacing(8),
               _doctorCardBody(),
               horizontalSpacing(8),
@@ -138,22 +138,6 @@ class _DoctorsCardState extends State<DoctorsCard> {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  ClipRRect _doctorCardImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.asset(
-        DoctorsImages.getRandomDoctorImage(widget.doctor?.gender ?? 'male'),
-        height: 32.r,
-        width: 32.r,
-        cacheWidth: 64, // Performance optimization
-        cacheHeight: 64,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) =>
-            const Icon(Icons.person, size: 32),
       ),
     );
   }

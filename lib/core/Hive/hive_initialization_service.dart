@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:developer';
 
 import '../../feature/booking/data/local/cancle_appoinmets_local_service.dart';
-import '../../feature/booking/data/model/appoitmnet_data.dart';
+import '../../feature/booking/data/model/appointment_data.dart';
 import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/home/data/model/doctor_model.dart';
 import '../../feature/home/data/model/notification_model.dart';
