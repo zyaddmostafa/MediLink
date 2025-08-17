@@ -17,7 +17,8 @@ import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
 import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
 import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
-import '../../feature/navigation/main_navigation_screen.dart';
+import '../../feature/navigation/main_navigation.dart';
+import '../../feature/profile/presentation/cubit/user_cubit.dart';
 import '../../feature/profile/presentation/screens/edit_profile_screen.dart';
 import '../di/dependency_injection.dart';
 import '../paymob/paymob_getway.dart';
@@ -42,8 +43,8 @@ class AppRoute {
         );
       case Routes.signUpScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<AuthCubit>(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<AuthCubit>(),
             child: const SignUpScreen(),
           ),
         );
@@ -51,14 +52,19 @@ class AppRoute {
       case Routes.setPasswordScreen:
         final Map<String, dynamic> signupData = args as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<AuthCubit>(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<AuthCubit>(),
             child: SetPasswordScreen(signupData: signupData),
           ),
         );
 
       case Routes.mainNavigation:
-        return MaterialPageRoute(builder: (_) => const MainNavigationScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => UserCubit(getIt()),
+            child: const MainNavigation(),
+          ),
+        );
 
       case Routes.homeScreen:
         return MaterialPageRoute(
@@ -164,7 +170,7 @@ class AppRoute {
         );
 
       case Routes.editProfileScreen:
-        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+        return MaterialPageRoute(builder: (_) => EditProfileScreen());
       case Routes.notificationScreen:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       default:

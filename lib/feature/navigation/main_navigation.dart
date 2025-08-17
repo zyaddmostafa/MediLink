@@ -6,18 +6,32 @@ import '../booking/presentation/screen/booking_screen.dart';
 import '../home/presentation/cubit/home_cubit.dart';
 import '../home/presentation/screens/home_screen.dart';
 import '../home/presentation/screens/search_screen.dart';
+import '../profile/data/local/user_local_service.dart';
+import '../profile/presentation/cubit/user_cubit.dart';
 import '../profile/presentation/screens/profile_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
 
-class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+class MainNavigation extends StatefulWidget {
+  const MainNavigation({super.key});
 
   @override
-  State<MainNavigationScreen> createState() => _MainNavigationScreenState();
+  State<MainNavigation> createState() => _MainNavigationState();
 }
 
-class _MainNavigationScreenState extends State<MainNavigationScreen> {
+class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final savedUser = getIt<UserLocalService>().getUser();
+      if (savedUser == null) {
+        context.read<UserCubit>().getUserProfile();
+      }
+    });
+  }
 
   // List of screens for bottom navigation
   final List<Widget> _screens = [
@@ -26,8 +40,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       child: const HomeScreen(),
     ),
 
-    BlocProvider(
-      create: (context) => BookingAppointmentCubit(getIt(), getIt()),
+    BlocProvider.value(
+      value: getIt<BookingAppointmentCubit>(),
       child: const BookingScreen(),
     ),
     BlocProvider.value(value: getIt<HomeCubit>(), child: const SearchScreen()),
@@ -44,27 +58,11 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return PopScope(
-      canPop: false,
-      onPopInvoked: (didPop) {
-        if (!didPop) {
-          // If not on home screen, go back to home
-          if (_currentIndex != 0) {
-            setState(() {
-              _currentIndex = 0;
-            });
-          } else {
-            // Exit the app when on home screen
-            Navigator.of(context).pop();
-          }
-        }
-      },
-      child: Scaffold(
-        body: IndexedStack(index: _currentIndex, children: _screens),
-        bottomNavigationBar: BottomNavBar(
-          currentIndex: _currentIndex,
-          onTabTapped: _onTabTapped,
-        ),
+    return Scaffold(
+      body: IndexedStack(index: _currentIndex, children: _screens),
+      bottomNavigationBar: BottomNavBar(
+        currentIndex: _currentIndex,
+        onTabTapped: _onTabTapped,
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 import '../../../../core/api_helpers/api_constants.dart';
-import '../model/get_user_response.dart';
+import '../model/user_response.dart';
 import '../model/update_user_request.dart';
 
 part 'user_api_service.g.dart';

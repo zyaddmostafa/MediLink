@@ -7,6 +7,7 @@ import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../profile/data/local/user_local_service.dart';
 import '../../data/local/notification_local_service.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -16,6 +17,7 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userInfo = getIt<UserLocalService>().getUser();
     return Row(
       children: [
         Column(
@@ -25,7 +27,7 @@ class HomeHeader extends StatelessWidget {
               'Welcome Back',
               style: AppTextStyles.font14Medium.copyWith(color: AppColor.grey),
             ),
-            Text('Zyad Mostafa', style: AppTextStyles.font18Bold),
+            Text(userInfo?.name ?? '', style: AppTextStyles.font18Bold),
           ],
         ),
         const Spacer(),

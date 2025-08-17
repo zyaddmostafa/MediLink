@@ -1,13 +1,14 @@
+import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'get_user_response.g.dart';
+part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse {
-  final int message;
+  final String message;
   @JsonKey(name: 'data')
   final List<UserModel> userdata;
-  final String status;
+  final bool status;
   final int code;
 
   UserResponse({
@@ -24,11 +25,17 @@ class UserResponse {
 }
 
 @JsonSerializable()
+@HiveType(typeId: 7)
 class UserModel {
-  final String id;
+  @HiveField(0)
+  final int id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final String email;
+  @HiveField(3)
   final String phone;
+  @HiveField(4)
   final String gender;
 
   UserModel({

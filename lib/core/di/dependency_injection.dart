@@ -8,6 +8,7 @@ import '../../feature/booking/data/apis/booking_appointment_api_service.dart';
 import '../../feature/booking/data/local/cancle_appoinmets_local_service.dart';
 import '../../feature/booking/data/repo/booking_appointment_repo.dart';
 import '../../feature/booking/domain/use_case/filtered_appointment_use_case.dart';
+import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../../feature/home/data/apis/home_api_service.dart';
 import '../../feature/home/data/repo/home_repo_impl.dart';
 import '../../feature/home/domain/usecases/get_all_doctors_use_case.dart';
@@ -18,6 +19,7 @@ import '../../feature/home/domain/usecases/toggle_favorite_use_case.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/profile/data/apis/user_api_service.dart';
+import '../../feature/profile/data/local/user_local_service.dart';
 import '../../feature/profile/data/repo/user_repo.dart';
 import '../api_helpers/dio_factory.dart';
 import '../favorites/favorite_doctor_service.dart';
@@ -78,13 +80,17 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<BookingAppointmentRepo>(
     () => BookingAppointmentRepo(getIt(), getIt()),
   );
+  getIt.registerFactory<BookingAppointmentCubit>(
+    () => BookingAppointmentCubit(getIt(), getIt()),
+  );
   getIt.registerLazySingleton<FilteredAppointmentUseCase>(
     () => FilteredAppointmentUseCase(getIt(), getIt()),
   );
 
   // user dependencies
   getIt.registerLazySingleton<UserApiService>(() => UserApiService(dio));
-  getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt()));
+  getIt.registerLazySingleton<UserLocalService>(() => UserLocalService());
+  getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt(), getIt()));
 
   // notification dependencies
   getIt.registerLazySingleton<NotificationLocalService>(

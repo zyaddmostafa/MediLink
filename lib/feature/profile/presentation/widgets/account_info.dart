@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../data/local/user_local_service.dart';
 import 'account_info_item.dart';
 
 class AccountInfo extends StatelessWidget {
@@ -13,6 +15,8 @@ class AccountInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = getIt<UserLocalService>().getUser();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -21,27 +25,27 @@ class AccountInfo extends StatelessWidget {
         Column(
           spacing: 16,
           children: [
-            const AccountInfoItem(
+            AccountInfoItem(
               title: 'Name',
-              value: 'Zyad Mostafa',
+              value: user?.name ?? 'No name available',
               icon: Icons.person,
             ),
 
-            const AccountInfoItem(
+            AccountInfoItem(
               title: 'Email',
-              value: 'zyadmostafa@gmail.com',
+              value: user?.email ?? 'No email available',
               icon: Icons.email,
             ),
 
-            const AccountInfoItem(
+            AccountInfoItem(
               title: 'Phone',
-              value: '+1234567890',
+              value: user?.phone ?? 'No phone available',
               icon: Icons.phone,
             ),
 
-            const AccountInfoItem(
+            AccountInfoItem(
               title: 'Gender',
-              value: 'Male',
+              value: user?.gender ?? 'No gender available',
               icon: FontAwesomeIcons.marsAndVenus,
             ),
 
