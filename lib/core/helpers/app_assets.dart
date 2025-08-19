@@ -58,9 +58,13 @@ class Assets {
 
   static const String svgsEtisalatAndLogo = "assets/svgs/etisalat-and-logo.svg";
 
+  static const String svgsFacebook = "assets/svgs/Facebook.svg";
+
   static const String svgsFavactive = "assets/svgs/favactive.svg";
 
   static const String svgsFavinactive = "assets/svgs/favinactive.svg";
+
+  static const String svgsGoogle = "assets/svgs/Google.svg";
 
   static const String svgsHome = "assets/svgs/Home.svg";
 

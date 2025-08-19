@@ -1,10 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_color.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/models/login_request_body.dart';
 import '../cubit/auth_cubit.dart';
@@ -59,6 +62,53 @@ class _LoginScreenState extends State<LoginScreen> {
                       verticalSpacing(32),
                       _dontHaveAnAccount(context),
                       verticalSpacing(32),
+
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Expanded(
+                                child: Divider(
+                                  thickness: 1,
+                                  color: AppColor.grey,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                child: Text(
+                                  'OR',
+                                  style: AppTextStyles.font14Medium,
+                                ),
+                              ),
+                              const Expanded(
+                                child: Divider(
+                                  thickness: 1,
+                                  color: AppColor.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          verticalSpacing(32),
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SocialAuthItem(
+                                svgImage: Assets.svgsGoogle,
+                                onTap: () {},
+                              ),
+                              horizontalSpacing(24),
+                              SocialAuthItem(
+                                svgImage: Assets.svgsFacebook,
+                                onTap: () {},
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                       const AuthBlocListener(),
                     ],
                   ),
@@ -115,5 +165,30 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
     }
+  }
+}
+
+class SocialAuthItem extends StatelessWidget {
+  final String svgImage;
+  final VoidCallback onTap;
+  const SocialAuthItem({
+    super.key,
+    required this.svgImage,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: const ShapeDecoration(
+          color: AppColor.blueGrey,
+          shape: OvalBorder(),
+        ),
+        padding: const EdgeInsets.all(16),
+        child: SvgPicture.asset(svgImage),
+      ),
+    );
   }
 }

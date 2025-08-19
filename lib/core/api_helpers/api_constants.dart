@@ -5,6 +5,8 @@ class ApiConstants {
   static const String login = 'auth/login';
   static const String signup = "auth/register";
   static const String logout = "auth/logout";
+  static const String socialAuth =
+      "auth/social"; // New social authentication endpoint
 
   // Doctor endpoints
 
