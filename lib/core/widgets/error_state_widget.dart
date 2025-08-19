@@ -18,28 +18,31 @@ class ErrorStateWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: Text(
-            errorMessage ?? extractErrorMessages(errorMessages).toString(),
-            style: AppTextStyles.font18Bold.copyWith(color: AppColor.red),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        verticalSpacing(16),
-        ElevatedButton(
-          onPressed: onRetry,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColor.blueGrey,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(32),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(
+              errorMessage ?? extractErrorMessages(errorMessages).toString(),
+              style: AppTextStyles.font18Bold.copyWith(color: AppColor.red),
+              textAlign: TextAlign.center,
             ),
           ),
-          child: Text('Retry', style: AppTextStyles.font16Bold),
-        ),
-      ],
+          verticalSpacing(16),
+          ElevatedButton(
+            onPressed: onRetry,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColor.blueGrey,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(32),
+              ),
+            ),
+            child: Text('Retry', style: AppTextStyles.font16Bold),
+          ),
+        ],
+      ),
     );
   }
 }

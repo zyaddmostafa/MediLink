@@ -96,8 +96,9 @@ class AppRoute {
       case Routes.doctorsByCategory:
         final CategoryModel categoryModel = args as CategoryModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<HomeCubit>()..getDoctorsByCategory(categoryModel.id),
+          builder: (_) => BlocProvider(
+            create: (context) =>
+                getIt<HomeCubit>()..getDoctorsByCategory(categoryModel.id),
             child: DoctorsByCategoriesScreen(categoryModel: categoryModel),
           ),
         );
@@ -111,8 +112,8 @@ class AppRoute {
       case Routes.doctorInfo:
         final int doctorId = args as int;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<HomeCubit>()..getDoctorById(doctorId),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<HomeCubit>()..getDoctorById(doctorId),
             child: const DoctorInfoScreen(),
           ),
         );
@@ -170,11 +171,11 @@ class AppRoute {
         );
 
       case Routes.editProfileScreen:
-        return MaterialPageRoute(builder: (_) => EditProfileScreen());
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       case Routes.notificationScreen:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       default:
-        return null;
+        return MaterialPageRoute(builder: (_) => const Scaffold());
     }
   }
 }

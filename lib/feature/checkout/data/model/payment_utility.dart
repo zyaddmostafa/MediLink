@@ -11,19 +11,16 @@ class PaymentUtility {
     required String errorTitle,
     required String errorMessage,
   }) async {
-    bool loadingShown = false;
-
     try {
       CustomDialog.showLoadingDialog(context: context, message: loadingMessage);
-      loadingShown = true;
 
       await action();
 
-      if (context.mounted && loadingShown) {
+      if (context.mounted) {
         Navigator.pop(context);
       }
     } catch (e) {
-      if (context.mounted && loadingShown) {
+      if (context.mounted) {
         Navigator.pop(context);
       }
 

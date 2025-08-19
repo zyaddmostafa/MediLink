@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import '../helpers/app_assets.dart';
 import '../helpers/extentions.dart';
 import '../helpers/spacing.dart';
+import '../routing/routes.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_styles.dart';
 import 'custom_text_from_field.dart';
@@ -168,7 +169,7 @@ class CustomDialog {
     required BuildContext context,
     required String title,
     required String message,
-    required VoidCallback onConfirm,
+    VoidCallback? onConfirm,
     String? confirmText,
     String? cancelText,
     Color? confirmColor,
@@ -177,7 +178,7 @@ class CustomDialog {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           backgroundColor: AppColor.white,
           shape: RoundedRectangleBorder(
@@ -215,7 +216,7 @@ class CustomDialog {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pop(false); // Close dialog first
+                        dialogContext.pop(); // Close dialog first
                         if (onCancel != null) {
                           onCancel();
                         }
@@ -239,8 +240,10 @@ class CustomDialog {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pop(true); // Close dialog first
-                        onConfirm(); // Then call the confirm action
+                        dialogContext.pop(); // Close dialog first
+                        if (onConfirm != null) {
+                          onConfirm();
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: confirmColor ?? AppColor.primary,

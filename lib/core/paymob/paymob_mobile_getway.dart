@@ -7,7 +7,8 @@ import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/booking/data/model/store_appointment_request.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../helpers/doctors_helper.dart';
-import '../widgets/store_appointment_listener.dart';
+import '../helpers/extentions.dart';
+import '../routing/routes.dart';
 
 class PaymobMobileGetway extends StatefulWidget {
   final String webUri;
@@ -30,20 +31,32 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${_getWalletDisplayName()} Payment'),
-        backgroundColor: _getWalletColor(),
-        foregroundColor: Colors.white,
-      ),
-      body: Stack(
-        children: [
-          _buildWebView(),
-          if (_isLoading) _buildLoadingOverlay(),
-          StoreAppointmentListener(
-            appointmentDetails: widget.appointmentDetails,
-          ),
-        ],
+    return BlocListener<BookingAppointmentCubit, BookingAppointmentState>(
+      listenWhen: (previous, current) =>
+          current is StoreAppointmentSuccess ||
+          current is StoreAppointmentFailure,
+      listener: (context, state) {
+        if (state is StoreAppointmentSuccess) {
+          _returnResult(
+            'success',
+            'Payment and appointment booking successful',
+          );
+        } else if (state is StoreAppointmentFailure) {
+          _returnResult(
+            'failed',
+            'Payment successful but booking failed: ${state.errorMessage}',
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('${_getWalletDisplayName()} Payment'),
+          backgroundColor: _getWalletColor(),
+          foregroundColor: Colors.white,
+        ),
+        body: Stack(
+          children: [_buildWebView(), if (_isLoading) _buildLoadingOverlay()],
+        ),
       ),
     );
   }
@@ -114,7 +127,7 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
 
     if (url.contains('success') || url.contains('approved')) {
       log('Payment successful, storing appointment...');
-      _storeAppointment(context);
+      _storeAppointmentAndReturn(context);
     } else if (url.contains('failed') || url.contains('cancelled')) {
       _returnResult('failed', 'Payment failed or cancelled');
     } else if (url.contains('post_pay')) {
@@ -122,28 +135,34 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
       final success = uri.queryParameters['success'] == 'true';
       if (success) {
         log('Payment successful, storing appointment...');
-        _storeAppointment(context);
+        _storeAppointmentAndReturn(context);
       } else {
         _returnResult('failed', 'Payment failed');
       }
     }
   }
 
-  void _storeAppointment(BuildContext context) {
-    final cubit = context.read<BookingAppointmentCubit>();
-    final request = StoreAppointmentRequest(
-      doctorId: widget.appointmentDetails.doctorId.toString(),
-      appointmentDateAndTime: DoctorsHelpers.storeAppointmentStartDate(
-        widget.appointmentDetails.appointmentDate,
-        widget.appointmentDetails.appointmentTime,
-      ),
-      message: widget.appointmentDetails.message ?? '',
-    );
-    log(
-      " doctorId: ${widget.appointmentDetails.doctorId} appointmentDateAndTime: ${request.appointmentDateAndTime}, message: ${request.message}",
-    );
+  void _storeAppointmentAndReturn(BuildContext context) {
+    try {
+      final cubit = context.read<BookingAppointmentCubit>();
+      final request = StoreAppointmentRequest(
+        doctorId: widget.appointmentDetails.doctorId.toString(),
+        appointmentDateAndTime: DoctorsHelpers.storeAppointmentStartDate(
+          widget.appointmentDetails.appointmentDate,
+          widget.appointmentDetails.appointmentTime,
+        ),
+        message: widget.appointmentDetails.message ?? '',
+      );
 
-    cubit.storeAppointment(request);
+      log('PaymobMobileGetway - Storing appointment...');
+      // Store the appointment - BlocListener will handle the result and pop
+      cubit.storeAppointment(request);
+    } catch (e) {
+      log('Error storing appointment: $e');
+      if (mounted) {
+        _returnResult('error', 'Failed to book appointment');
+      }
+    }
   }
 
   void _returnResult(String status, String message) {

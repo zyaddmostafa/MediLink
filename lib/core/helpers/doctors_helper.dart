@@ -115,7 +115,7 @@ class DoctorsHelpers {
     ];
 
     // Day names
-    const dayNames = ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     final monthName = monthNames[date.month];
     final dayName = dayNames[date.weekday - 1];

@@ -6,7 +6,6 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/booking/data/model/store_appointment_request.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
-import '../widgets/store_appointment_listener.dart';
 import 'paymob_constants.dart';
 
 class PaymobGetway extends StatefulWidget {
@@ -67,6 +66,7 @@ class _PaymobGetwayState extends State<PaymobGetway> {
                     _storeAppointment(context);
                   } else {
                     log('Payment failed');
+                    _returnResult('failed', 'Payment failed');
                   }
                 }
               }
@@ -80,9 +80,6 @@ class _PaymobGetwayState extends State<PaymobGetway> {
             },
           ),
           if (_isLoading) const Center(child: CircularProgressIndicator()),
-          StoreAppointmentListener(
-            appointmentDetails: widget.appointmentDetails,
-          ),
         ],
       ),
     );
@@ -98,5 +95,11 @@ class _PaymobGetwayState extends State<PaymobGetway> {
     );
 
     cubit.storeAppointment(request);
+  }
+
+  void _returnResult(String status, String message) {
+    if (mounted) {
+      Navigator.pop(context, {'status': status, 'message': message});
+    }
   }
 }

@@ -1,13 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/helpers/skeletonizer_dummy_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/widgets/error_state_widget.dart';
 import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../widgets/categories/categories_section.dart';
 import '../widgets/doctors/doctors_section.dart';
@@ -54,8 +53,9 @@ class HomeScreen extends StatelessWidget {
                     appointments: state.response,
                   );
                 } else if (state is GetStoredAppointmentsFailure) {
-                  return const Center(
-                    child: Text('Failed to load appointments'),
+                  return ErrorStateWidget(
+                    errorMessages: state.error.errors ?? {},
+                    errorMessage: state.error.message,
                   );
                 }
 

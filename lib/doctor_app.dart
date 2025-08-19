@@ -18,7 +18,7 @@ class DoctorApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
 
         // initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.loginScreen,
-        initialRoute: Routes.loginScreen,
+        initialRoute: Routes.mainNavigation,
         onGenerateRoute: AppRoute.generateRoute,
       ),
     );
