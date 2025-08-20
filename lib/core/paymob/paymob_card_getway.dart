@@ -8,21 +8,21 @@ import '../../feature/booking/data/model/store_appointment_request.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import 'paymob_constants.dart';
 
-class PaymobGetway extends StatefulWidget {
+class PaymobCardGetway extends StatefulWidget {
   final String paymentToken;
   final AppointmentDetailsModel appointmentDetails;
 
-  const PaymobGetway({
+  const PaymobCardGetway({
     super.key,
     required this.paymentToken,
     required this.appointmentDetails,
   });
 
   @override
-  State<PaymobGetway> createState() => _PaymobGetwayState();
+  State<PaymobCardGetway> createState() => _PaymobCardGetwayState();
 }
 
-class _PaymobGetwayState extends State<PaymobGetway> {
+class _PaymobCardGetwayState extends State<PaymobCardGetway> {
   bool _isLoading = true;
 
   @override
@@ -64,6 +64,7 @@ class _PaymobGetwayState extends State<PaymobGetway> {
                   if (success == 'true') {
                     log('Payment successful, storing appointment...');
                     _storeAppointment(context);
+                    _returnResult('success', 'Payment successful');
                   } else {
                     log('Payment failed');
                     _returnResult('failed', 'Payment failed');

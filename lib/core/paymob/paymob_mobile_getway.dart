@@ -7,8 +7,6 @@ import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/booking/data/model/store_appointment_request.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../helpers/doctors_helper.dart';
-import '../helpers/extentions.dart';
-import '../routing/routes.dart';
 
 class PaymobMobileGetway extends StatefulWidget {
   final String webUri;
@@ -31,32 +29,14 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<BookingAppointmentCubit, BookingAppointmentState>(
-      listenWhen: (previous, current) =>
-          current is StoreAppointmentSuccess ||
-          current is StoreAppointmentFailure,
-      listener: (context, state) {
-        if (state is StoreAppointmentSuccess) {
-          _returnResult(
-            'success',
-            'Payment and appointment booking successful',
-          );
-        } else if (state is StoreAppointmentFailure) {
-          _returnResult(
-            'failed',
-            'Payment successful but booking failed: ${state.errorMessage}',
-          );
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('${_getWalletDisplayName()} Payment'),
-          backgroundColor: _getWalletColor(),
-          foregroundColor: Colors.white,
-        ),
-        body: Stack(
-          children: [_buildWebView(), if (_isLoading) _buildLoadingOverlay()],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${_getWalletDisplayName()} Payment'),
+        backgroundColor: _getWalletColor(),
+        foregroundColor: Colors.white,
+      ),
+      body: Stack(
+        children: [_buildWebView(), if (_isLoading) _buildLoadingOverlay()],
       ),
     );
   }
@@ -128,6 +108,7 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
     if (url.contains('success') || url.contains('approved')) {
       log('Payment successful, storing appointment...');
       _storeAppointmentAndReturn(context);
+      _returnResult('success', 'Payment successful');
     } else if (url.contains('failed') || url.contains('cancelled')) {
       _returnResult('failed', 'Payment failed or cancelled');
     } else if (url.contains('post_pay')) {
@@ -136,6 +117,7 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
       if (success) {
         log('Payment successful, storing appointment...');
         _storeAppointmentAndReturn(context);
+        _returnResult('success', 'Payment successful');
       } else {
         _returnResult('failed', 'Payment failed');
       }

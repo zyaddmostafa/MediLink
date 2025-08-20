@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/doctors_helper.dart';
 import '../../../../core/helpers/spacing.dart';
@@ -7,18 +7,19 @@ import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
+import '../../../../core/widgets/store_appointment_listener.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../../../booking/data/model/store_appointment_request.dart';
 import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 
 class CashPaymentBottomSheet extends StatelessWidget {
   final AppointmentDetailsModel appointmentDetails;
-  final BookingAppointmentCubit? storeAppointmentCubit;
+  final BookingAppointmentCubit bookingCubit;
 
   const CashPaymentBottomSheet({
     super.key,
     required this.appointmentDetails,
-    this.storeAppointmentCubit,
+    required this.bookingCubit,
   });
 
   @override
@@ -49,7 +50,7 @@ class CashPaymentBottomSheet extends StatelessWidget {
           // Cash payment icon
           Container(
             decoration: BoxDecoration(
-              color: AppColor.primary.withOpacity(0.1),
+              color: AppColor.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.money, size: 30, color: AppColor.primary),
@@ -114,10 +115,9 @@ class CashPaymentBottomSheet extends StatelessWidget {
               textColor: Colors.white,
               backgroundColor: AppColor.primary,
               onPressed: () {
-                final cubit =
-                    storeAppointmentCubit ??
-                    context.read<BookingAppointmentCubit>();
-                cubit.storeAppointment(
+                Navigator.pop(context);
+
+                bookingCubit.storeAppointment(
                   StoreAppointmentRequest(
                     doctorId: appointmentDetails.doctorId.toString(),
                     appointmentDateAndTime:

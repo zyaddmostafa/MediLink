@@ -37,9 +37,8 @@ class _MainNavigationState extends State<MainNavigation> {
     MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => getIt<HomeCubit>()..getAllDoctors()),
-        BlocProvider(
-          create: (context) =>
-              getIt<BookingAppointmentCubit>()..getFilteredAppointments(),
+        BlocProvider.value(
+          value: getIt<BookingAppointmentCubit>()..getFilteredAppointments(),
         ),
       ],
       child: const HomeScreen(),

@@ -11,12 +11,12 @@ class PaymobManager {
     final token = await getToken();
     final orderId = await getOrderId(
       token: token,
-      amount: (amount * 100).toString(), // Convert amount to cents
+      amount: (amount).toString(), // Convert amount to cents
     ); // Get the order ID
     final paymentKey = await getPaymentKey(
       token: token,
       orderId: orderId,
-      amount: (amount * 100).toString(),
+      amount: (amount).toString(),
     ); // Get the payment key
 
     return paymentKey; // Return the payment key for further processing
@@ -27,12 +27,12 @@ class PaymobManager {
     final token = await getToken();
     final orderId = await getOrderId(
       token: token,
-      amount: (amount * 100).toString(), // Convert amount to cents
+      amount: (amount).toString(), // Convert amount to cents
     );
     final paymentKey = await getPaymentKey(
       token: token,
       orderId: orderId,
-      amount: (amount * 100).toString(),
+      amount: (amount).toString(),
     );
 
     return paymentKey; // Return the payment key for mobile wallet
@@ -188,14 +188,14 @@ class PaymobManager {
       // Step 2: Create order
       final orderId = await getOrderId(
         token: token,
-        amount: (amount * 100).toString(), // Convert to cents
+        amount: (amount).toString(), // Convert to cents
       );
 
       // Step 3: Get payment key for wallet (not card)
       final paymentToken = await getPaymentKey(
         token: token,
         orderId: orderId,
-        amount: (amount * 100).toString(),
+        amount: (amount).toString(),
         isCardPayment: false, // Use wallet integration ID
       );
 

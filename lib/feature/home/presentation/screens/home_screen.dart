@@ -1,17 +1,11 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/helpers/extentions.dart';
-import '../../../../core/helpers/skeletonizer_dummy_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/routing/routes.dart';
-import '../../../../core/widgets/error_state_widget.dart';
-import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../widgets/categories/categories_section.dart';
 import '../widgets/doctors/doctors_section.dart';
 import '../widgets/home_header.dart';
-import '../widgets/upcomping/upcoming_appointments_section.dart';
+import '../widgets/upcomping/upcoming_appoitment_bloc_builder.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -34,34 +28,7 @@ class HomeScreen extends StatelessWidget {
 
             verticalSpacing(24),
 
-            BlocBuilder<BookingAppointmentCubit, BookingAppointmentState>(
-              buildWhen: (previous, current) =>
-                  current is GetStoredAppointmentsLoading ||
-                  current is GetStoredAppointmentsSuccess ||
-                  current is GetStoredAppointmentsFailure,
-              builder: (context, state) {
-                log('Current state: $state');
-                if (state is GetStoredAppointmentsLoading) {
-                  return Skeletonizer(
-                    enabled: true,
-                    child: UpcomingAppointmentsSection(
-                      appointments: SkeletonizerDummyData.dummyAppointmentsList,
-                    ),
-                  );
-                } else if (state is GetStoredAppointmentsSuccess) {
-                  return UpcomingAppointmentsSection(
-                    appointments: state.response,
-                  );
-                } else if (state is GetStoredAppointmentsFailure) {
-                  return ErrorStateWidget(
-                    errorMessages: state.error.errors ?? {},
-                    errorMessage: state.error.message,
-                  );
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
+            const UpComingAppoitmentBlocBuilder(),
 
             verticalSpacing(24),
 

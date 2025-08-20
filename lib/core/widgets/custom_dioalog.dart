@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import '../helpers/app_assets.dart';
 import '../helpers/extentions.dart';
 import '../helpers/spacing.dart';
-import '../routing/routes.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_styles.dart';
 import 'custom_text_from_field.dart';
@@ -28,20 +27,7 @@ class CustomDialog {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Success Icon
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 40,
-                ),
-              ),
+              SvgPicture.asset(Assets.svgsSeccessful, width: 60, height: 60),
               verticalSpacing(16),
 
               // Title
