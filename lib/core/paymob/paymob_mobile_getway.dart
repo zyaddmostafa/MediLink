@@ -149,10 +149,12 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
 
   void _returnResult(String status, String message) {
     if (mounted) {
-      Navigator.pop(context, {
-        'status': status,
-        'message': message,
-        'walletType': widget.walletType,
+      Future.delayed(const Duration(milliseconds: 800), () {
+        Navigator.pop(context, {
+          'status': status,
+          'message': message,
+          'walletType': widget.walletType,
+        });
       });
     }
   }

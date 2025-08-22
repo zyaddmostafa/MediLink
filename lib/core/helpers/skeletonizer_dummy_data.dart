@@ -60,7 +60,7 @@ class SkeletonizerDummyData {
       id: 1,
       appointmentTime: 'Monday, October 14, 2025 10:00 AM',
       doctor: dummyDoctor.copyWith(
-        name: 'Dr.  Doctor One',
+        name: 'Doctor One',
         specialization: Specialization(id: 1, name: 'Cardiology'),
       ),
     ),
@@ -68,7 +68,7 @@ class SkeletonizerDummyData {
       id: 2,
       appointmentTime: 'Tuesday, October 15, 2025 2:30 PM',
       doctor: dummyDoctor.copyWith(
-        name: 'Dr.Doctor Two',
+        name: 'Doctor Two',
         specialization: Specialization(id: 2, name: 'Dermatology'),
       ),
     ),
@@ -76,7 +76,7 @@ class SkeletonizerDummyData {
       id: 3,
       appointmentTime: 'Wednesday, October 16, 2025 9:15 AM',
       doctor: dummyDoctor.copyWith(
-        name: 'Dr.Doctor Three',
+        name: 'Doctor Three',
         specialization: Specialization(id: 3, name: 'Neurology'),
       ),
     ),
@@ -84,7 +84,7 @@ class SkeletonizerDummyData {
       id: 4,
       appointmentTime: 'Friday, October 18, 2025 4:00 PM',
       doctor: dummyDoctor.copyWith(
-        name: 'Dr.Doctor Four',
+        name: 'Doctor Four',
         specialization: Specialization(id: 4, name: 'Orthopedic'),
       ),
     ),
