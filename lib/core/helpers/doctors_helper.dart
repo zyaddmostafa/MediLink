@@ -136,7 +136,7 @@ class DoctorsHelpers {
 
     // Convert to total minutes for easier calculation
     int currentMinutes = startTime24['hour']! * 60 + startTime24['minute']!;
-    int endMinutes = endTime24['hour']! * 60 + endTime24['minute']!;
+    final int endMinutes = endTime24['hour']! * 60 + endTime24['minute']!;
 
     while (currentMinutes + 30 <= endMinutes) {
       // Calculate current time

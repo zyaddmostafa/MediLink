@@ -1,10 +1,7 @@
 import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
-
 import 'core/di/dependency_injection.dart';
 import 'core/helpers/bloc_observer.dart';
-
 import 'core/helpers/constants.dart';
 import 'core/helpers/shared_pref_helper.dart';
 import 'core/hive/hive_initialization_service.dart';
@@ -18,10 +15,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = SimpleBlocObserver();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  setupGetIt();
+  await setupGetIt();
   await HiveInitializationService.init();
   checkUserLoggedIn();
   FirebaseMessagingConfig().configNotification();
+
   runApp(const DoctorApp());
 }
 

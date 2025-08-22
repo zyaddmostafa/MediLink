@@ -24,6 +24,13 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
     _tabController = TabController(length: 2, vsync: this);
 
     _tabController.addListener(_onTabChanged);
+
+    // Initial call to load appointments data when tab becomes visible
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_tabController.index == 0) {
+        context.read<BookingAppointmentCubit>().getStoredAppointments();
+      }
+    });
   }
 
   void _onTabChanged() {

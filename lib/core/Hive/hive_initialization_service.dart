@@ -18,8 +18,20 @@ class HiveInitializationService {
   static Future<void> init() async {
     await Hive.initFlutter();
     _registerAdapters();
-    await _openCoreBoxes();
-    log('Hive initialization completed');
+    await _openCriticalBoxes();
+  }
+
+  static Future<void> _openCriticalBoxes() async {
+    await Hive.openBox<UserModel>(getIt<UserLocalService>().boxName);
+    await Hive.openBox<AppointmentData>(
+      CancelledAppointmentsLocalService.instance.boxName,
+    );
+    await Hive.openBox<NotificationModel>(
+      getIt<NotificationLocalService>().boxName,
+    );
+
+    // Open favorite doctors box
+    await Hive.openBox<DoctorModel>(getIt<FavoriteDoctorService>().boxName);
   }
 
   /// Register all Hive adapters
@@ -63,24 +75,6 @@ class HiveInitializationService {
     }
 
     log('All Hive adapters registered successfully');
-  }
-
-  /// Open core boxes used across the app
-  static Future<void> _openCoreBoxes() async {
-    // Open cancelled appointments box
-    await Hive.openBox<AppointmentData>(
-      CancelledAppointmentsLocalService.instance.boxName,
-    );
-    await Hive.openBox<NotificationModel>(
-      getIt<NotificationLocalService>().boxName,
-    );
-
-    // Open favorite doctors box
-    await Hive.openBox<DoctorModel>(getIt<FavoriteDoctorService>().boxName);
-
-    // Open user box
-    await Hive.openBox<UserModel>(getIt<UserLocalService>().boxName);
-    log('Core Hive boxes opened successfully');
   }
 
   /// Close all boxes

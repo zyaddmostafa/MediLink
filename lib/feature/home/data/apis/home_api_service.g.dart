@@ -102,14 +102,14 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<ApiResponseModel<List<DoctorModel>>> getDoctorsByCategory(
+  Future<ApiResponseModel<DoctorsByCategoryModel>> getDoctorsByCategory(
       int categoryId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options =
-        _setStreamType<ApiResponseModel<List<DoctorModel>>>(Options(
+        _setStreamType<ApiResponseModel<DoctorsByCategoryModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -126,16 +126,11 @@ class _HomeApiService implements HomeApiService {
               baseUrl,
             )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponseModel<List<DoctorModel>> _value;
+    late ApiResponseModel<DoctorsByCategoryModel> _value;
     try {
-      _value = ApiResponseModel<List<DoctorModel>>.fromJson(
+      _value = ApiResponseModel<DoctorsByCategoryModel>.fromJson(
         _result.data!,
-        (json) => json is List<dynamic>
-            ? json
-                .map<DoctorModel>(
-                    (i) => DoctorModel.fromJson(i as Map<String, dynamic>))
-                .toList()
-            : List.empty(),
+        (json) => DoctorsByCategoryModel.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

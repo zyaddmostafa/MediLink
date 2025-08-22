@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../../../core/api_helpers/api_constants.dart';
 import '../../../../core/model/api_response_model.dart';
 import '../model/doctor_model.dart';
+import '../model/doctors_by_category_model.dart';
 
 part 'home_api_service.g.dart';
 
@@ -18,7 +19,7 @@ abstract class HomeApiService {
   Future<ApiResponseModel<DoctorModel>> getDoctorById(@Path("id") int id);
 
   @GET('${ApiConstants.getDoctorsByCategory}/{categoryId}')
-  Future<ApiResponseModel<List<DoctorModel>>> getDoctorsByCategory(
+  Future<ApiResponseModel<DoctorsByCategoryModel>> getDoctorsByCategory(
     @Path("categoryId") int categoryId,
   );
 

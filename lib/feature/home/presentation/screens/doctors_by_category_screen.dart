@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -56,22 +58,21 @@ Widget _doctorsListViewBlocBuilder(BuildContext context) {
         current is DoctorsByCategoryLoading ||
         current is DoctorsByCategoryError,
     builder: (context, state) {
-      if (state is DoctorsByCategoryLoading ||
-          state is DoctorsByCategorySuccess) {
+      if (state is DoctorsByCategoryLoading) {
         return Expanded(
           child: Skeletonizer(
-            enabled: state is DoctorsByCategoryLoading,
-            child: DoctorListView(
-              doctors: state is DoctorsByCategorySuccess
-                  ? state.doctors
-                  : generateSkeletonDoctors(),
-            ),
+            enabled: true,
+            child: DoctorListView(doctors: generateSkeletonDoctors()),
           ),
         );
+      } else if (state is DoctorsByCategorySuccess) {
+        log('Doctors loaded successfully: ${state.doctors.length}');
+        return Expanded(child: DoctorListView(doctors: state.doctors));
       } else if (state is DoctorsByCategoryError) {
         return ErrorStateWidget(
           errorMessage: state.error.message,
           errorMessages: state.error.errors ?? {},
+          onRetry: () {},
         );
       }
       return const SizedBox.shrink();

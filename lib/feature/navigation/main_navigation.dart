@@ -26,10 +26,16 @@ class _MainNavigationState extends State<MainNavigation> {
   void initState() {
     super.initState();
 
+    // Delay user profile loading to avoid blocking UI
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadUserProfileIfNeeded();
+    });
+  }
+
+  void _loadUserProfileIfNeeded() async {
     final savedUser = getIt<UserLocalService>().getUser();
     if (savedUser == null) {
       context.read<UserCubit>().getUserProfile();
-      getIt<UserLocalService>().getUser();
     }
   }
 
@@ -37,10 +43,8 @@ class _MainNavigationState extends State<MainNavigation> {
   final List<Widget> _screens = [
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<HomeCubit>()..getAllDoctors()),
-        BlocProvider.value(
-          value: getIt<BookingAppointmentCubit>()..getFilteredAppointments(),
-        ),
+        BlocProvider(create: (context) => getIt<HomeCubit>()),
+        BlocProvider.value(value: getIt<BookingAppointmentCubit>()),
       ],
       child: const HomeScreen(),
     ),

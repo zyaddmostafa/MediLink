@@ -7,7 +7,6 @@ import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../profile/data/local/user_local_service.dart';
-import '../../data/local/notification_local_service.dart';
 
 class HomeHeader extends StatelessWidget {
   final void Function()? onNotificationTap;
@@ -49,44 +48,23 @@ class NotificationIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColor.grey.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: AppColor.grey.withOpacity(0.2),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Stack(
-        clipBehavior: Clip.none, // Allows overflow
-        children: [
-          const Icon(FontAwesomeIcons.bell, color: AppColor.black, size: 24),
-          Positioned(
-            right: -0,
-            top: -10,
-            child: Container(
-              padding: const EdgeInsets.all(2),
-              decoration: BoxDecoration(
-                color: AppColor.red,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
-              child: Center(
-                child: Text(
-                  getIt<NotificationLocalService>().getListCount().toString(),
-                  style: AppTextStyles.font12SemiBold.copyWith(
-                    color: AppColor.white,
-                  ),
-                ),
-              ),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        const Icon(FontAwesomeIcons.bell, color: AppColor.black, size: 24),
+        Positioned(
+          right: 4,
+          top: -4,
+          child: Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              color: AppColor.red,
+              borderRadius: BorderRadius.circular(12),
             ),
+            constraints: const BoxConstraints(minWidth: 10, minHeight: 10),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
