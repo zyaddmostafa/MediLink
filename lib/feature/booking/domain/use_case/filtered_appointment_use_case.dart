@@ -1,4 +1,5 @@
 import '../../../../core/api_helpers/api_result.dart';
+import '../../../../core/model/api_response_model.dart';
 import '../../data/local/cancle_appoinmets_local_service.dart';
 import '../../data/model/appointment_data.dart';
 import '../../data/repo/booking_appointment_repo.dart';
@@ -21,8 +22,8 @@ class FilteredAppointmentUseCase {
     final storedAppointments = await _repository.getStoredAppointments();
 
     return storedAppointments.when(
-      onSuccess: (data) {
-        for (var appointment in data.data) {
+      onSuccess: (ApiResponseModel<List<AppointmentData>> data) {
+        for (var appointment in data.responseData ?? []) {
           if (!canceledAppointmentList.any(
             (canceled) => canceled.id == appointment.id,
           )) {

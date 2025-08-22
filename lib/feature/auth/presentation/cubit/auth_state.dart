@@ -20,9 +20,9 @@ final class SignupError extends AuthState {
 final class LoginLoading extends AuthState {}
 
 final class LoginSuccess extends AuthState {
-  final LoginResponse loginResponse;
+  final UserModel userData;
 
-  LoginSuccess(this.loginResponse);
+  LoginSuccess(this.userData);
 }
 
 final class LoginError extends AuthState {
@@ -33,11 +33,7 @@ final class LoginError extends AuthState {
 
 final class LogoutLoading extends AuthState {}
 
-final class LogoutSuccess extends AuthState {
-  final LogoutResponse logoutResponse;
-
-  LogoutSuccess(this.logoutResponse);
-}
+final class LogoutSuccess extends AuthState {}
 
 final class LogoutError extends AuthState {
   final ApiErrorModel apiErrorModel;

@@ -23,7 +23,7 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
 
     result.when(
       onSuccess: (response) {
-        emit(StoreAppointmentSuccess(response.data));
+        emit(StoreAppointmentSuccess(response.responseData!));
       },
       onError: (ApiErrorModel error) {
         emit(StoreAppointmentFailure(error.message ?? 'An error occurred'));
@@ -37,7 +37,7 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
 
     result.when(
       onSuccess: (response) {
-        emit(GetStoredAppointmentsSuccess(response.data));
+        emit(GetStoredAppointmentsSuccess(response.responseData!));
       },
       onError: (ApiErrorModel error) {
         emit(GetStoredAppointmentsFailure(error));

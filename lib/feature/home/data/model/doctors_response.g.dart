@@ -8,18 +8,12 @@ part of 'doctors_response.dart';
 
 DoctorsResponse _$DoctorsResponseFromJson(Map<String, dynamic> json) =>
     DoctorsResponse(
-      message: json['message'] as String?,
-      data: (json['data'] as List<dynamic>?)
+      doctors: (json['doctors'] as List<dynamic>?)
           ?.map((e) => DoctorModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      status: json['status'] as bool?,
-      code: (json['code'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$DoctorsResponseToJson(DoctorsResponse instance) =>
     <String, dynamic>{
-      'message': instance.message,
-      'data': instance.data,
-      'status': instance.status,
-      'code': instance.code,
+      'doctors': instance.doctors,
     };

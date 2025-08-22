@@ -1,5 +1,6 @@
 import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
+import '../../../../core/model/api_response_model.dart';
 import '../apis/user_api_service.dart';
 import '../local/user_local_service.dart';
 import '../model/user_response.dart';
@@ -15,10 +16,10 @@ class UserRepo {
     try {
       final response = await apiService.getUserProfile();
 
-      await userLocalService.saveUser(response.userdata.first);
+      await userLocalService.saveUser(response.responseData!.first);
       final user = userLocalService.getUser();
       if (user == null) {
-        return ApiResult.success(response.userdata.first);
+        return ApiResult.success(response.responseData!.first);
       } else {
         return ApiResult.success(user);
       }
@@ -27,7 +28,7 @@ class UserRepo {
     }
   }
 
-  Future<ApiResult<UserResponse>> updateUserProfile(
+  Future<ApiResult<ApiResponseModel<List<UserModel>>>> updateUserProfile(
     UpdateUserRequest request,
   ) async {
     try {

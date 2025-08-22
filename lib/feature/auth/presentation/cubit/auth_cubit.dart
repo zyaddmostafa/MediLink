@@ -5,16 +5,15 @@ import '../../../../core/api_helpers/dio_factory.dart';
 import '../../../../core/helpers/constants.dart';
 import '../../../../core/helpers/shared_pref_helper.dart';
 import '../../data/models/login_request_body.dart';
-import '../../data/models/login_response.dart';
-import '../../data/models/logout_response.dart';
 import '../../data/models/sign_up_request_body.dart';
 import '../../data/models/sign_up_response.dart';
-import '../../data/repos/auth_repo_impl.dart';
+import '../../data/models/user_model.dart';
+import '../../data/repos/auth_repo.dart';
 
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final AuthRepoImpl _authRepoImpl;
+  final AuthRepo _authRepoImpl;
   AuthCubit(this._authRepoImpl) : super(AuthInitial());
 
   void login(LoginRequestBody loginRequestBody) async {
@@ -22,9 +21,9 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _authRepoImpl.login(loginRequestBody);
 
     response.when(
-      onSuccess: (LoginResponse data) {
-        saveUserToken(data.userData?.token ?? '');
-        emit(LoginSuccess(data));
+      onSuccess: (UserModel userData) {
+        saveUserToken(userData.token ?? '');
+        emit(LoginSuccess(userData));
       },
       onError: (ApiErrorModel error) {
         emit(LoginError(error));
@@ -41,8 +40,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(SignupLoading());
     final response = await _authRepoImpl.signup(signupRequestBody);
     response.when(
-      onSuccess: (SignupResponse data) {
-        emit(SignupSuccess(data));
+      onSuccess: (SignupResponse signupResponse) {
+        emit(SignupSuccess(signupResponse));
       },
       onError: (ApiErrorModel error) {
         emit(SignupError(error));
@@ -54,8 +53,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LogoutLoading());
     final response = await _authRepoImpl.logout();
     response.when(
-      onSuccess: (LogoutResponse data) {
-        emit(LogoutSuccess(data));
+      onSuccess: (_) {
+        emit(LogoutSuccess());
       },
       onError: (ApiErrorModel error) {
         emit(LogoutError(error));

@@ -1,12 +1,9 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../../core/api_helpers/api_constants.dart';
-import '../model/doctor_by_id_response.dart';
-import '../model/doctors_by_category_response.dart';
-import '../model/doctors_response.dart';
+import '../../../../core/model/api_response_model.dart';
+import '../model/doctor_model.dart';
 
 part 'home_api_service.g.dart';
 
@@ -15,16 +12,18 @@ abstract class HomeApiService {
   factory HomeApiService(Dio dio, {String baseUrl}) = _HomeApiService;
 
   @GET(ApiConstants.getAllDoctors)
-  Future<DoctorsResponse> getAllDoctors();
+  Future<ApiResponseModel<List<DoctorModel>>> getAllDoctors();
 
   @GET('${ApiConstants.getDoctorById}/{id}')
-  Future<DoctorByIdResponse> getDoctorById(@Path("id") int id);
+  Future<ApiResponseModel<DoctorModel>> getDoctorById(@Path("id") int id);
 
   @GET('${ApiConstants.getDoctorsByCategory}/{categoryId}')
-  Future<DoctorsByCategoryResponse> getDoctorsByCategory(
+  Future<ApiResponseModel<List<DoctorModel>>> getDoctorsByCategory(
     @Path("categoryId") int categoryId,
   );
 
   @GET('${ApiConstants.searchDoctors}?name={name}')
-  Future<DoctorsResponse> searchDoctors(@Query("name") String name);
+  Future<ApiResponseModel<List<DoctorModel>>> searchDoctors(
+    @Query("name") String name,
+  );
 }

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import '../../feature/auth/data/apis/auth_api_service.dart';
-import '../../feature/auth/data/repos/auth_repo_impl.dart';
+import '../../feature/auth/data/repos/auth_repo.dart';
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
 import '../../feature/booking/data/apis/booking_appointment_api_service.dart';
 import '../../feature/booking/data/local/cancle_appoinmets_local_service.dart';
@@ -34,7 +34,7 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<AuthApiService>(() => AuthApiService(dio));
   // Authentication related dependencies
-  getIt.registerLazySingleton<AuthRepoImpl>(() => AuthRepoImpl(getIt()));
+  getIt.registerLazySingleton<AuthRepo>(() => AuthRepo(getIt()));
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt()));
 
   // Home related dependencies

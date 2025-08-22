@@ -22,7 +22,7 @@ class FirebaseMessagingConfig {
 
       // Initialize the FlutterLocalNotificationsPlugin andoid and iOS settings
       const AndroidInitializationSettings initializationSettingsAndroid =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+          AndroidInitializationSettings('@mipmap/launcher_icon');
       final DarwinInitializationSettings initializationSettingsDarwin =
           const DarwinInitializationSettings();
       // make them in one initialization settings

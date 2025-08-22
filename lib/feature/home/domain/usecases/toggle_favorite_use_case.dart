@@ -1,4 +1,5 @@
 import '../../../../core/favorites/favorite_doctor_service.dart';
+import '../../../../core/model/api_response_model.dart';
 import '../../data/repo/home_repo_impl.dart';
 import '../../data/model/doctor_model.dart';
 import 'base_use_case.dart';
@@ -18,8 +19,8 @@ class ToggleFavoriteUseCase extends UseCase<void, int> {
     if (doctor == null) {
       final result = await _homeRepo.getDoctorById(doctorId);
       result.when(
-        onSuccess: (response) {
-          doctor = response.data;
+        onSuccess: (ApiResponseModel<DoctorModel> response) {
+          doctor = response.responseData;
         },
         onError: (error) {
           // If we can't fetch the doctor, we can still toggle the ID-based favorite

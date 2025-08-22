@@ -31,7 +31,7 @@ class UserCubit extends Cubit<UserState> {
     final result = await userRepo.updateUserProfile(request);
     result.when(
       onSuccess: (userResponse) {
-        emit(UserSuccess(userResponse.userdata.first));
+        emit(UserSuccess(userResponse.responseData!.first));
       },
       onError: (error) {
         emit(UserError(error.message ?? "Unknown error"));

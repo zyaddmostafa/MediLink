@@ -5,18 +5,10 @@ part 'user_response.g.dart';
 
 @JsonSerializable()
 class UserResponse {
-  final String message;
   @JsonKey(name: 'data')
   final List<UserModel> userdata;
-  final bool status;
-  final int code;
 
-  UserResponse({
-    required this.message,
-    required this.userdata,
-    required this.status,
-    required this.code,
-  });
+  UserResponse({required this.userdata});
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
