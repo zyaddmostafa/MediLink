@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/helpers/extentions.dart';
 import '../../../../core/widgets/custom_dioalog.dart';
-import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../cubit/payment_checkout_cubit.dart';
 import '../../data/helpers/payment_methods_handler.dart';
 import '../../data/model/appointment_details_model.dart';

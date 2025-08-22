@@ -4,9 +4,9 @@ import '../../../../core/api_helpers/api_error_model.dart';
 import '../../../../core/api_helpers/dio_factory.dart';
 import '../../../../core/helpers/constants.dart';
 import '../../../../core/helpers/shared_pref_helper.dart';
+import '../../../../core/model/api_response_model.dart';
 import '../../data/models/login_request_body.dart';
 import '../../data/models/sign_up_request_body.dart';
-import '../../data/models/sign_up_response.dart';
 import '../../data/models/user_model.dart';
 import '../../data/repos/auth_repo.dart';
 
@@ -21,9 +21,9 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _authRepoImpl.login(loginRequestBody);
 
     response.when(
-      onSuccess: (UserModel userData) {
-        saveUserToken(userData.token ?? '');
-        emit(LoginSuccess(userData));
+      onSuccess: (ApiResponseModel<UserModel> userData) {
+        saveUserToken(userData.responseData?.token ?? '');
+        emit(LoginSuccess(userData.responseData!));
       },
       onError: (ApiErrorModel error) {
         emit(LoginError(error));
@@ -40,8 +40,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(SignupLoading());
     final response = await _authRepoImpl.signup(signupRequestBody);
     response.when(
-      onSuccess: (SignupResponse signupResponse) {
-        emit(SignupSuccess(signupResponse));
+      onSuccess: (ApiResponseModel<UserModel> signupResponse) {
+        emit(SignupSuccess(signupResponse.responseData!));
       },
       onError: (ApiErrorModel error) {
         emit(SignupError(error));

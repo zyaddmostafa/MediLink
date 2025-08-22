@@ -8,8 +8,8 @@ final class AuthInitial extends AuthState {}
 final class SignupLoading extends AuthState {}
 
 final class SignupSuccess extends AuthState {
-  final SignupResponse signupResponse;
-  SignupSuccess(this.signupResponse);
+  final UserModel userData;
+  SignupSuccess(this.userData);
 }
 
 final class SignupError extends AuthState {

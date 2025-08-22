@@ -1,17 +1,18 @@
 import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
+import '../../../../core/model/api_response_model.dart';
 import '../apis/auth_api_service.dart';
 import '../models/login_request_body.dart';
-import '../models/logout_response.dart';
 import '../models/sign_up_request_body.dart';
-import '../models/sign_up_response.dart';
 import '../models/user_model.dart';
 
 class AuthRepo {
   final AuthApiService _apiService;
   AuthRepo(this._apiService);
 
-  Future<ApiResult<UserModel>> login(LoginRequestBody loginRequestBody) async {
+  Future<ApiResult<ApiResponseModel<UserModel>>> login(
+    LoginRequestBody loginRequestBody,
+  ) async {
     try {
       final response = await _apiService.login(loginRequestBody);
       return ApiResult.success(response);
@@ -20,7 +21,7 @@ class AuthRepo {
     }
   }
 
-  Future<ApiResult<SignupResponse>> signup(
+  Future<ApiResult<ApiResponseModel<UserModel>>> signup(
     SignupRequestBody signupRequestBody,
   ) async {
     try {
@@ -32,7 +33,7 @@ class AuthRepo {
     }
   }
 
-  Future<ApiResult<LogoutResponse>> logout() async {
+  Future<ApiResult<ApiResponseModel<List<dynamic>>>> logout() async {
     try {
       final response = await _apiService.logout();
       return ApiResult.success(response);

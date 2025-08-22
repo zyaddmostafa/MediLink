@@ -13,7 +13,7 @@ class SkeletonizerDummyData {
     address: 'Loading Address Street Name, City',
     description:
         'Loading doctor description text that will be shown as skeleton...',
-    degree: 'MBBS, Loading Degree',
+    degree: 'Consultant',
     specialization: dummySpecialization,
     city: dummyCity,
     appointPrice: 150,
@@ -23,11 +23,11 @@ class SkeletonizerDummyData {
 
   // Dummy Specialization
   static Specialization get dummySpecialization =>
-      Specialization(id: 0, name: 'Loading Specialization Name');
+      Specialization(id: 0, name: ' Specialization ');
 
   // Dummy City
   static City get dummyCity =>
-      City(id: 0, name: 'Loading City Name', governrate: dummyGovernrate);
+      City(id: 0, name: ' City ', governrate: dummyGovernrate);
 
   // Dummy Governrate
   static Governrate get dummyGovernrate =>

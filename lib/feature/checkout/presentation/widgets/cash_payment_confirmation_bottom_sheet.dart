@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../../../core/helpers/doctors_helper.dart';
@@ -7,7 +6,6 @@ import '../../../../core/model/button_properties_model.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
-import '../../../../core/widgets/store_appointment_listener.dart';
 import '../../data/model/appointment_details_model.dart';
 import '../../../booking/data/model/store_appointment_request.dart';
 import '../../../booking/presentation/cubit/booking_appointment_cubit.dart';
