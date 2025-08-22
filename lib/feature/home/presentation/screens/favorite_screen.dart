@@ -12,6 +12,7 @@ import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_dioalog.dart';
+import '../../../../core/widgets/no_result_widget.dart';
 import '../widgets/doctors/doctors_list_view.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -64,6 +65,11 @@ class FavoriteScreen extends StatelessWidget {
                     );
                   }
                   final doctors = snapshot.data ?? [];
+                  if (doctors.isEmpty) {
+                    return const NoResultWidget(
+                      message: 'No favorite doctors found',
+                    );
+                  }
                   return DoctorListView(
                     doctors: doctors,
                     buttonProperties: ButtonPropertiesModel(

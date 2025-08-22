@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-  
+
+  static const String imagesAppLogsAppIcon =
+      "assets/images/app_logs/app_icon.png";
+
   static const String imagesDoctorFemale1 = "assets/images/doctor_female_1.png";
 
   static const String imagesDoctorFemale2 = "assets/images/doctor_female_2.png";
@@ -18,31 +21,43 @@ class Assets {
 
   static const String imagesDoctorMale4 = "assets/images/doctor_male_4.png";
 
-  static const String imagesDoctorsCategorysCardiology = "assets/images/Doctors_categorys/Cardiology.png";
+  static const String imagesDoctorsCategorysCardiology =
+      "assets/images/Doctors_categorys/Cardiology.png";
 
-  static const String imagesDoctorsCategorysDermatology = "assets/images/Doctors_categorys/Dermatology.png";
+  static const String imagesDoctorsCategorysDermatology =
+      "assets/images/Doctors_categorys/Dermatology.png";
 
-  static const String imagesDoctorsCategorysGastroenterology = "assets/images/Doctors_categorys/Gastroenterology.png";
+  static const String imagesDoctorsCategorysGastroenterology =
+      "assets/images/Doctors_categorys/Gastroenterology.png";
 
-  static const String imagesDoctorsCategorysGynecology = "assets/images/Doctors_categorys/Gynecology.png";
+  static const String imagesDoctorsCategorysGynecology =
+      "assets/images/Doctors_categorys/Gynecology.png";
 
-  static const String imagesDoctorsCategorysNeurology = "assets/images/Doctors_categorys/Neurology.png";
+  static const String imagesDoctorsCategorysNeurology =
+      "assets/images/Doctors_categorys/Neurology.png";
 
-  static const String imagesDoctorsCategorysOphthalmology = "assets/images/Doctors_categorys/Ophthalmology.png";
+  static const String imagesDoctorsCategorysOphthalmology =
+      "assets/images/Doctors_categorys/Ophthalmology.png";
 
-  static const String imagesDoctorsCategorysOrthopedics = "assets/images/Doctors_categorys/Orthopedics.png";
+  static const String imagesDoctorsCategorysOrthopedics =
+      "assets/images/Doctors_categorys/Orthopedics.png";
 
-  static const String imagesDoctorsCategorysPediatrics = "assets/images/Doctors_categorys/Pediatrics.png";
+  static const String imagesDoctorsCategorysPediatrics =
+      "assets/images/Doctors_categorys/Pediatrics.png";
 
-  static const String imagesDoctorsCategorysPsychiatry = "assets/images/Doctors_categorys/Psychiatry.png";
+  static const String imagesDoctorsCategorysPsychiatry =
+      "assets/images/Doctors_categorys/Psychiatry.png";
 
-  static const String imagesDoctorsCategorysUrology = "assets/images/Doctors_categorys/Urology.png";
+  static const String imagesDoctorsCategorysUrology =
+      "assets/images/Doctors_categorys/Urology.png";
 
-  static const String imagesHeartBackgroundShadow = "assets/images/heart_background_shadow.png";
+  static const String imagesHeartBackgroundShadow =
+      "assets/images/heart_background_shadow.png";
 
   static const String imagesUser = "assets/images/user.png";
 
-  static const String lottieNoSearchResult = "assets/lottie/no_search_result.json";
+  static const String lottieNoSearchResult =
+      "assets/lottie/no_search_result.json";
 
   static const String svgs3dots = "assets/svgs/3dots.svg";
 
@@ -52,7 +67,8 @@ class Assets {
 
   static const String svgsCalender = "assets/svgs/Calender.svg";
 
-  static const String svgsCashPaySvgrepoCom = "assets/svgs/cash-pay-svgrepo-com.svg";
+  static const String svgsCashPaySvgrepoCom =
+      "assets/svgs/cash-pay-svgrepo-com.svg";
 
   static const String svgsClose = "assets/svgs/close.svg";
 
@@ -96,4 +112,3 @@ class Assets {
 
   static const String svgsVodafoneIcon = "assets/svgs/vodafone-icon.svg";
 }
-

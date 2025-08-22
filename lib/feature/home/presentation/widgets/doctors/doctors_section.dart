@@ -58,7 +58,7 @@ class DoctorsSection extends StatelessWidget {
             child: DoctorListView(
               shrinkWrap: true, // Allow full scrolling
               doctors: state is AllDoctorsSuccess
-                  ? state.doctors.take(5).toList()
+                  ? state.doctors
                   : generateSkeletonDoctors(),
             ),
           );

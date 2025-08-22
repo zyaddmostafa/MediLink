@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/di/dependency_injection.dart';
+import '../auth/presentation/cubit/auth_cubit.dart';
 import '../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../booking/presentation/screen/booking_screen.dart';
 import '../home/presentation/cubit/home_cubit.dart';
@@ -49,7 +50,10 @@ class _MainNavigationState extends State<MainNavigation> {
       child: const BookingScreen(),
     ),
     BlocProvider.value(value: getIt<HomeCubit>(), child: const SearchScreen()),
-    const ProfileScreen(),
+    BlocProvider(
+      create: (context) => getIt<AuthCubit>(),
+      child: const ProfileScreen(),
+    ),
   ];
 
   void _onTabTapped(int index) {

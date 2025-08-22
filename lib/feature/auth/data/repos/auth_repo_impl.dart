@@ -3,6 +3,7 @@ import '../../../../core/api_helpers/api_result.dart';
 import '../apis/auth_api_service.dart';
 import '../models/login_request_body.dart';
 import '../models/login_response.dart';
+import '../models/logout_response.dart';
 import '../models/sign_up_request_body.dart';
 import '../models/sign_up_response.dart';
 
@@ -27,6 +28,15 @@ class AuthRepoImpl {
     try {
       final response = await _apiService.signup(signupRequestBody);
 
+      return ApiResult.success(response);
+    } catch (error) {
+      return ApiResult.failure(ApiErrorHandler.handle(error));
+    }
+  }
+
+  Future<ApiResult<LogoutResponse>> logout() async {
+    try {
+      final response = await _apiService.logout();
       return ApiResult.success(response);
     } catch (error) {
       return ApiResult.failure(ApiErrorHandler.handle(error));

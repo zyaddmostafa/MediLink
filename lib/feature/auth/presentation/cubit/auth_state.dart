@@ -30,3 +30,17 @@ final class LoginError extends AuthState {
 
   LoginError(this.apiErrorModel);
 }
+
+final class LogoutLoading extends AuthState {}
+
+final class LogoutSuccess extends AuthState {
+  final LogoutResponse logoutResponse;
+
+  LogoutSuccess(this.logoutResponse);
+}
+
+final class LogoutError extends AuthState {
+  final ApiErrorModel apiErrorModel;
+
+  LogoutError(this.apiErrorModel);
+}

@@ -6,6 +6,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../../../core/api_helpers/api_constants.dart';
 import '../models/login_request_body.dart';
 import '../models/login_response.dart';
+import '../models/logout_response.dart';
 import '../models/sign_up_request_body.dart';
 import '../models/sign_up_response.dart';
 part 'auth_api_service.g.dart';
@@ -21,5 +22,5 @@ abstract class AuthApiService {
   Future<SignupResponse> signup(@Body() SignupRequestBody signupRequestBody);
 
   @POST(ApiConstants.logout)
-  Future<void> logout();
+  Future<LogoutResponse> logout();
 }

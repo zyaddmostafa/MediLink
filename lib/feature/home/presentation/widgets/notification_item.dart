@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/spacing.dart';
-import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../data/model/notification_model.dart';
 
@@ -17,7 +16,7 @@ class NotificationItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.notifications, color: AppColor.black),
+          Image.asset(Assets.imagesAppLogsAppIcon, width: 48, height: 48),
           horizontalSpacing(16),
           Expanded(
             child: Column(

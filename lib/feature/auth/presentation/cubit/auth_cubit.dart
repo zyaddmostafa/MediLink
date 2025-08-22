@@ -6,6 +6,7 @@ import '../../../../core/helpers/constants.dart';
 import '../../../../core/helpers/shared_pref_helper.dart';
 import '../../data/models/login_request_body.dart';
 import '../../data/models/login_response.dart';
+import '../../data/models/logout_response.dart';
 import '../../data/models/sign_up_request_body.dart';
 import '../../data/models/sign_up_response.dart';
 import '../../data/repos/auth_repo_impl.dart';
@@ -45,6 +46,19 @@ class AuthCubit extends Cubit<AuthState> {
       },
       onError: (ApiErrorModel error) {
         emit(SignupError(error));
+      },
+    );
+  }
+
+  void logout() async {
+    emit(LogoutLoading());
+    final response = await _authRepoImpl.logout();
+    response.when(
+      onSuccess: (LogoutResponse data) {
+        emit(LogoutSuccess(data));
+      },
+      onError: (ApiErrorModel error) {
+        emit(LogoutError(error));
       },
     );
   }

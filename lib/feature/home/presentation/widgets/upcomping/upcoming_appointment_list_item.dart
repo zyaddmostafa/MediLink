@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/helpers/doctors_images.dart';
+import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/spacing.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
+import '../../../../../core/widgets/custom_dioalog.dart';
 import '../../../../booking/data/model/appointment_data.dart';
+import '../../../../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../date_and_time.dart';
 import '../doctors/doctor_rate.dart';
 
@@ -51,9 +55,18 @@ class UpcomingAppoinmentListItem extends StatelessWidget {
                 ],
               ),
 
-              const Padding(
-                padding: EdgeInsets.only(top: 10, left: 50),
-                child: Icon(Icons.more_vert, color: AppColor.white, size: 24),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 50),
+                child: InkWell(
+                  onTap: () {
+                    _cancelAppointment(context);
+                  },
+                  child: const Icon(
+                    Icons.more_vert,
+                    color: AppColor.white,
+                    size: 24,
+                  ),
+                ),
               ),
             ],
           ),
@@ -61,6 +74,21 @@ class UpcomingAppoinmentListItem extends StatelessWidget {
           DateAndTime(appointmentTime: appointmentData.appointmentTime),
         ],
       ),
+    );
+  }
+
+  void _cancelAppointment(BuildContext context) {
+    CustomDialog.showConfirmationDialog(
+      context: context,
+      title: 'Cancel Appointment',
+      message: 'Are you sure you want to cancel this appointment?',
+      onConfirm: () {
+        final cubit = context.read<BookingAppointmentCubit>();
+        cubit.cancelAppointment(appointmentData);
+        if (cubit.state is CancelAppointmentSuccess) {
+          context.pop();
+        }
+      },
     );
   }
 }

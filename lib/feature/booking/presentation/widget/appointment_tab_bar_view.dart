@@ -23,12 +23,7 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
 
-    // Listen to tab changes and trigger appropriate data loading
     _tabController.addListener(_onTabChanged);
-
-    // Load initial data for the first tab (Upcoming)
-
-    context.read<BookingAppointmentCubit>().getFilteredAppointments();
   }
 
   void _onTabChanged() {
@@ -36,12 +31,7 @@ class _AppointmentTabBarViewState extends State<AppointmentTabBarView>
 
     final cubit = context.read<BookingAppointmentCubit>();
 
-    if (_tabController.index == 0 &&
-        cubit.state is GetStoredAppointmentsSuccess) {
-      // Upcoming tab selected
-      cubit.getFilteredAppointments();
-    } else if (_tabController.index == 1) {
-      // Cancelled tab selected
+    if (_tabController.index == 1) {
       cubit.getCancelledAppointments();
     }
   }

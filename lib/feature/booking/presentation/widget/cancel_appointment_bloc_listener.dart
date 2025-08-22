@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:developer';
 
 import '../../../../core/helpers/extentions.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/custom_dioalog.dart';
 import '../cubit/booking_appointment_cubit.dart';
 
@@ -59,12 +58,11 @@ class CancelAppointmentBlocListener extends StatelessWidget {
     context.read<BookingAppointmentCubit>().getFilteredAppointments();
     context.read<BookingAppointmentCubit>().getCancelledAppointments();
 
-    CustomDialog.showConfirmationDialog(
+    CustomDialog.showSuccessDialog(
       context: context,
       title: 'Successfully',
       message: 'Appointment cancelled successfully',
-      confirmText: 'Go to Home',
-      onConfirm: () => context.pushNamed(Routes.mainNavigation),
+      buttonText: 'OK',
     );
   }
 }
