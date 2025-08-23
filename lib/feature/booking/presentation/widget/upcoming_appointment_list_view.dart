@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/helpers/spacing.dart';
-import '../../data/model/appoitmnet_data.dart';
+import '../../data/model/appointment_data.dart';
 import 'upcoming_appointment_list_item.dart';
 
 class UpcomingAppointmentListView extends StatelessWidget {

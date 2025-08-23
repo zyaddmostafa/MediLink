@@ -3,8 +3,8 @@ import '../../../../../core/helpers/doctors_helper.dart';
 import '../doctor_info/schedule_time_item.dart';
 
 class ScheduleTimeGrid extends StatefulWidget {
-  final String startTime; // e.g., "09:00"
-  final String endTime; // e.g., "17:00"
+  final String startTime;
+  final String endTime;
   final Function(String)? onTimeSelected;
   final String? selectedTime;
 

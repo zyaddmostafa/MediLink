@@ -1,11 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feature/auth/data/models/sing_up_form_data.dart';
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
 import '../../feature/booking/presentation/screen/booking_screen.dart';
 import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
+import '../../feature/checkout/presentation/cubit/payment_checkout_cubit.dart';
 import '../../feature/checkout/presentation/screens/appointment_detail_screen.dart';
-import '../../feature/checkout/presentation/screens/appointmet_payment_methods_screen.dart';
+import '../../feature/checkout/presentation/screens/payment_methods_screen.dart';
 import '../../feature/home/data/model/category_model.dart';
 import '../../feature/home/data/model/doctor_model.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
@@ -17,10 +19,11 @@ import '../../feature/home/presentation/screens/search_screen.dart';
 import '../../feature/home/presentation/screens/home_screen.dart';
 import '../../feature/home/presentation/screens/see_all_categories_screen.dart';
 import '../../feature/home/presentation/screens/see_all_doctors_screen.dart';
-import '../../feature/navigation/main_navigation_screen.dart';
+import '../../feature/navigation/main_navigation.dart';
+import '../../feature/profile/presentation/cubit/user_cubit.dart';
 import '../../feature/profile/presentation/screens/edit_profile_screen.dart';
 import '../di/dependency_injection.dart';
-import '../paymob/paymob_getway.dart';
+import '../paymob/paymob_card_getway.dart';
 import '../paymob/paymob_mobile_getway.dart';
 import 'routes.dart';
 import '../../feature/auth/presentation/screens/login_screen.dart';
@@ -42,23 +45,28 @@ class AppRoute {
         );
       case Routes.signUpScreen:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<AuthCubit>(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<AuthCubit>(),
             child: const SignUpScreen(),
           ),
         );
 
       case Routes.setPasswordScreen:
-        final Map<String, dynamic> signupData = args as Map<String, dynamic>;
+        final SignUpFormData signupData = args as SignUpFormData;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<AuthCubit>(),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<AuthCubit>(),
             child: SetPasswordScreen(signupData: signupData),
           ),
         );
 
       case Routes.mainNavigation:
-        return MaterialPageRoute(builder: (_) => const MainNavigationScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => UserCubit(getIt()),
+            child: const MainNavigation(),
+          ),
+        );
 
       case Routes.homeScreen:
         return MaterialPageRoute(
@@ -90,8 +98,9 @@ class AppRoute {
       case Routes.doctorsByCategory:
         final CategoryModel categoryModel = args as CategoryModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<HomeCubit>()..getDoctorsByCategory(categoryModel.id),
+          builder: (_) => BlocProvider(
+            create: (context) =>
+                getIt<HomeCubit>()..getDoctorsByCategory(categoryModel.id),
             child: DoctorsByCategoriesScreen(categoryModel: categoryModel),
           ),
         );
@@ -105,8 +114,8 @@ class AppRoute {
       case Routes.doctorInfo:
         final int doctorId = args as int;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<HomeCubit>()..getDoctorById(doctorId),
+          builder: (_) => BlocProvider(
+            create: (context) => getIt<HomeCubit>()..getDoctorById(doctorId),
             child: const DoctorInfoScreen(),
           ),
         );
@@ -122,20 +131,21 @@ class AppRoute {
         final AppointmentDetailsModel appointmentDetails =
             args as AppointmentDetailsModel;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: getIt<BookingAppointmentCubit>(),
-            child: AppointmentPaymentMethodsScreen(
-              appointmentDetails: appointmentDetails,
-            ),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: getIt<BookingAppointmentCubit>()),
+              BlocProvider(create: (_) => getIt<PaymentCheckoutCubit>()),
+            ],
+            child: PaymentMethodsScreen(appointmentDetails: appointmentDetails),
           ),
         );
 
-      case Routes.paymentGetWay:
+      case Routes.cardPaymentGetWay:
         final Map<String, dynamic> paymentData = args as Map<String, dynamic>;
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
             value: getIt<BookingAppointmentCubit>(),
-            child: PaymobGetway(
+            child: PaymobCardGetway(
               paymentToken: paymentData['paymentToken'],
               appointmentDetails: paymentData['appointmentDetails'],
             ),
@@ -168,7 +178,7 @@ class AppRoute {
       case Routes.notificationScreen:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       default:
-        return null;
+        return MaterialPageRoute(builder: (_) => const Scaffold());
     }
   }
 }

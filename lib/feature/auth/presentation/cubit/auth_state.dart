@@ -8,8 +8,8 @@ final class AuthInitial extends AuthState {}
 final class SignupLoading extends AuthState {}
 
 final class SignupSuccess extends AuthState {
-  final SignupResponse signupResponse;
-  SignupSuccess(this.signupResponse);
+  final UserModel userData;
+  SignupSuccess(this.userData);
 }
 
 final class SignupError extends AuthState {
@@ -20,13 +20,23 @@ final class SignupError extends AuthState {
 final class LoginLoading extends AuthState {}
 
 final class LoginSuccess extends AuthState {
-  final LoginResponse loginResponse;
+  final UserModel userData;
 
-  LoginSuccess(this.loginResponse);
+  LoginSuccess(this.userData);
 }
 
 final class LoginError extends AuthState {
   final ApiErrorModel apiErrorModel;
 
   LoginError(this.apiErrorModel);
+}
+
+final class LogoutLoading extends AuthState {}
+
+final class LogoutSuccess extends AuthState {}
+
+final class LogoutError extends AuthState {
+  final ApiErrorModel apiErrorModel;
+
+  LogoutError(this.apiErrorModel);
 }

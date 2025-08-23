@@ -1,11 +1,10 @@
 import '../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../core/api_helpers/api_result.dart';
+import '../../../../core/model/api_response_model.dart';
 import '../apis/booking_appointment_api_service.dart';
 import '../local/cancle_appoinmets_local_service.dart';
-import '../model/appoitmnet_data.dart';
-import '../model/get_stored_appoinnmnet_response.dart';
+import '../model/appointment_data.dart';
 import '../model/store_appointment_request.dart';
-import '../model/store_appointment_response.dart';
 
 class BookingAppointmentRepo {
   final BookingAppointmentApiService apiService;
@@ -16,7 +15,7 @@ class BookingAppointmentRepo {
     this.cancelledAppointmentsLocalService,
   );
 
-  Future<ApiResult<StoreAppointmentResponse>> storeAppointment(
+  Future<ApiResult<ApiResponseModel<AppointmentData>>> storeAppointment(
     StoreAppointmentRequest request,
   ) async {
     try {
@@ -33,7 +32,7 @@ class BookingAppointmentRepo {
     return response;
   }
 
-  Future<ApiResult<GetStoredAppointmentResponse>>
+  Future<ApiResult<ApiResponseModel<List<AppointmentData>>>>
   getStoredAppointments() async {
     try {
       final response = await apiService.getStoredAppointments();

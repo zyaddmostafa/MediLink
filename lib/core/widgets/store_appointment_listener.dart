@@ -1,6 +1,6 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../feature/checkout/data/model/appointment_details_model.dart';
 import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../helpers/extentions.dart';
@@ -9,43 +9,84 @@ import '../widgets/custom_dioalog.dart';
 
 class StoreAppointmentListener extends StatelessWidget {
   final AppointmentDetailsModel appointmentDetails;
-
-  const StoreAppointmentListener({super.key, required this.appointmentDetails});
+  final Widget child;
+  const StoreAppointmentListener({
+    super.key,
+    required this.appointmentDetails,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<BookingAppointmentCubit, BookingAppointmentState>(
       listener: (context, state) {
         if (state is StoreAppointmentLoading) {
-          CustomDialog.showLoadingDialog(
-            context: context,
-            message: 'Storing your appointment...',
-          );
+          CustomDialog.showLoadingDialog(context: context);
         } else if (state is StoreAppointmentSuccess) {
-          CustomDialog.showConfirmationDialog(
-            context: context,
-            title: 'Payment Successful',
-            message:
-                'Your appointment with Dr. ${appointmentDetails.doctorName} has been confirmed successfully!',
-            confirmText: 'Go to Home',
-            onConfirm: () {
-              context.pushAndRemoveUntil(Routes.mainNavigation);
-            },
-          );
+          context.pop();
+          if (context.mounted) {
+            Future.delayed(const Duration(milliseconds: 800), () {
+              // Show success dialog
+              CustomDialog.showSuccessDialog(
+                context: context,
+                title: 'Appointment Confirmed',
+                message:
+                    'Your appointment with Dr. ${appointmentDetails.doctorName} has been confirmed successfully!',
+                buttonText: 'Go to Home',
+                onPressed: () {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (context.mounted) {
+                      Navigator.of(
+                        context,
+                        rootNavigator: true,
+                      ).pushNamedAndRemoveUntil(
+                        Routes.mainNavigation,
+                        (route) => false,
+                      );
+                    }
+                  });
+                },
+              );
+            });
+          }
         } else if (state is StoreAppointmentFailure) {
-          // Show error dialog
-          CustomDialog.showErrorDialog(
-            context: context,
-            title: 'Booking Failed',
-            message: state.errorMessage,
-            buttonText: 'Try Again',
-            onPressed: () {
-              Navigator.pop(context, {'status': 'failed'});
-            },
+          log(
+            'StoreAppointmentListener - Failure state received: ${state.errorMessage}',
           );
+          // Close loading dialog if open
+          context.pop();
+          // Show error dialog
+          if (context.mounted) {
+            Future.delayed(const Duration(milliseconds: 800), () {
+              CustomDialog.showErrorDialog(
+                context: context,
+                title: 'Booking Failed',
+                message: state.errorMessage,
+                buttonText: 'Try Again',
+                onPressed: () {
+                  // Use post-frame callback and delay for stable navigation
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (context.mounted) {
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        if (context.mounted) {
+                          Navigator.of(
+                            context,
+                            rootNavigator: true,
+                          ).pushNamedAndRemoveUntil(
+                            Routes.mainNavigation,
+                            (route) => false,
+                          );
+                        }
+                      });
+                    }
+                  });
+                },
+              );
+            });
+          }
         }
       },
-      child: const SizedBox.shrink(),
+      child: child,
     );
   }
 }

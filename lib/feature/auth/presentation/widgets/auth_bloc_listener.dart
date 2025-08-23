@@ -25,7 +25,9 @@ class AuthBlocListener extends StatelessWidget {
             _showErrorDialog(
               context: context,
               title: 'Login Error',
-              message: state.apiErrorModel.getAllErrorMessages(),
+              message:
+                  state.apiErrorModel.message ??
+                  state.apiErrorModel.getAllErrorMessages(),
             );
             break;
           case LoginSuccess():
@@ -35,7 +37,9 @@ class AuthBlocListener extends StatelessWidget {
             _showErrorDialog(
               context: context,
               title: 'Sign Up Error',
-              message: state.apiErrorModel.getAllErrorMessages(),
+              message:
+                  state.apiErrorModel.message ??
+                  state.apiErrorModel.getAllErrorMessages(),
             );
             break;
           case SignupSuccess():
@@ -64,7 +68,7 @@ class AuthBlocListener extends StatelessWidget {
 
   /// Handles successful login by navigating to home screen
   void _handleLoginSuccess(BuildContext context) {
-    context.pushNamed(Routes.homeScreen);
+    context.pushAndRemoveUntil(Routes.mainNavigation);
   }
 
   /// Shows success dialog for signup completion

@@ -2,18 +2,36 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'dart:developer';
 
 import '../../feature/booking/data/local/cancle_appoinmets_local_service.dart';
-import '../../feature/booking/data/model/appoitmnet_data.dart';
+import '../../feature/booking/data/model/appointment_data.dart';
 import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/home/data/model/doctor_model.dart';
 import '../../feature/home/data/model/notification_model.dart';
+import '../../feature/profile/data/local/user_local_service.dart';
+import '../../feature/profile/data/model/user_response.dart';
+import '../di/dependency_injection.dart';
+import '../favorites/favorite_doctor_service.dart';
 
 class HiveInitializationService {
+  HiveInitializationService();
+
   /// Initialize Hive with all adapters and boxes
   static Future<void> init() async {
     await Hive.initFlutter();
     _registerAdapters();
-    await _openCoreBoxes();
-    log('Hive initialization completed');
+    await _openCriticalBoxes();
+  }
+
+  static Future<void> _openCriticalBoxes() async {
+    await Hive.openBox<UserModel>(getIt<UserLocalService>().boxName);
+    await Hive.openBox<AppointmentData>(
+      CancelledAppointmentsLocalService.instance.boxName,
+    );
+    await Hive.openBox<NotificationModel>(
+      getIt<NotificationLocalService>().boxName,
+    );
+
+    // Open favorite doctors box
+    await Hive.openBox<DoctorModel>(getIt<FavoriteDoctorService>().boxName);
   }
 
   /// Register all Hive adapters
@@ -51,23 +69,12 @@ class HiveInitializationService {
     if (!Hive.isAdapterRegistered(6)) {
       Hive.registerAdapter(NotificationModelAdapter());
     }
+    // Register UserModel adapter (typeId: 7)
+    if (!Hive.isAdapterRegistered(7)) {
+      Hive.registerAdapter(UserModelAdapter());
+    }
 
     log('All Hive adapters registered successfully');
-  }
-
-  /// Open core boxes used across the app
-  static Future<void> _openCoreBoxes() async {
-    // Open cancelled appointments box
-    await Hive.openBox<AppointmentData>(
-      CancelledAppointmentsLocalService.instance.boxName,
-    );
-    await Hive.openBox<NotificationModel>(NotificationLocalService().boxName);
-
-    // Add other core boxes here as needed
-    // await Hive.openBox<UserModel>('user_data_box');
-    // await Hive.openBox<Settings>('settings_box');
-
-    log('Core Hive boxes opened successfully');
   }
 
   /// Close all boxes

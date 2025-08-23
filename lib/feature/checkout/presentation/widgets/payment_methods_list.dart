@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/model/payment_method_helper.dart';
+import '../../data/helpers/payment_method_helper.dart';
 import 'payment_method_list_item.dart';
 
 class PaymentMethodsList extends StatelessWidget {

@@ -25,8 +25,8 @@ final class GetStoredAppointmentsSuccess extends BookingAppointmentState {
 }
 
 final class GetStoredAppointmentsFailure extends BookingAppointmentState {
-  final String errorMessage;
-  GetStoredAppointmentsFailure(this.errorMessage);
+  final ApiErrorModel error;
+  GetStoredAppointmentsFailure(this.error);
 }
 
 final class CancelAppointmentLoading extends BookingAppointmentState {}

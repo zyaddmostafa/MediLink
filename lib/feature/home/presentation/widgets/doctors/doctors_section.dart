@@ -1,14 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../../core/api_helpers/api_error_handler.dart';
 import '../../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../../core/helpers/extentions.dart';
 import '../../../../../core/helpers/spacing.dart';
-import '../../../../../core/model/button_properties_model.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_color.dart';
+import '../../../../../core/widgets/error_state_widget.dart';
 import '../../cubit/home_cubit.dart';
 import 'doctors_list_view.dart';
 import '../home_body_header.dart';
@@ -53,27 +53,21 @@ class DoctorsSection extends StatelessWidget {
           current is AllDoctorsError,
       builder: (context, state) {
         if (state is AllDoctorsLoading || state is AllDoctorsSuccess) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Skeletonizer(
-              enabled: state is AllDoctorsLoading,
-              child: DoctorListView(
-                isFavorite: false,
-                shrinkWrap: true, // Allow full scrolling
-                doctors: state is AllDoctorsSuccess
-                    ? state.doctors.take(5).toList()
-                    : generateSkeletonDoctors(),
-              ),
+          return Skeletonizer(
+            enabled: state is AllDoctorsLoading,
+            child: DoctorListView(
+              shrinkWrap: true, // Allow full scrolling
+              doctors: state is AllDoctorsSuccess
+                  ? state.doctors
+                  : generateSkeletonDoctors(),
             ),
           );
         } else if (state is AllDoctorsError) {
-          return Center(
-            child: Text(
-              extractErrorMessages(
-                state.error.errors ??
-                    {'message': state.error.message ?? 'Unknown error'},
-              ).join(','),
-            ),
+          log('Error fetching doctors: ${state.error.message}');
+          return ErrorStateWidget(
+            errorMessages: state.error.errors ?? {},
+            errorMessage: state.error.message,
+            onRetry: () => context.read<HomeCubit>().getAllDoctors(),
           );
         }
         return const SizedBox.shrink();

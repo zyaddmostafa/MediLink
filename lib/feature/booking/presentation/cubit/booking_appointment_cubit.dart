@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import '../../../../core/api_helpers/api_error_model.dart';
-import '../../data/model/appoitmnet_data.dart';
+import '../../data/model/appointment_data.dart';
 import '../../data/model/store_appointment_request.dart';
 import '../../data/repo/booking_appointment_repo.dart';
 import '../../domain/use_case/filtered_appointment_use_case.dart';
@@ -23,7 +23,7 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
 
     result.when(
       onSuccess: (response) {
-        emit(StoreAppointmentSuccess(response.data));
+        emit(StoreAppointmentSuccess(response.responseData!));
       },
       onError: (ApiErrorModel error) {
         emit(StoreAppointmentFailure(error.message ?? 'An error occurred'));
@@ -37,12 +37,10 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
 
     result.when(
       onSuccess: (response) {
-        emit(GetStoredAppointmentsSuccess(response.data));
+        emit(GetStoredAppointmentsSuccess(response.responseData!));
       },
       onError: (ApiErrorModel error) {
-        emit(
-          GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
-        );
+        emit(GetStoredAppointmentsFailure(error));
       },
     );
   }
@@ -57,9 +55,7 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
         emit(GetStoredAppointmentsSuccess(filteredAppointments));
       },
       onError: (ApiErrorModel error) {
-        emit(
-          GetStoredAppointmentsFailure(error.message ?? 'An error occurred'),
-        );
+        emit(GetStoredAppointmentsFailure(error));
       },
     );
   }

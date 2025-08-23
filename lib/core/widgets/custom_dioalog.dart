@@ -27,20 +27,7 @@ class CustomDialog {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Success Icon
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 40,
-                ),
-              ),
+              SvgPicture.asset(Assets.svgsSeccessful, width: 60, height: 60),
               verticalSpacing(16),
 
               // Title
@@ -168,15 +155,16 @@ class CustomDialog {
     required BuildContext context,
     required String title,
     required String message,
-    required VoidCallback onConfirm,
+    VoidCallback? onConfirm,
     String? confirmText,
     String? cancelText,
     Color? confirmColor,
+    VoidCallback? onCancel,
   }) async {
     return showDialog<bool>(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return AlertDialog(
           backgroundColor: AppColor.white,
           shape: RoundedRectangleBorder(
@@ -213,7 +201,12 @@ class CustomDialog {
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () => context.pop(),
+                      onPressed: () {
+                        dialogContext.pop(); // Close dialog first
+                        if (onCancel != null) {
+                          onCancel();
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColor.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
@@ -233,7 +226,10 @@ class CustomDialog {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        onConfirm();
+                        dialogContext.pop(); // Close dialog first
+                        if (onConfirm != null) {
+                          onConfirm();
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: confirmColor ?? AppColor.primary,

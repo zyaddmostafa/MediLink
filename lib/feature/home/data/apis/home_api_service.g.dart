@@ -24,31 +24,40 @@ class _HomeApiService implements HomeApiService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<DoctorsResponse> getAllDoctors() async {
+  Future<ApiResponseModel<List<DoctorModel>>> getAllDoctors() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DoctorsResponse>(Options(
+    final _options =
+        _setStreamType<ApiResponseModel<List<DoctorModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'doctor/index',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+            .compose(
+              _dio.options,
+              'doctor/index',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DoctorsResponse _value;
+    late ApiResponseModel<List<DoctorModel>> _value;
     try {
-      _value = DoctorsResponse.fromJson(_result.data!);
+      _value = ApiResponseModel<List<DoctorModel>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<DoctorModel>(
+                    (i) => DoctorModel.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -57,12 +66,12 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<DoctorByIdResponse> getDoctorById(int id) async {
+  Future<ApiResponseModel<DoctorModel>> getDoctorById(int id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DoctorByIdResponse>(Options(
+    final _options = _setStreamType<ApiResponseModel<DoctorModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -79,9 +88,12 @@ class _HomeApiService implements HomeApiService {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DoctorByIdResponse _value;
+    late ApiResponseModel<DoctorModel> _value;
     try {
-      _value = DoctorByIdResponse.fromJson(_result.data!);
+      _value = ApiResponseModel<DoctorModel>.fromJson(
+        _result.data!,
+        (json) => DoctorModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -90,31 +102,36 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<DoctorsByCategoryResponse> getDoctorsByCategory(int categoryId) async {
+  Future<ApiResponseModel<DoctorsByCategoryModel>> getDoctorsByCategory(
+      int categoryId) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DoctorsByCategoryResponse>(Options(
+    final _options =
+        _setStreamType<ApiResponseModel<DoctorsByCategoryModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'specialization/show/${categoryId}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+            .compose(
+              _dio.options,
+              'specialization/show/${categoryId}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DoctorsByCategoryResponse _value;
+    late ApiResponseModel<DoctorsByCategoryModel> _value;
     try {
-      _value = DoctorsByCategoryResponse.fromJson(_result.data!);
+      _value = ApiResponseModel<DoctorsByCategoryModel>.fromJson(
+        _result.data!,
+        (json) => DoctorsByCategoryModel.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -123,31 +140,40 @@ class _HomeApiService implements HomeApiService {
   }
 
   @override
-  Future<DoctorsResponse> searchDoctors(String name) async {
+  Future<ApiResponseModel<List<DoctorModel>>> searchDoctors(String name) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'name': name};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<DoctorsResponse>(Options(
+    final _options =
+        _setStreamType<ApiResponseModel<List<DoctorModel>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          'doctor/doctor-search?name={name}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+            .compose(
+              _dio.options,
+              'doctor/doctor-search?name={name}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late DoctorsResponse _value;
+    late ApiResponseModel<List<DoctorModel>> _value;
     try {
-      _value = DoctorsResponse.fromJson(_result.data!);
+      _value = ApiResponseModel<List<DoctorModel>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<DoctorModel>(
+                    (i) => DoctorModel.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-
+import '../../../../../core/di/dependency_injection.dart';
+import '../../../../../core/favorites/favorite_doctor_service.dart';
+import '../../../../../core/favorites/favorite_toogle_method.dart';
 import '../../../../../core/helpers/app_assets.dart';
 import '../../../../../core/helpers/doctors_images.dart';
 import '../../../../../core/helpers/doctors_helper.dart';
@@ -13,51 +15,54 @@ import '../../../../../core/widgets/custom_elevated_button.dart';
 import '../../../data/model/doctor_model.dart';
 import 'doctor_rate.dart';
 
-class DoctorsCard extends StatelessWidget {
-  final bool isFavorite;
+class DoctorsCard extends StatefulWidget {
   final DoctorModel? doctor;
   final ButtonPropertiesModel buttonProperties;
 
-  const DoctorsCard({
-    super.key,
-    this.isFavorite = false,
-    this.doctor,
-    required this.buttonProperties,
-  });
+  const DoctorsCard({super.key, this.doctor, required this.buttonProperties});
+
+  @override
+  State<DoctorsCard> createState() => _DoctorsCardState();
+}
+
+class _DoctorsCardState extends State<DoctorsCard> {
+  late final FavoriteDoctorService _favoriteService;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteService = getIt<FavoriteDoctorService>();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColor.white,
+        color: AppColor.lightGrey,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColor.grey.withValues(alpha: .2)),
+        border: Border.all(color: AppColor.blueGrey),
       ),
       child: Column(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _doctorCardImage(),
+              DoctorsImages.doctorCardImage(widget.doctor!),
               horizontalSpacing(8),
               _doctorCardBody(),
-              Icon(
-                isFavorite ? Icons.favorite : Icons.favorite_border,
-                size: 28,
-                color: AppColor.red,
-              ),
+              horizontalSpacing(8),
+              buildFavoriteIcon(_favoriteService, widget.doctor!),
             ],
           ),
           verticalSpacing(16),
           CustomElevatedButton(
             properties: ButtonPropertiesModel(
-              textColor: buttonProperties.textColor,
-              backgroundColor: buttonProperties.backgroundColor,
-              text: buttonProperties.text,
-              onPressed: buttonProperties.onPressed,
-              onPressedWithArgument: buttonProperties.onPressedWithArgument,
-              isLoading: buttonProperties.isLoading,
+              textColor: widget.buttonProperties.textColor,
+              backgroundColor: widget.buttonProperties.backgroundColor,
+              text: widget.buttonProperties.text,
+              onPressed: widget.buttonProperties.onPressed,
+              isLoading: widget.buttonProperties.isLoading,
             ),
           ),
         ],
@@ -71,14 +76,14 @@ class DoctorsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            doctor?.name ?? 'Default Doctor Name',
+            widget.doctor?.name ?? 'Default Doctor Name',
             style: AppTextStyles.font14SemiBold,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           verticalSpacing(4),
           Text(
-            doctor?.specialization?.name ?? 'Default Specialization',
+            widget.doctor?.specialization?.name ?? 'Default Specialization',
             style: AppTextStyles.font14Regular,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -101,8 +106,8 @@ class DoctorsCard extends StatelessWidget {
               Flexible(
                 child: Text(
                   DoctorsHelpers.convertStartAndEndTimeTo12HourFormat(
-                    doctor?.startTime ?? '',
-                    doctor?.endTime ?? '',
+                    widget.doctor?.startTime ?? '',
+                    widget.doctor?.endTime ?? '',
                   ),
                   style: AppTextStyles.font14Medium,
                 ),
@@ -110,22 +115,6 @@ class DoctorsCard extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  ClipRRect _doctorCardImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.asset(
-        DoctorsImages.getRandomDoctorImage(doctor?.gender ?? 'male'),
-        height: 32.r,
-        width: 32.r,
-        cacheWidth: 64, // Performance optimization
-        cacheHeight: 64,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) =>
-            const Icon(Icons.person, size: 32),
       ),
     );
   }

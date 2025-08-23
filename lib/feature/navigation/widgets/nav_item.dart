@@ -31,7 +31,7 @@ class NavItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () => onTabTapped(index),
-      behavior: HitTestBehavior.opaque,
+      behavior: HitTestBehavior.translucent,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
 

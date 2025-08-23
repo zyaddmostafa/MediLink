@@ -6,36 +6,41 @@ import '../../../../core/theme/app_text_styles.dart';
 
 class AccountInfoItem extends StatelessWidget {
   final String title;
-  final String value;
+  final String? value;
   final IconData icon;
-
+  final Color iconColor;
+  final Color textColor;
+  final VoidCallback? onTap;
   const AccountInfoItem({
     super.key,
     required this.title,
-    required this.value,
+    this.value,
     required this.icon,
+    this.iconColor = AppColor.black,
+    this.textColor = AppColor.black,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColor.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColor.grey.withValues(alpha: .2)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: AppColor.black, size: 24),
-          horizontalSpacing(8),
-          Text(
-            title,
-            style: AppTextStyles.font18Medium.copyWith(color: AppColor.black),
-          ),
-          const Spacer(),
-          Text(value, style: AppTextStyles.font16Bold),
-        ],
+      child: InkWell(
+        onTap: onTap,
+        child: Row(
+          children: [
+            Icon(icon, color: iconColor, size: 24),
+            horizontalSpacing(8),
+            Text(
+              title,
+              style: AppTextStyles.font18Medium.copyWith(color: textColor),
+            ),
+            const Spacer(),
+            value != null
+                ? Text(value!, style: AppTextStyles.font16Bold)
+                : const SizedBox.shrink(),
+          ],
+        ),
       ),
     );
   }

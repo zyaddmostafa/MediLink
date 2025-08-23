@@ -37,9 +37,15 @@ class BottomNavBar extends StatelessWidget {
               currentIndex: currentIndex,
               onTabTapped: onTabTapped,
             ),
-
             NavItem(
               index: 2,
+              iconPath: Assets.svgsSearch,
+              label: 'Search',
+              currentIndex: currentIndex,
+              onTabTapped: onTabTapped,
+            ),
+            NavItem(
+              index: 3,
               iconPath: Assets.svgsProfile,
               label: 'Profile',
               currentIndex: currentIndex,

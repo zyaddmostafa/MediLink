@@ -1,20 +1,31 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-
 import '../../feature/auth/data/apis/auth_api_service.dart';
-import '../../feature/auth/data/repos/auth_repo_impl.dart';
+import '../../feature/auth/data/repos/auth_repo.dart';
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
 import '../../feature/booking/data/apis/booking_appointment_api_service.dart';
 import '../../feature/booking/data/local/cancle_appoinmets_local_service.dart';
 import '../../feature/booking/data/repo/booking_appointment_repo.dart';
 import '../../feature/booking/domain/use_case/filtered_appointment_use_case.dart';
+import '../../feature/booking/presentation/cubit/booking_appointment_cubit.dart';
+import '../../feature/checkout/data/apis/payment_api_service.dart';
+import '../../feature/checkout/data/repositories/payment_repository_impl.dart';
+import '../../feature/checkout/presentation/cubit/payment_checkout_cubit.dart';
 import '../../feature/home/data/apis/home_api_service.dart';
 import '../../feature/home/data/repo/home_repo_impl.dart';
+import '../../feature/home/domain/usecases/get_all_doctors_use_case.dart';
+import '../../feature/home/domain/usecases/get_doctors_by_category_use_case.dart';
+import '../../feature/home/domain/usecases/search_doctors_use_case.dart';
+import '../../feature/home/domain/usecases/get_doctor_by_id_use_case.dart';
+import '../../feature/home/domain/usecases/toggle_favorite_use_case.dart';
 import '../../feature/home/presentation/cubit/home_cubit.dart';
 import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/profile/data/apis/user_api_service.dart';
+import '../../feature/profile/data/local/user_local_service.dart';
 import '../../feature/profile/data/repo/user_repo.dart';
 import '../api_helpers/dio_factory.dart';
+import '../favorites/favorite_doctor_service.dart';
+import '../paymob/paymob_manager.dart';
 
 final getIt = GetIt.instance;
 
@@ -23,13 +34,44 @@ Future<void> setupGetIt() async {
 
   getIt.registerLazySingleton<AuthApiService>(() => AuthApiService(dio));
   // Authentication related dependencies
-  getIt.registerLazySingleton<AuthRepoImpl>(() => AuthRepoImpl(getIt()));
+  getIt.registerLazySingleton<AuthRepo>(() => AuthRepo(getIt()));
   getIt.registerFactory<AuthCubit>(() => AuthCubit(getIt()));
 
   // Home related dependencies
   getIt.registerLazySingleton<HomeApiService>(() => HomeApiService(dio));
   getIt.registerLazySingleton<HomeRepoImpl>(() => HomeRepoImpl(getIt()));
-  getIt.registerFactory<HomeCubit>(() => HomeCubit(getIt()));
+
+  // Favorite service
+  getIt.registerLazySingleton<FavoriteDoctorService>(
+    () => FavoriteDoctorService(),
+  );
+
+  // Home use cases
+  getIt.registerLazySingleton<GetAllDoctorsUseCase>(
+    () => GetAllDoctorsUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<GetDoctorsByCategoryUseCase>(
+    () => GetDoctorsByCategoryUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<SearchDoctorsUseCase>(
+    () => SearchDoctorsUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<GetDoctorByIdUseCase>(
+    () => GetDoctorByIdUseCase(getIt(), getIt()),
+  );
+  getIt.registerLazySingleton<ToggleFavoriteUseCase>(
+    () => ToggleFavoriteUseCase(getIt(), getIt()),
+  );
+
+  getIt.registerFactory<HomeCubit>(
+    () => HomeCubit(
+      getIt<GetAllDoctorsUseCase>(),
+      getIt<GetDoctorsByCategoryUseCase>(),
+      getIt<SearchDoctorsUseCase>(),
+      getIt<GetDoctorByIdUseCase>(),
+      getIt<ToggleFavoriteUseCase>(),
+    ),
+  );
 
   // store appointment dependencies
   getIt.registerLazySingleton<BookingAppointmentApiService>(
@@ -41,16 +83,32 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<BookingAppointmentRepo>(
     () => BookingAppointmentRepo(getIt(), getIt()),
   );
+  getIt.registerLazySingleton<BookingAppointmentCubit>(
+    () => BookingAppointmentCubit(getIt(), getIt()),
+  );
   getIt.registerLazySingleton<FilteredAppointmentUseCase>(
     () => FilteredAppointmentUseCase(getIt(), getIt()),
   );
 
   // user dependencies
   getIt.registerLazySingleton<UserApiService>(() => UserApiService(dio));
-  getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt()));
+  getIt.registerLazySingleton<UserLocalService>(() => UserLocalService());
+  getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt(), getIt()));
 
   // notification dependencies
   getIt.registerLazySingleton<NotificationLocalService>(
     () => NotificationLocalService(),
+  );
+
+  // payment dependencies
+  getIt.registerLazySingleton<PaymobManager>(() => PaymobManager());
+  getIt.registerLazySingleton<PaymentApiService>(
+    () => PaymentApiServiceImpl(getIt()),
+  );
+  getIt.registerLazySingleton<PaymentRepository>(
+    () => PaymentRepository(getIt()),
+  );
+  getIt.registerFactory<PaymentCheckoutCubit>(
+    () => PaymentCheckoutCubit(getIt()),
   );
 }

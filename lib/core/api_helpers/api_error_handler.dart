@@ -7,7 +7,9 @@ class ApiErrorHandler {
     if (error is DioException) {
       switch (error.type) {
         case DioExceptionType.connectionError:
-          return ApiErrorModel(message: "Connection to server failed");
+          return ApiErrorModel(
+            message: "NO internet Connection Check your internet",
+          );
         case DioExceptionType.cancel:
           return ApiErrorModel(message: "Request to the server was cancelled");
         case DioExceptionType.connectionTimeout:
@@ -37,10 +39,23 @@ class ApiErrorHandler {
 }
 
 ApiErrorModel _handleError(data) {
+  Map<String, dynamic>? errors;
+
+  if (data is Map<String, dynamic>) {
+    final dataField = data['data'];
+    if (dataField is Map<String, dynamic>) {
+      errors = dataField;
+    } else if (dataField is List) {
+      errors = {'errors': dataField};
+    }
+  }
+
   return ApiErrorModel(
-    message: data['message'] ?? "Unknown error occurred",
-    code: data['code'],
-    errors: data['data'],
+    message: data is Map<String, dynamic>
+        ? (data['message'] ?? "Unknown error occurred")
+        : "Unknown error occurred",
+    code: data is Map<String, dynamic> ? data['code'] : null,
+    errors: errors,
   );
 }
 

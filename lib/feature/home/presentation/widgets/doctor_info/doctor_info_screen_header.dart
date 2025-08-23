@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../../../core/helpers/app_assets.dart';
-import '../../../../../core/helpers/extentions.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/di/dependency_injection.dart';
+import '../../../../../core/favorites/favorite_doctor_service.dart';
+import '../../../../../core/favorites/favorite_toogle_method.dart';
 import '../../../../../core/helpers/spacing.dart';
-import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_color.dart';
 import '../../../../../core/theme/app_text_styles.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
+import '../../../data/model/doctor_model.dart';
+import '../../cubit/home_cubit.dart';
 
-class DoctorInfoScreenHeader extends StatelessWidget {
-  const DoctorInfoScreenHeader({super.key});
+class DoctorInfoScreenHeader extends StatefulWidget {
+  final DoctorModel? doctor;
+  const DoctorInfoScreenHeader({super.key, this.doctor});
+
+  @override
+  State<DoctorInfoScreenHeader> createState() => _DoctorInfoScreenHeaderState();
+}
+
+class _DoctorInfoScreenHeaderState extends State<DoctorInfoScreenHeader> {
+  late final FavoriteDoctorService _favoriteService;
+  @override
+  void initState() {
+    super.initState();
+    _favoriteService = getIt<FavoriteDoctorService>();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,35 +41,25 @@ class DoctorInfoScreenHeader extends StatelessWidget {
                 style: AppTextStyles.font18Bold.copyWith(color: AppColor.white),
               ),
               const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  context.pushNamed(Routes.searchScreen);
-                },
-                child: SvgPicture.asset(
-                  Assets.svgsSearch,
-                  colorFilter: const ColorFilter.mode(
-                    AppColor.white,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
+
               horizontalSpacing(24),
-              GestureDetector(
-                onTap: () {
-                  // Handle favorite tap
-                },
-                child: SvgPicture.asset(
-                  Assets.svgsFavinactive,
-                  colorFilter: const ColorFilter.mode(
-                    AppColor.white,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
+              _favoriteDoctorToggleBlocBuiler(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  BlocBuilder<HomeCubit, HomeState> _favoriteDoctorToggleBlocBuiler() {
+    return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) => current is DoctorByIdSuccess,
+      builder: (context, state) {
+        if (state is DoctorByIdSuccess) {
+          return buildFavoriteIcon(_favoriteService, state.doctor!);
+        }
+        return Container();
+      },
     );
   }
 }

@@ -37,6 +37,11 @@ class DoctorModel extends HiveObject {
   @HiveField(13)
   final String? endTime;
 
+  // Local field - not from API, used for UI state
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @HiveField(14, defaultValue: false)
+  final bool? isFavorite;
+
   DoctorModel({
     this.id,
     this.name,
@@ -52,10 +57,48 @@ class DoctorModel extends HiveObject {
     this.appointPrice,
     this.startTime,
     this.endTime,
+    this.isFavorite = false,
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) =>
       _$DoctorModelFromJson(json);
+
+  // Copy with method for updating favorite status
+  DoctorModel copyWith({
+    int? id,
+    String? name,
+    String? email,
+    String? phone,
+    String? photo,
+    String? gender,
+    String? address,
+    String? description,
+    String? degree,
+    Specialization? specialization,
+    City? city,
+    int? appointPrice,
+    String? startTime,
+    String? endTime,
+    bool? isFavorite,
+  }) {
+    return DoctorModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      phone: phone ?? this.phone,
+      photo: photo ?? this.photo,
+      gender: gender ?? this.gender,
+      address: address ?? this.address,
+      description: description ?? this.description,
+      degree: degree ?? this.degree,
+      specialization: specialization ?? this.specialization,
+      city: city ?? this.city,
+      appointPrice: appointPrice ?? this.appointPrice,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 }
 
 @JsonSerializable()

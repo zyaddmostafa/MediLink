@@ -29,7 +29,6 @@ class ProfileSreenHeader extends StatelessWidget {
               message:
                   'You Dont Have to Update The Password To Update the Account Information Just Update The Rest',
               onConfirm: () {
-                context.pop();
                 context.pushNamed(Routes.editProfileScreen);
               },
             );

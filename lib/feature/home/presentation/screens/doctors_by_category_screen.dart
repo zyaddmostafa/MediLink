@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -6,6 +8,7 @@ import '../../../../core/helpers/dummy_doctor_list_data.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
+import '../../../../core/widgets/error_state_widget.dart';
 import '../../data/model/category_model.dart';
 import '../cubit/home_cubit.dart';
 import '../widgets/doctors/doctors_list_view.dart';
@@ -55,21 +58,22 @@ Widget _doctorsListViewBlocBuilder(BuildContext context) {
         current is DoctorsByCategoryLoading ||
         current is DoctorsByCategoryError,
     builder: (context, state) {
-      if (state is DoctorsByCategoryLoading ||
-          state is DoctorsByCategorySuccess) {
+      if (state is DoctorsByCategoryLoading) {
         return Expanded(
           child: Skeletonizer(
-            enabled: state is DoctorsByCategoryLoading,
-            child: DoctorListView(
-              isFavorite: false,
-              doctors: state is DoctorsByCategorySuccess
-                  ? state.doctors
-                  : generateSkeletonDoctors(),
-            ),
+            enabled: true,
+            child: DoctorListView(doctors: generateSkeletonDoctors()),
           ),
         );
+      } else if (state is DoctorsByCategorySuccess) {
+        log('Doctors loaded successfully: ${state.doctors.length}');
+        return Expanded(child: DoctorListView(doctors: state.doctors));
       } else if (state is DoctorsByCategoryError) {
-        return const Center(child: Text('Error fetching doctors'));
+        return ErrorStateWidget(
+          errorMessage: state.error.message,
+          errorMessages: state.error.errors ?? {},
+          onRetry: () {},
+        );
       }
       return const SizedBox.shrink();
     },
