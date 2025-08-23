@@ -27,35 +27,26 @@ class UpcomingAppointmentListItem extends StatelessWidget {
       children: [
         Text(appointmentsDate.appointmentTime, style: AppTextStyles.font18Bold),
         verticalSpacing(12),
-        // Add your appointment list here
-        Column(
-          children: List.generate(
-            2,
-            (index) => Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: DoctorsCard(
-                doctor: appointmentsDate.doctor,
-                buttonProperties: ButtonPropertiesModel(
-                  text: 'Cancel Appointment',
-                  textColor: AppColor.primary,
-                  backgroundColor: AppColor.doctorCardButton,
+        DoctorsCard(
+          doctor: appointmentsDate.doctor,
+          buttonProperties: ButtonPropertiesModel(
+            text: 'Cancel Appointment',
+            textColor: AppColor.primary,
+            backgroundColor: AppColor.doctorCardButton,
 
-                  onPressed: () async {
-                    // Debug print
-                    await BookingAppointmentBottomSheet.show(
-                      context: context,
-                      bookingCubit: bookingCubit,
-                      appointmentData: appointmentsDate,
-                      buttonText: 'Cancel Appointment',
-                      onPressed: () {
-                        context.pop();
-                        bookingCubit.cancelAppointment(appointmentsDate);
-                      },
-                    );
-                  },
-                ),
-              ),
-            ),
+            onPressed: () async {
+              // Debug print
+              await BookingAppointmentBottomSheet.show(
+                context: context,
+                bookingCubit: bookingCubit,
+                appointmentData: appointmentsDate,
+                buttonText: 'Cancel Appointment',
+                onPressed: () {
+                  context.pop();
+                  bookingCubit.cancelAppointment(appointmentsDate);
+                },
+              );
+            },
           ),
         ),
       ],

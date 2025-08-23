@@ -52,7 +52,15 @@ class CustomDialog {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: onPressed ?? () => context.pop(),
+                  onPressed: () {
+                    if (onPressed != null) {
+                      onPressed();
+                    } else {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        context.pop();
+                      });
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColor.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),

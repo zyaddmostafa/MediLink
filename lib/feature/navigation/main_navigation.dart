@@ -7,7 +7,6 @@ import '../booking/presentation/screen/booking_screen.dart';
 import '../home/presentation/cubit/home_cubit.dart';
 import '../home/presentation/screens/home_screen.dart';
 import '../home/presentation/screens/search_screen.dart';
-import '../profile/data/local/user_local_service.dart';
 import '../profile/presentation/cubit/user_cubit.dart';
 import '../profile/presentation/screens/profile_screen.dart';
 import 'widgets/bottom_nav_bar.dart';
@@ -27,16 +26,11 @@ class _MainNavigationState extends State<MainNavigation> {
     super.initState();
 
     // Delay user profile loading to avoid blocking UI
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadUserProfileIfNeeded();
-    });
+    _loadUserProfileIfNeeded();
   }
 
   void _loadUserProfileIfNeeded() async {
-    final savedUser = getIt<UserLocalService>().getUser();
-    if (savedUser == null) {
-      context.read<UserCubit>().getUserProfile();
-    }
+    context.read<UserCubit>().getUserProfile();
   }
 
   // List of screens for bottom navigation

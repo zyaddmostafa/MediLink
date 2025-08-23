@@ -28,11 +28,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _loadInitialData() {
     final homeCubit = context.read<HomeCubit>();
-    // Only load if no data has been loaded yet
 
     homeCubit.getAllDoctors();
 
-    // Also load appointments for the upcoming appointments section
     final bookingCubit = context.read<BookingAppointmentCubit>();
 
     bookingCubit.getFilteredAppointments();

@@ -14,10 +14,10 @@ abstract class UserApiService {
   factory UserApiService(Dio dio, {String baseUrl}) = _UserApiService;
 
   @GET(ApiConstants.getUserProfile)
-  Future<ApiResponseModel<List<UserModel>>> getUserProfile();
+  Future<ApiResponseModel<List<UserInformation>>> getUserProfile();
 
   @PUT(ApiConstants.updateUserProfile)
-  Future<ApiResponseModel<List<UserModel>>> updateUserProfile(
+  Future<ApiResponseModel<List<UserInformation>>> updateUserProfile(
     @Body() UpdateUserRequest request,
   );
 }

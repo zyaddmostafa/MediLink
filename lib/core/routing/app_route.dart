@@ -174,7 +174,12 @@ class AppRoute {
         );
 
       case Routes.editProfileScreen:
-        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: getIt<UserCubit>(),
+            child: const EditProfileScreen(),
+          ),
+        );
       case Routes.notificationScreen:
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       default:

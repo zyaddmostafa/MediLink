@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/helpers/spacing.dart';
@@ -10,12 +12,11 @@ class UpcomingAppointmentListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(appointments.length.toString());
     return ListView.separated(
       itemCount: appointments.length,
       separatorBuilder: (context, index) => verticalSpacing(12),
       itemBuilder: (context, index) {
-        // Example data for appointments
-
         return UpcomingAppointmentListItem(
           appointmentsDate: appointments[index],
         );

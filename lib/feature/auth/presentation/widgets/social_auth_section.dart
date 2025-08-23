@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/helpers/app_assets.dart';
+import '../../../../core/helpers/snack_bar.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -31,31 +32,16 @@ class SocialAuthSection extends StatelessWidget {
           children: [
             SocialAuthItem(
               svgImage: Assets.svgsGoogle,
-              onTap: () => _showSnackBar(context, 'Google Auth Coming Soon'),
+              onTap: () => showSnackBar(context, 'Google Auth Coming Soon'),
             ),
             horizontalSpacing(24),
             SocialAuthItem(
               svgImage: Assets.svgsFacebook,
-              onTap: () => _showSnackBar(context, 'Facebook Auth Coming Soon'),
+              onTap: () => showSnackBar(context, 'Facebook Auth Coming Soon'),
             ),
           ],
         ),
       ],
     );
   }
-}
-
-_showSnackBar(BuildContext context, String message) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(
-        message,
-        style: AppTextStyles.font14SemiBold.copyWith(color: Colors.white),
-      ),
-      backgroundColor: Colors.green,
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      duration: const Duration(milliseconds: 500),
-    ),
-  );
 }

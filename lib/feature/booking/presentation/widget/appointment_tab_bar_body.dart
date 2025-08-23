@@ -92,8 +92,9 @@ class AppointmentTabBarBody extends StatelessWidget {
           return ErrorStateWidget(
             errorMessage: state.error.message,
             errorMessages: state.error.errors ?? {},
-            onRetry: () =>
-                context.read<BookingAppointmentCubit>().getStoredAppointments(),
+            onRetry: () => context
+                .read<BookingAppointmentCubit>()
+                .getFilteredAppointments(),
           );
         } else if (state is GetStoredAppointmentsSuccess) {
           final upcomingAppointments = state.response;
