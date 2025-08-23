@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/favorites/favorite_doctor_service.dart';
 import '../../../../core/helpers/app_assets.dart';
@@ -117,13 +116,17 @@ class _ToggletoSelectAllDoctorsState extends State<ToggletoSelectAllDoctors> {
             title: 'Delete All Doctors',
             message: 'Are you sure you want to Delete all Favorites Doctors?',
             onConfirm: () async {
-              await getIt<FavoriteDoctorService>().clear();
-              setState(() {
-                _isSelected = false;
+              WidgetsBinding.instance.addPostFrameCallback((_) async {
+                await getIt<FavoriteDoctorService>().clear();
+                setState(() {
+                  _isSelected = false;
+                });
+                if (context.mounted) {
+                  Future.delayed(const Duration(milliseconds: 300), () {
+                    context.pop();
+                  });
+                }
               });
-              if (context.mounted) {
-                context.pop();
-              }
             },
             onCancel: () {
               setState(() {

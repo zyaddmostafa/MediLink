@@ -23,7 +23,7 @@ class FilteredAppointmentUseCase {
 
     return storedAppointments.when(
       onSuccess: (ApiResponseModel<List<AppointmentData>> data) {
-        for (var appointment in data.responseData ?? []) {
+        for (AppointmentData appointment in data.responseData ?? []) {
           if (!canceledAppointmentList.any(
             (canceled) => canceled.id == appointment.id,
           )) {

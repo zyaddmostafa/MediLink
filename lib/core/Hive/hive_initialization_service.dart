@@ -22,7 +22,7 @@ class HiveInitializationService {
   }
 
   static Future<void> _openCriticalBoxes() async {
-    await Hive.openBox<UserModel>(getIt<UserLocalService>().boxName);
+    await Hive.openBox<UserInformation>(getIt<UserLocalService>().boxName);
     await Hive.openBox<AppointmentData>(
       CancelledAppointmentsLocalService.instance.boxName,
     );
@@ -69,9 +69,9 @@ class HiveInitializationService {
     if (!Hive.isAdapterRegistered(6)) {
       Hive.registerAdapter(NotificationModelAdapter());
     }
-    // Register UserModel adapter (typeId: 7)
+    // Register UserInformation adapter (typeId: 7)
     if (!Hive.isAdapterRegistered(7)) {
-      Hive.registerAdapter(UserModelAdapter());
+      Hive.registerAdapter(UserInformationAdapter());
     }
 
     log('All Hive adapters registered successfully');

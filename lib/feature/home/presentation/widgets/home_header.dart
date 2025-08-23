@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../core/di/dependency_injection.dart';
 import '../../../../core/helpers/app_assets.dart';
 import '../../../../core/helpers/spacing.dart';
 import '../../../../core/theme/app_color.dart';
 import '../../../../core/theme/app_text_styles.dart';
-import '../../../profile/data/local/user_local_service.dart';
+import '../../../profile/presentation/cubit/user_cubit.dart';
 
 class HomeHeader extends StatelessWidget {
   final void Function()? onNotificationTap;
@@ -15,7 +15,6 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = getIt<UserLocalService>().getUser();
     return Row(
       children: [
         Column(
@@ -25,7 +24,14 @@ class HomeHeader extends StatelessWidget {
               'Welcome Back',
               style: AppTextStyles.font14Medium.copyWith(color: AppColor.grey),
             ),
-            Text(userInfo?.name ?? '', style: AppTextStyles.font18Bold),
+            BlocBuilder<UserCubit, UserState>(
+              builder: (context, state) {
+                if (state is UserSuccess) {
+                  return Text(state.user.name, style: AppTextStyles.font18Bold);
+                }
+                return const SizedBox.shrink();
+              },
+            ),
           ],
         ),
         const Spacer(),

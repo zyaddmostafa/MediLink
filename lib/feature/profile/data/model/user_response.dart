@@ -6,7 +6,7 @@ part 'user_response.g.dart';
 @JsonSerializable()
 class UserResponse {
   @JsonKey(name: 'data')
-  final List<UserModel> userdata;
+  final List<UserInformation> userdata;
 
   UserResponse({required this.userdata});
 
@@ -18,7 +18,7 @@ class UserResponse {
 
 @JsonSerializable()
 @HiveType(typeId: 7)
-class UserModel {
+class UserInformation {
   @HiveField(0)
   final int id;
   @HiveField(1)
@@ -30,7 +30,7 @@ class UserModel {
   @HiveField(4)
   final String gender;
 
-  UserModel({
+  UserInformation({
     required this.id,
     required this.name,
     required this.email,
@@ -38,8 +38,8 @@ class UserModel {
     required this.gender,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
+  factory UserInformation.fromJson(Map<String, dynamic> json) =>
+      _$UserInformationFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UserModelToJson(this);
+  Map<String, dynamic> toJson() => _$UserInformationToJson(this);
 }

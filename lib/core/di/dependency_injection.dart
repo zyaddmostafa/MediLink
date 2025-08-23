@@ -23,6 +23,7 @@ import '../../feature/home/data/local/notification_local_service.dart';
 import '../../feature/profile/data/apis/user_api_service.dart';
 import '../../feature/profile/data/local/user_local_service.dart';
 import '../../feature/profile/data/repo/user_repo.dart';
+import '../../feature/profile/presentation/cubit/user_cubit.dart';
 import '../api_helpers/dio_factory.dart';
 import '../favorites/favorite_doctor_service.dart';
 import '../paymob/paymob_manager.dart';
@@ -94,6 +95,7 @@ Future<void> setupGetIt() async {
   getIt.registerLazySingleton<UserApiService>(() => UserApiService(dio));
   getIt.registerLazySingleton<UserLocalService>(() => UserLocalService());
   getIt.registerLazySingleton<UserRepo>(() => UserRepo(getIt(), getIt()));
+  getIt.registerLazySingleton<UserCubit>(() => UserCubit(getIt()));
 
   // notification dependencies
   getIt.registerLazySingleton<NotificationLocalService>(

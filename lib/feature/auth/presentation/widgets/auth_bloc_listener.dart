@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/extentions.dart';
+import '../../../../core/helpers/snack_bar.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/widgets/custom_dioalog.dart';
 import '../cubit/auth_cubit.dart';
@@ -68,7 +69,12 @@ class AuthBlocListener extends StatelessWidget {
 
   /// Handles successful login by navigating to home screen
   void _handleLoginSuccess(BuildContext context) {
-    context.pushAndRemoveUntil(Routes.mainNavigation);
+    showSnackBar(context, 'Login Successful');
+    Future.delayed(const Duration(milliseconds: 100), () {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        context.pushAndRemoveUntil(Routes.mainNavigation);
+      });
+    });
   }
 
   /// Shows success dialog for signup completion
@@ -79,7 +85,9 @@ class AuthBlocListener extends StatelessWidget {
       message: 'Your account has been created successfully. You can now login.',
       buttonText: 'Go to Login',
       onPressed: () {
-        context.pushAndRemoveUntil(Routes.loginScreen);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          context.pushAndRemoveUntil(Routes.loginScreen);
+        });
       },
     );
   }

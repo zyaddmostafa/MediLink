@@ -12,12 +12,13 @@ class UserRepo {
 
   UserRepo(this.apiService, this.userLocalService);
 
-  Future<ApiResult<UserModel>> getUserProfile() async {
+  Future<ApiResult<UserInformation>> getUserProfile() async {
     try {
       final response = await apiService.getUserProfile();
 
       await userLocalService.saveUser(response.responseData!.first);
-      final user = userLocalService.getUser();
+      final userStream = userLocalService.getUser();
+      final user = await userStream.first;
       if (user == null) {
         return ApiResult.success(response.responseData!.first);
       } else {
@@ -28,7 +29,7 @@ class UserRepo {
     }
   }
 
-  Future<ApiResult<ApiResponseModel<List<UserModel>>>> updateUserProfile(
+  Future<ApiResult<ApiResponseModel<List<UserInformation>>>> updateUserProfile(
     UpdateUserRequest request,
   ) async {
     try {

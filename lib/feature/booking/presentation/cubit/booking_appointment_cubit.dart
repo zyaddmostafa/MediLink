@@ -31,20 +31,6 @@ class BookingAppointmentCubit extends Cubit<BookingAppointmentState> {
     );
   }
 
-  void getStoredAppointments() async {
-    emit(GetStoredAppointmentsLoading());
-    final result = await _storeAppointmentRepo.getStoredAppointments();
-
-    result.when(
-      onSuccess: (response) {
-        emit(GetStoredAppointmentsSuccess(response.responseData!));
-      },
-      onError: (ApiErrorModel error) {
-        emit(GetStoredAppointmentsFailure(error));
-      },
-    );
-  }
-
   void getFilteredAppointments() async {
     emit(GetStoredAppointmentsLoading());
     final result = await _filteredAppointmentUseCase

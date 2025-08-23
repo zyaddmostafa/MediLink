@@ -1,18 +1,18 @@
 import '../../../../core/Hive/hive_service.dart';
 import '../model/user_response.dart';
 
-class UserLocalService extends HiveService<UserModel> {
+class UserLocalService extends HiveService<UserInformation> {
   UserLocalService();
 
   @override
   String get boxName => 'userBox';
 
-  Future<void> saveUser(UserModel user) async {
+  Future<void> saveUser(UserInformation user) async {
     await put('user', user);
   }
 
-  UserModel? getUser() {
-    return get('user');
+  Stream<UserInformation?> getUser() async* {
+    yield get('user');
   }
 
   Future<void> deleteUser() async {
