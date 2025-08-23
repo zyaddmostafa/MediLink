@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../feature/auth/data/models/sing_up_form_data.dart';
 import '../../feature/auth/presentation/cubit/auth_cubit.dart';
 import '../../feature/booking/presentation/screen/booking_screen.dart';
 import '../../feature/checkout/data/model/appointment_details_model.dart';
@@ -51,7 +52,7 @@ class AppRoute {
         );
 
       case Routes.setPasswordScreen:
-        final Map<String, dynamic> signupData = args as Map<String, dynamic>;
+        final SignUpFormData signupData = args as SignUpFormData;
         return MaterialPageRoute(
           builder: (_) => BlocProvider(
             create: (context) => getIt<AuthCubit>(),

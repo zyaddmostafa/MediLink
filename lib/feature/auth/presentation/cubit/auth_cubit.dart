@@ -31,8 +31,8 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> saveUserToken(String token) async {
-    await SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, token);
+  void saveUserToken(String token) {
+    SharedPrefHelper.setSecuredString(SharedPrefKeys.userToken, token);
     DioFactory.setTokenIntoHeaderAfterLogin(token);
   }
 
@@ -41,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
     final response = await _authRepoImpl.signup(signupRequestBody);
     response.when(
       onSuccess: (ApiResponseModel<UserModel> signupResponse) {
+        saveUserToken(signupResponse.responseData?.token ?? '');
         emit(SignupSuccess(signupResponse.responseData!));
       },
       onError: (ApiErrorModel error) {

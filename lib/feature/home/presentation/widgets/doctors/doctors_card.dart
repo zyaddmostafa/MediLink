@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get_it/get_it.dart';
-
+import '../../../../../core/di/dependency_injection.dart';
 import '../../../../../core/favorites/favorite_doctor_service.dart';
+import '../../../../../core/favorites/favorite_toogle_method.dart';
 import '../../../../../core/helpers/app_assets.dart';
 import '../../../../../core/helpers/doctors_images.dart';
 import '../../../../../core/helpers/doctors_helper.dart';
@@ -31,7 +31,7 @@ class _DoctorsCardState extends State<DoctorsCard> {
   @override
   void initState() {
     super.initState();
-    _favoriteService = GetIt.instance<FavoriteDoctorService>();
+    _favoriteService = getIt<FavoriteDoctorService>();
   }
 
   @override
@@ -52,7 +52,7 @@ class _DoctorsCardState extends State<DoctorsCard> {
               horizontalSpacing(8),
               _doctorCardBody(),
               horizontalSpacing(8),
-              _buildFavoriteIcon(),
+              buildFavoriteIcon(_favoriteService, widget.doctor!),
             ],
           ),
           verticalSpacing(16),
@@ -62,34 +62,11 @@ class _DoctorsCardState extends State<DoctorsCard> {
               backgroundColor: widget.buttonProperties.backgroundColor,
               text: widget.buttonProperties.text,
               onPressed: widget.buttonProperties.onPressed,
-              onPressedWithArgument:
-                  widget.buttonProperties.onPressedWithArgument,
               isLoading: widget.buttonProperties.isLoading,
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildFavoriteIcon() {
-    return StreamBuilder<List<DoctorModel>>(
-      stream: _favoriteService.getFavoriteDoctorsStream(),
-      builder: (context, snapshot) {
-        final isFavorite = _favoriteService.isFavorite(widget.doctor!.id!);
-
-        return GestureDetector(
-          onTap: () async {
-            if (widget.doctor != null) {
-              await _favoriteService.toggleFavorite(widget.doctor!);
-            }
-          },
-          child: SvgPicture.asset(
-            isFavorite ? Assets.svgsFavactive : Assets.svgsFavinactive,
-            color: AppColor.red,
-          ),
-        );
-      },
     );
   }
 

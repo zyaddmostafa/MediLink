@@ -1,3 +1,4 @@
+import 'core/helpers/constants.dart';
 import 'core/routing/app_route.dart';
 import 'core/routing/routes.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class DoctorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const ScreenUtilInit(
-      designSize: Size(375, 812),
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
 
@@ -18,7 +19,7 @@ class DoctorApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
 
         // initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.loginScreen,
-        initialRoute: Routes.mainNavigation,
+        initialRoute: Routes.loginScreen,
         onGenerateRoute: AppRoute.generateRoute,
       ),
     );

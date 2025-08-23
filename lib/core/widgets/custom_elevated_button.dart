@@ -18,19 +18,8 @@ class CustomElevatedButton extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         backgroundColor: properties.backgroundColor ?? AppColor.primary,
       ),
-      onPressed: properties.isLoading == true
-          ? null
-          : () {
-              // If onPressedWithArgument is provided, use it with the argument
-              if (properties.onPressedWithArgument != null) {
-                properties.onPressedWithArgument!(properties.argument ?? 0);
-              }
-              // Also call the regular onPressed if provided
-              else if (properties.onPressed != null) {
-                properties.onPressed!();
-              }
-            },
-      child: properties.isLoading == true
+      onPressed: properties.onPressed,
+      child: properties.isLoading!
           ? const CircularProgressIndicator(color: AppColor.white)
           : Text(
               properties.text!,

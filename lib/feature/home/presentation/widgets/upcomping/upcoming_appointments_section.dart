@@ -24,6 +24,7 @@ class UpcomingAppointmentsSection extends StatelessWidget {
               ),
               verticalSpacing(24),
               UpcomingAppoinmentsListView(appointments: appointments),
+              verticalSpacing(24),
             ],
           )
         : const SizedBox.shrink();

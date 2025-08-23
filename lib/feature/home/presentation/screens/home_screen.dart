@@ -58,8 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const UpComingAppoitmentBlocBuilder(),
 
-            verticalSpacing(24),
-
             const CategoriesSection(),
 
             verticalSpacing(24),

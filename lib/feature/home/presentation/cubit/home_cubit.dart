@@ -43,8 +43,7 @@ class HomeCubit extends Cubit<HomeState> {
           if (query.isNotEmpty) {
             _performSearch(query);
           } else {
-            // Clear search results when query is empty
-            emit(SearchDoctorsClear());
+            _performSearch('');
           }
         });
   }

@@ -19,7 +19,9 @@ class DoctorInfoScreen extends StatelessWidget {
               top: 0,
               left: 0,
               right: 0,
-              child: DoctorInfoScreenHeader(),
+              child: DoctorInfoScreenHeader(
+                doctor: null, // Pass the doctor model here if available
+              ),
             ),
             Positioned(
               top: 114,

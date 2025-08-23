@@ -39,10 +39,23 @@ class ApiErrorHandler {
 }
 
 ApiErrorModel _handleError(data) {
+  Map<String, dynamic>? errors;
+
+  if (data is Map<String, dynamic>) {
+    final dataField = data['data'];
+    if (dataField is Map<String, dynamic>) {
+      errors = dataField;
+    } else if (dataField is List) {
+      errors = {'errors': dataField};
+    }
+  }
+
   return ApiErrorModel(
-    message: data['message'] ?? "Unknown error occurred",
-    code: data['code'],
-    errors: data['data'],
+    message: data is Map<String, dynamic>
+        ? (data['message'] ?? "Unknown error occurred")
+        : "Unknown error occurred",
+    code: data is Map<String, dynamic> ? data['code'] : null,
+    errors: errors,
   );
 }
 

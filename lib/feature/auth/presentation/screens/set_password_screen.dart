@@ -8,6 +8,7 @@ import '../../../../core/theme/app_color.dart';
 import '../../../../core/widgets/custom_app_bar.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../data/models/sign_up_request_body.dart';
+import '../../data/models/sing_up_form_data.dart';
 import '../cubit/auth_cubit.dart';
 import '../widgets/auth_header.dart';
 import '../widgets/auth_rich_text.dart';
@@ -17,7 +18,7 @@ import '../widgets/set_password_screen_form.dart';
 import '../widgets/auth_bloc_listener.dart';
 
 class SetPasswordScreen extends StatefulWidget {
-  final Map<String, dynamic> signupData;
+  final SignUpFormData signupData;
   const SetPasswordScreen({super.key, required this.signupData});
 
   @override
@@ -114,12 +115,12 @@ class _SetPasswordScreenState extends State<SetPasswordScreen> {
     if (_formKey.currentState!.validate()) {
       signupCubit.signup(
         SignupRequestBody(
-          name: widget.signupData['name'],
-          email: widget.signupData['email'],
+          name: widget.signupData.name,
+          email: widget.signupData.email,
           password: passwordController.text,
           passwordConfirmation: passwordConfirmationController.text,
-          phone: widget.signupData['phone'],
-          gender: widget.signupData['gender'],
+          phone: widget.signupData.phone,
+          gender: widget.signupData.gender,
         ),
       );
     }

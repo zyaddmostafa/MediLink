@@ -39,6 +39,7 @@ class SearchTextField extends StatelessWidget {
             ? InkWell(
                 onTap: () {
                   _searchController.clear();
+                  onChanged?.call('');
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(12),
