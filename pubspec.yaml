@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.0+1
 
 environment:
-  sdk: ^3.8.1
+  sdk: ^3.9.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,8 +31,8 @@ dependencies:
   bloc: ^9.0.0
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
-  firebase_core: ^3.15.1
-  firebase_messaging: ^15.2.10
+  firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
@@ -43,9 +43,9 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
   flutter_svg: ^2.2.0
-  font_awesome_flutter: ^10.9.0
+  font_awesome_flutter: ^10.10.0
   get_it: ^8.0.3
-  google_fonts: ^6.1.0
+  google_fonts: ^6.3.0
   google_sign_in: ^7.1.1
   googleapis_auth: ^2.0.0
   hive: ^2.2.3
@@ -55,21 +55,21 @@ dependencies:
   lottie: ^3.3.1
   meta: ^1.16.0
   pretty_dio_logger: ^1.4.0
-  retrofit: ^4.6.0
-  rxdart: ^0.27.7
+  retrofit: ^4.7.2
+  rxdart: ^0.28.0
   shared_preferences: ^2.5.3
   skeletonizer: ^2.1.0+1
 
 dev_dependencies:
   analyzer: ^6.4.1
-  build_runner: ^2.4.7
+  build_runner: ^2.4.13
   flutter_assets: ^0.0.6
-  flutter_launcher_icons: ^0.14.4
-  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
   json_serializable: ^6.8.0
-  retrofit_generator: ^8.0.0
+  retrofit_generator: ^8.2.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
