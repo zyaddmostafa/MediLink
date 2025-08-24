@@ -31,10 +31,17 @@ jobs:
           bundler-cache: true
           working-directory: android
 
-      - name: Build and Distribute App
+      - name: Generate code and Build APK
+        run: |
+          flutter clean
+          flutter pub get
+          dart run build_runner build --delete-conflicting-outputs
+          flutter build apk --release --flavor production --target lib/main_production.dart --no-tree-shake-icons
+
+      - name: Distribute App to Firebase
         env:
           FIREBASE_CLI_TOKEN: ${{ secrets.FIREBASE_CLI_TOKEN }}
           FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         working-directory: android
         run: |
-          bundle exec fastlane android firebase_distribution
+          bundle exec fastlane android firebase_distribution_simple

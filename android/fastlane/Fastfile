@@ -1,33 +1,14 @@
-
 default_platform(:android)
-
-# To run the lane, execute the following command:
-# bundle exec fastlane firebase_distribution
-
 platform :android do
-  desc "Lane for Android Firebase App Distribution"
-  lane :firebase_distribution do
-    # Get the parent directory (Flutter project root)
-    flutter_root = File.expand_path("..", Dir.pwd)
-    UI.message "Current directory: #{Dir.pwd}"
-    UI.message "Flutter root directory: #{flutter_root}"
-    
-    Dir.chdir(flutter_root) do
-      UI.message "Changed to directory: #{Dir.pwd}"
-      sh "ls -la" # List files to verify we're in the right place
-      sh "flutter clean"
-      sh "flutter pub get"
-      sh "flutter pub run build_runner build --delete-conflicting-outputs"
-      sh "flutter build apk --release --flavor production --target lib/main_production.dart --no-tree-shake-icons"
-    end
+  desc "Lane for Android Firebase App Distribution (build done separately)"
+  lane :firebase_distribution_simple do
     firebase_app_distribution(
         app: ENV["FIREBASE_APP_ID"],
         firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
         android_artifact_type: "APK",
         android_artifact_path: "../build/app/outputs/flutter-apk/app-production-release.apk",
         testers: "zyadm2137@gmail.com",
-        release_notes: "Testing something with fastlane ,add secure environment variables",
-        
-  )
+        release_notes: "Testing something with fastlane, add secure environment variables",
+    )
   end
 end
