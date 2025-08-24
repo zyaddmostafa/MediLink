@@ -1,4 +1,4 @@
-import '../../../../core/Hive/hive_service.dart';
+import '../../../../core/hive/hive_service.dart';
 import '../model/user_response.dart';
 
 class UserLocalService extends HiveService<UserInformation> {
