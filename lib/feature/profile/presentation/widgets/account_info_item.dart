@@ -24,7 +24,7 @@ class AccountInfoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: InkWell(
         onTap: onTap,
         child: Row(

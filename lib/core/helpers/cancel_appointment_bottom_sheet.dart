@@ -24,7 +24,7 @@ class BookingAppointmentBottomSheet {
       context: context,
       useRootNavigator: false, // keep it within the same navigator scope
       builder: (context) => Container(
-        height: MediaQuery.sizeOf(context).height * 0.35,
+        height: MediaQuery.sizeOf(context).height * 0.4,
         padding: const EdgeInsets.symmetric(horizontal: 24),
         decoration: const ShapeDecoration(
           color: Colors.white,

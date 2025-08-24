@@ -10,7 +10,7 @@ class DoctorApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const ScreenUtilInit(
+    return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
@@ -18,8 +18,7 @@ class DoctorApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
 
-        // initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.loginScreen,
-        initialRoute: Routes.loginScreen,
+        initialRoute: isLoggedInUser ? Routes.homeScreen : Routes.loginScreen,
         onGenerateRoute: AppRoute.generateRoute,
       ),
     );
