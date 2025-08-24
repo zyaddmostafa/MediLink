@@ -7,7 +7,14 @@ default_platform(:android)
 platform :android do
   desc "Lane for Android Firebase App Distribution"
   lane :firebase_distribution do
-    Dir.chdir("..") do
+    # Get the parent directory (Flutter project root)
+    flutter_root = File.expand_path("..", Dir.pwd)
+    UI.message "Current directory: #{Dir.pwd}"
+    UI.message "Flutter root directory: #{flutter_root}"
+    
+    Dir.chdir(flutter_root) do
+      UI.message "Changed to directory: #{Dir.pwd}"
+      sh "ls -la" # List files to verify we're in the right place
       sh "flutter clean"
       sh "flutter pub get"
       sh "dart run build_runner build --delete-conflicting-outputs"
