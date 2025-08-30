@@ -99,6 +99,48 @@ class DoctorModel extends HiveObject {
       isFavorite: isFavorite ?? this.isFavorite,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is DoctorModel &&
+        other.id == id &&
+        other.name == name &&
+        other.email == email &&
+        other.phone == phone &&
+        other.photo == photo &&
+        other.gender == gender &&
+        other.address == address &&
+        other.description == description &&
+        other.degree == degree &&
+        other.specialization == specialization &&
+        other.city == city &&
+        other.appointPrice == appointPrice &&
+        other.startTime == startTime &&
+        other.endTime == endTime &&
+        other.isFavorite == isFavorite;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      id,
+      name,
+      email,
+      phone,
+      photo,
+      gender,
+      address,
+      description,
+      degree,
+      specialization,
+      city,
+      appointPrice,
+      startTime,
+      endTime,
+      isFavorite,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -113,6 +155,15 @@ class Specialization extends HiveObject {
 
   factory Specialization.fromJson(Map<String, dynamic> json) =>
       _$SpecializationFromJson(json);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Specialization && other.id == id && other.name == name;
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
 }
 
 @JsonSerializable()
@@ -128,6 +179,18 @@ class City extends HiveObject {
   City({this.id, this.name, this.governrate});
 
   factory City.fromJson(Map<String, dynamic> json) => _$CityFromJson(json);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is City &&
+        other.id == id &&
+        other.name == name &&
+        other.governrate == governrate;
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, governrate);
 }
 
 @JsonSerializable()
@@ -142,4 +205,13 @@ class Governrate extends HiveObject {
 
   factory Governrate.fromJson(Map<String, dynamic> json) =>
       _$GovernrateFromJson(json);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Governrate && other.id == id && other.name == name;
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
 }

@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import '../../../../core/api_helpers/api_error_model.dart';
 import '../../../../core/api_helpers/dio_factory.dart';

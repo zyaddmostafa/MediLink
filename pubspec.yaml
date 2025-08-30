@@ -29,8 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^9.0.0
+  bloc_test: ^10.0.0
   cupertino_icons: ^1.0.8
   dio: ^5.8.0+1
+  equatable: ^2.0.5
   firebase_core: ^4.0.0
   firebase_messaging: ^16.0.0
   flutter:
@@ -54,6 +56,7 @@ dependencies:
   json_annotation: ^4.9.0
   lottie: ^3.3.1
   meta: ^1.16.0
+  mocktail: ^1.0.4
   pretty_dio_logger: ^1.4.0
   retrofit: ^4.7.2
   rxdart: ^0.28.0
