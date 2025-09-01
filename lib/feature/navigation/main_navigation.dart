@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/di/dependency_injection.dart';
+import '../../core/widgets/keep_alive_wrapper.dart';
 import '../auth/presentation/cubit/auth_cubit.dart';
 import '../booking/presentation/cubit/booking_appointment_cubit.dart';
 import '../booking/presentation/screen/booking_screen.dart';
@@ -20,11 +21,45 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
+  late final PageController _pageController = PageController();
+
+  // Cache for BLoC providers to avoid recreating them
+  late final HomeCubit _homeCubit = getIt<HomeCubit>();
+  late final BookingAppointmentCubit _bookingCubit =
+      getIt<BookingAppointmentCubit>();
+  late final AuthCubit _authCubit = getIt<AuthCubit>();
+
+  // Pre-built screens with KeepAlive for state preservation
+  late final List<Widget> _screens = [
+    KeepAliveWrapper(
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider.value(value: _homeCubit),
+          BlocProvider.value(value: _bookingCubit),
+        ],
+        child: const HomeScreen(),
+      ),
+    ),
+    KeepAliveWrapper(
+      child: BlocProvider.value(
+        value: _bookingCubit,
+        child: const BookingScreen(),
+      ),
+    ),
+    KeepAliveWrapper(
+      child: BlocProvider.value(value: _homeCubit, child: const SearchScreen()),
+    ),
+    KeepAliveWrapper(
+      child: BlocProvider.value(
+        value: _authCubit,
+        child: const ProfileScreen(),
+      ),
+    ),
+  ];
 
   @override
   void initState() {
     super.initState();
-
     // Delay user profile loading to avoid blocking UI
     _loadUserProfileIfNeeded();
   }
@@ -33,43 +68,40 @@ class _MainNavigationState extends State<MainNavigation> {
     context.read<UserCubit>().getUserProfile();
   }
 
-  // List of screens for bottom navigation
-  final List<Widget> _screens = [
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIt<HomeCubit>()),
-        BlocProvider.value(value: getIt<BookingAppointmentCubit>()),
-      ],
-      child: const HomeScreen(),
-    ),
-
-    BlocProvider.value(
-      value: getIt<BookingAppointmentCubit>(),
-      child: const BookingScreen(),
-    ),
-    BlocProvider.value(value: getIt<HomeCubit>(), child: const SearchScreen()),
-    BlocProvider(
-      create: (context) => getIt<AuthCubit>(),
-      child: const ProfileScreen(),
-    ),
-  ];
-
   void _onTabTapped(int index) {
     if (_currentIndex != index) {
       setState(() {
         _currentIndex = index;
       });
+      _pageController.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: _currentIndex, children: _screens),
+      body: PageView(
+        controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(), // Disable swipe
+        children: _screens,
+      ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTabTapped: _onTabTapped,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _homeCubit.close();
+    _bookingCubit.close();
+    _authCubit.close();
+    super.dispose();
   }
 }
