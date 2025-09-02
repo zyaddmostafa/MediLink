@@ -1,7 +1,7 @@
 import '../../feature/home/data/model/category_model.dart';
 import 'app_assets.dart';
 
-class DoctorsHelpers {
+class DoctorsHelper {
   static const List<CategoryModel> all = [
     CategoryModel(
       id: 1,
@@ -77,7 +77,7 @@ class DoctorsHelpers {
         final parts = time.split(' ');
         if (parts.length >= 2) {
           timeOnly = parts[0];
-          suffix = '${parts[1]}';
+          suffix = parts[1];
         }
       }
 
@@ -140,17 +140,17 @@ class DoctorsHelpers {
 
     while (currentMinutes + 30 <= endMinutes) {
       // Calculate current time
-      int currentHour = currentMinutes ~/ 60;
-      int currentMin = currentMinutes % 60;
+      final int currentHour = currentMinutes ~/ 60;
+      final int currentMin = currentMinutes % 60;
 
       // Calculate end time (30 minutes later)
-      int nextMinutes = currentMinutes + 30;
-      int nextHour = nextMinutes ~/ 60;
-      int nextMin = nextMinutes % 60;
+      final int nextMinutes = currentMinutes + 30;
+      final int nextHour = nextMinutes ~/ 60;
+      final int nextMin = nextMinutes % 60;
 
       // Format times in 12-hour format with AM/PM
-      String startTimeStr = _formatTo12Hour(currentHour, currentMin);
-      String endTimeStr = _formatTo12Hour(nextHour, nextMin);
+      final String startTimeStr = _formatTo12Hour(currentHour, currentMin);
+      final String endTimeStr = _formatTo12Hour(nextHour, nextMin);
 
       timeSlots.add('$startTimeStr - $endTimeStr');
 
@@ -164,15 +164,15 @@ class DoctorsHelpers {
   // Parse time with AM/PM format (e.g., "2:30 pm", "10:00 am")
   static Map<String, int> _parseTimeWithAmPm(String timeStr) {
     String cleanTime = timeStr.trim().toLowerCase();
-    bool isAm = cleanTime.contains('am');
-    bool isPm = cleanTime.contains('pm');
+    final bool isAm = cleanTime.contains('am');
+    final bool isPm = cleanTime.contains('pm');
 
     // Remove AM/PM from string
     cleanTime = cleanTime.replaceAll(RegExp(r'\s*(am|pm)\s*'), '');
 
     final parts = cleanTime.split(':');
     int hour = int.parse(parts[0]);
-    int minute = parts.length > 1 ? int.parse(parts[1]) : 0;
+    final int minute = parts.length > 1 ? int.parse(parts[1]) : 0;
 
     // Convert to 24-hour format for calculation
     if (isPm && hour != 12) {
@@ -186,7 +186,7 @@ class DoctorsHelpers {
 
   // Format time to 12-hour format with am/pm (lowercase)
   static String _formatTo12Hour(int hour, int minute) {
-    String period = hour >= 12 ? 'pm' : 'am';
+    final String period = hour >= 12 ? 'pm' : 'am';
     int displayHour = hour;
 
     if (hour == 0) {
@@ -195,7 +195,7 @@ class DoctorsHelpers {
       displayHour = hour - 12;
     }
 
-    return '${displayHour}:${minute.toString().padLeft(2, '0')} $period';
+    return '$displayHour:${minute.toString().padLeft(2, '0')} $period';
   }
 
   /// Convert DateTime string from "2025-08-06 00:00:00.000" to "2025-08-06"
@@ -241,7 +241,7 @@ class DoctorsHelpers {
       return timeWithAmPm.toLowerCase(); // Return as is if no AM/PM found
     }
 
-    String timePart = parts[0];
+    final String timePart = parts[0];
     String period = parts[1].toLowerCase();
 
     // Split time into hour, minute, second
@@ -252,7 +252,7 @@ class DoctorsHelpers {
     }
 
     int hour = int.tryParse(timeParts[0]) ?? 0;
-    String minute = timeParts[1];
+    final String minute = timeParts[1];
 
     // Convert 24-hour format to 12-hour format
     if (hour == 0) {

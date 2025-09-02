@@ -31,7 +31,7 @@ class _ScheduleTimeGridState extends State<ScheduleTimeGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final timeSlots = DoctorsHelpers.generateTimeSlots(
+    final timeSlots = DoctorsHelper.generateTimeSlots(
       startTime: widget.startTime,
       endTime: widget.endTime,
     );

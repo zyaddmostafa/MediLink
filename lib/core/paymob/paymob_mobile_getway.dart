@@ -129,7 +129,7 @@ class _PaymobMobileGetwayState extends State<PaymobMobileGetway> {
       final cubit = context.read<BookingAppointmentCubit>();
       final request = StoreAppointmentRequest(
         doctorId: widget.appointmentDetails.doctorId.toString(),
-        appointmentDateAndTime: DoctorsHelpers.storeAppointmentStartDate(
+        appointmentDateAndTime: DoctorsHelper.storeAppointmentStartDate(
           widget.appointmentDetails.appointmentDate,
           widget.appointmentDetails.appointmentTime,
         ),

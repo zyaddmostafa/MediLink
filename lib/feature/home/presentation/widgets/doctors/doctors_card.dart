@@ -105,7 +105,7 @@ class _DoctorsCardState extends State<DoctorsCard> {
               horizontalSpacing(4),
               Flexible(
                 child: Text(
-                  DoctorsHelpers.convertStartAndEndTimeTo12HourFormat(
+                  DoctorsHelper.convertStartAndEndTimeTo12HourFormat(
                     widget.doctor?.startTime ?? '',
                     widget.doctor?.endTime ?? '',
                   ),

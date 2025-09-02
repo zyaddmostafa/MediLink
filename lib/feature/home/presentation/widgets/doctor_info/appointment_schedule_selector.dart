@@ -39,8 +39,8 @@ class AppointmentScheduleSelector extends StatelessWidget {
         ),
         verticalSpacing(16),
         ScheduleTimeGrid(
-          startTime: DoctorsHelpers.formatTime(startTime),
-          endTime: DoctorsHelpers.formatTime(endTime),
+          startTime: DoctorsHelper.formatTime(startTime),
+          endTime: DoctorsHelper.formatTime(endTime),
           selectedTime: selectedTimeSlot,
           onTimeSelected: (String timeSlot) {
             onTimeSelected(timeSlot);

@@ -119,7 +119,7 @@ class CashPaymentBottomSheet extends StatelessWidget {
                   StoreAppointmentRequest(
                     doctorId: appointmentDetails.doctorId.toString(),
                     appointmentDateAndTime:
-                        DoctorsHelpers.storeAppointmentStartDate(
+                        DoctorsHelper.storeAppointmentStartDate(
                           appointmentDetails.appointmentDate,
                           appointmentDetails.appointmentTime,
                         ),

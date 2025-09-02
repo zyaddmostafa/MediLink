@@ -46,7 +46,7 @@ class _AppointmentDetailsScreenState extends State<AppointmentDetailsScreen> {
                 verticalSpacing(24),
 
                 AppointmentScheduleSection(
-                  appointmentDate: DoctorsHelpers.formatDateToDayMonth(
+                  appointmentDate: DoctorsHelper.formatDateToDayMonth(
                     widget.appointmentDetails.appointmentDate,
                   ),
                   appointmentTime: widget.appointmentDetails.appointmentTime,

@@ -25,6 +25,7 @@ class LoginScreenForm extends StatelessWidget {
       child: Column(
         children: [
           LabelAndTextField(
+            key: const Key('email field'),
             label: 'Email Address',
             textFormField: CustomTextFormField(
               hintText: 'Enter your email',

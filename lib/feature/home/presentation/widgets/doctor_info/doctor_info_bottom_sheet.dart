@@ -81,10 +81,10 @@ class _DoctorInfoBottomSheetState extends State<DoctorInfoBottomSheet> {
                     // Appointment schedule selection section
                     AppointmentScheduleSelector(
                       selectedTimeSlot: selectedTimeSlot,
-                      startTime: DoctorsHelpers.convertTime12hFormat(
+                      startTime: DoctorsHelper.convertTime12hFormat(
                         widget.doctor.startTime!,
                       ),
-                      endTime: DoctorsHelpers.convertTime12hFormat(
+                      endTime: DoctorsHelper.convertTime12hFormat(
                         widget.doctor.endTime!,
                       ),
                       onTimeSelected: (String timeSlot) {

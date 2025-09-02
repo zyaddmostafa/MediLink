@@ -11,12 +11,12 @@ class AllCategoriesListView extends StatelessWidget {
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-        itemCount: DoctorsHelpers.getAllCategories().length,
+        itemCount: DoctorsHelper.getAllCategories().length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: AllCategoriesListItem(
-              category: DoctorsHelpers.getAllCategories()[index],
+              category: DoctorsHelper.getAllCategories()[index],
             ),
           );
         },
