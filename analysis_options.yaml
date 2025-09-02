@@ -57,3 +57,63 @@ linter:
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+dart_code_metrics:
+  extends:
+    - recommended
+
+  rules:
+    # Avoid using border: null; prefer more specific border constructors for clarity.
+    - avoid-border-all
+    # Avoid incorrect opacity values in Image widgets (e.g., values not between 0.0 and 1.0).
+    - avoid-incorrect-image-opacity
+    # Avoid returning widgets from functions that are not widget builders.
+    - avoid-returning-widgets
+    # Avoid unnecessary calls to setState; only call when needed.
+    - avoid-unnecessary-setstate
+    # Prefer using const BorderRadius for immutable border radii.
+    - prefer-const-border-radius
+    # Avoid newline before return statement.
+    - newline-before-return
+    # Avoid comparing boolean values to true/false explicitly.
+    - no-boolean-literal-compare
+    # Avoid empty code blocks.
+    - no-empty-block
+    # Prefer using conditional expressions (?) over if-else for simple assignments.
+    - prefer-conditional-expressions
+    # Avoid if branches with equal then/else blocks.
+    - no-equal-then-else
+    # Prefer assigning expressions to variables before use for clarity.
+    - prefer-moving-to-variable
+    # File name should match the main class or widget name.
+    - prefer-match-file-name
+    # Avoid incomplete implementations of copyWith methods.
+    - avoid-incomplete-copy-with
+    # Avoid comparing a variable to itself.
+    - avoid-self-compare
+    # Avoid assigning a variable to itself.
+    - avoid-self-assignment
+
+  metrics:
+    # Maximum allowed cyclomatic complexity (number of independent paths through code).
+    cyclomatic-complexity: 20
+    # Maximum allowed nesting level (e.g., nested ifs/loops).
+    maximum-nesting-level: 5
+    # Maximum allowed number of parameters in a function/method.
+    number-of-parameters: 4
+    # Maximum allowed Halstead volume (measures code complexity).
+    halstead-volume: 150
+    # Maximum allowed lines of code per function/method.
+    lines-of-code: 100
+    # Minimum maintainability index (higher is better; measures code maintainability).
+    maintainability-index: 50
+    # Maximum allowed number of widgets used in a widget tree.
+    number-of-used-widgets: 20
+    # Maximum allowed number of source lines of code per function/method.
+    source-lines-of-code: 25
+    # Maximum allowed widget nesting level.
+    widgets-nesting-level: 10
+    # Maximum allowed coupling between object classes (number of dependencies).
+    coupling-between-object-classes: 12
+    # Maximum allowed depth of inheritance tree.
+    depth-of-inheritance-tree: 5
